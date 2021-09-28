@@ -132,6 +132,11 @@
                                                           ItemsSource="{Binding ComboBoxUserIdItemsSource}"
                                                           SelectedItem="{Binding ComboBoxUserIdSelectedItem}"
                                                           >
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="SelectionChanged">
+                                                            <i:InvokeCommandAction Command="{Binding ComboBoxUserIdCommand}"/>
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
                                                     <ComboBox.Resources>
                                                         <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#98d7f8" />
                                                     </ComboBox.Resources>
@@ -150,7 +155,13 @@
 
                                                 </ComboBox>
                                                 <Border x:Name="UserIdBox" Visibility="{Binding UserIdBoxVisibility}" Grid.Row="1" Grid.Column="1" Style="{StaticResource MainSellFundBorderTextBox}" Margin="10">
-                                                    <TextBox Grid.Column="0" Style="{StaticResource MainSellFundTextBoxBoldBlack}" Margin="0,0,0,5" VerticalAlignment="Bottom" />
+                                                    <TextBox x:Name="UserIdBoxTextBox" Grid.Column="0" Style="{StaticResource MainSellFundTextBoxBoldBlack}" Margin="0,0,0,5" VerticalAlignment="Bottom" Text="{Binding TextBoxUserIdSelectedItem}">
+                                                        <i:Interaction.Triggers>
+                                                            <i:EventTrigger EventName="TextChanged">
+                                                                <prism:InvokeCommandAction Command="{Binding UserIdBoxChangedCommand}" CommandParameter="{Binding ElementName=UserIdBoxTextBox}"></prism:InvokeCommandAction>
+                                                            </i:EventTrigger>
+                                                        </i:Interaction.Triggers>
+                                                    </TextBox>
                                                 </Border>
 
                                                 <Label Grid.Row="2" Grid.Column="0" Content="Access Code : " Style="{StaticResource MainSellFundLabelRegularBlack}" />

@@ -179,7 +179,8 @@ namespace MainModule.ViewModels
                     (result) => {
                         if (result.Result == ButtonResult.OK)
                         {
-                            CheckIcLicense();
+                            var _empId = result.Parameters.GetValue<string>("_empId");
+                            CheckIcLicense(_empId);
                             //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
                         }
                     });
@@ -261,41 +262,53 @@ namespace MainModule.ViewModels
             }
         }
 
-        private async void CheckIcLicense()
+        private async void CheckIcLicense(string _empId)
         {
             try
             {
-                string userId = AccountManager.Instance.Account.id.ToString();
-                if (!string.IsNullOrEmpty(userId))
+                if (!string.IsNullOrEmpty(_empId))
                 {
-                    //SellFundMainService sellFundMainService = new SellFundMainService();
-                    //SearchEmployeeResult searchEmployee = sellFundMainService.CheckIcLicense(userId);
                     SecService sec = new();
-                    SearchEmployeeResult searchEmployee = await sec.Sec(userId);
+                    SearchEmployeeResult searchEmployee = await sec.Sec(_empId);
 
                     if (searchEmployee != null)
                     {
-                        if (searchEmployee != null)
+                        if (searchEmployee.IcLicense)
                         {
-                            if (searchEmployee.IcLicense)
+                            StaffIdText = (searchEmployee.EmpId).ToString();
+                            SecIdContent = searchEmployee.SecId;
+                            IcLicenseContent = searchEmployee.IcType;
+                            StaffRmContent = searchEmployee.RmId;
+                            StaffNameContent = searchEmployee.EmpFirstName + " " + searchEmployee.EmpLastName;
+                            var tempComboBoxOrderByItemsSource = searchEmployee.ListObjective.Select(x => new StringModel()
                             {
-                                StaffIdText = (searchEmployee.EmpId).ToString();
-                                SecIdContent = searchEmployee.SecId;
-                                IcLicenseContent = searchEmployee.IcType;
-                                StaffRmContent = searchEmployee.RmId;
-                                StaffNameContent = searchEmployee.EmpFirstName + " " + searchEmployee.EmpLastName;
-                                var tempComboBoxOrderByItemsSource = searchEmployee.ListObjective.Select(x => new StringModel()
-                                {
-                                    Text = x
-                                }).ToList();
-                                ComboBoxOrderByItemsSource = new(tempComboBoxOrderByItemsSource);
-                            }
-                        }
-                        else
-                        {
-                            ComboBoxOrderByItemsSource = new();
+                                Text = x
+                            }).ToList();
+                            ComboBoxOrderByItemsSource = new(tempComboBoxOrderByItemsSource);
                         }
                     }
+                    else
+                    {
+                        StaffIdText = "";
+                        SecIdContent = "";
+                        IcLicenseContent = "";
+                        StaffRmContent = "";
+                        StaffNameContent = "";
+                        List<StringModel> tempComboBoxOrderByItemsSource = new();
+                        tempComboBoxOrderByItemsSource.Add(new StringModel() { Text = "" });
+                        ComboBoxOrderByItemsSource = new(tempComboBoxOrderByItemsSource);
+                    }
+                }
+                else
+                {
+                    StaffIdText = "";
+                    SecIdContent = "";
+                    IcLicenseContent = "";
+                    StaffRmContent = "";
+                    StaffNameContent = "";
+                    List<StringModel> tempComboBoxOrderByItemsSource = new();
+                    tempComboBoxOrderByItemsSource.Add(new StringModel() { Text = "" });
+                    ComboBoxOrderByItemsSource = new(tempComboBoxOrderByItemsSource);
                 }
             }
             catch (Exception)
@@ -306,7 +319,6 @@ namespace MainModule.ViewModels
 
         private void SetSellFundTable()
         {
-            //List<string> ListFundCode = SellFundList.Where(x => !string.IsNullOrEmpty(x.Id)).Select(y => y.Id).ToList();
             var fundDetail = FundManager.Instance;
             if (SellFundList == null) SellFundList = new();
             if (fundDetail != null)
