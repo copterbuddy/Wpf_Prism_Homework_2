@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_generic_services = true;
+
+package com.example.fund;
+
+option csharp_namespace = "FundGrpc";
+
+service FundService {
+    rpc funds(EmptyRequest) returns (ListFundResponse) {}
+    rpc listFundsByAccountNumber(FundListRequest) returns (ListFundResponse) {}
+    rpc listFundGroups(EmptyRequest) returns (ListFundGroupsResponse) {}
+}
+
+message EmptyRequest {
+    string text = 1;
+}
+
+message FundListRequest {
+    string accountNumber = 1;
+    string fundGroup = 2;
+    string fundCode = 3;
+}
+
+message ListFundGroupsResponse {
+   repeated string ListFundGroups = 1;
+}
+
+message ListFundResponse {
+ message FundRpc {
+   string fundGroup = 1;
+    string fundGroupName = 2;
+    string fundCode = 3;
+    string fundName = 4;
+    bool isComplex = 5;
+    string nav = 6;
+    string gainAmount = 7; 
+    string gainPercentage = 8;
+    string totalUnit = 9;
+    string totalBaht = 10;
+    string minimumSellableUnit = 11;
+    string minimumSellableBaht = 12;
+    string minimumUnit = 13;
+    string minimumBaht = 14;
+    string allowRedeem = 15;
+    string percentageFee = 16;
+}
+
+   repeated FundRpc Funds = 1;
+}

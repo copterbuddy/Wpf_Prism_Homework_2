@@ -1,0 +1,16 @@
+﻿<prism:PrismApplication x:Class="WPFWorkshopOriPrism.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WPFWorkshopOriPrism"
+             xmlns:prism="http://prismlibrary.com/">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Entity;component/Strings_EN.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Entity;component/Strings_TH.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/LoginModule;component/ResourceDictionary.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MainModule;component/ResourceDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</prism:PrismApplication>

@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="MainModule.Views.MenuRegion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MainModule.Views"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Image HorizontalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Entity;Component/Images/landing page_ch 1.png" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Image HorizontalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Entity;Component/Images/landing page_ch 2.png" />
+        </Grid>
+        <Grid Grid.Row="2">
+            <Image HorizontalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Entity;Component/Images/landing page_ch 3.png" />
+        </Grid>
+        <Grid Grid.Row="3">
+            <Image HorizontalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Entity;Component/Images/landing page_ch 4.png" />
+        </Grid>
+        <Grid Grid.Row="4">
+            <Image HorizontalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Entity;Component/Images/landing page_ch 5.png" />
+        </Grid>
+        <Grid Grid.Row="5">
+            <Image HorizontalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Entity;Component/Images/landing page_ch 6.png" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="OtherServiceRegion"></prism:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+        </Grid>
+        <Grid Grid.Row="6">
+            <Image HorizontalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Entity;Component/Images/landing page_ch 7.png" />
+        </Grid>
+    </Grid>
+</UserControl>

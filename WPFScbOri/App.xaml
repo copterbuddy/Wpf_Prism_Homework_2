@@ -1,0 +1,15 @@
+﻿<Application x:Class="WPFScbOri.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WPFScbOri"
+             StartupUri="Views/LoginWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WPFScbOri;component/Resource/Strings_EN.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPFScbOri;component/Resource/Strings_TH.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPFScbOri;component/Resource/ResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

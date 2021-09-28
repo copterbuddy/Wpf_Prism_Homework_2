@@ -1,0 +1,1758 @@
+﻿<Window x:Class="WPFScbOri.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFScbOri.Views"
+        xmlns:components="clr-namespace:WPFScbOri.Components"
+        mc:Ignorable="d"
+         ResizeMode="CanMinimize"
+        WindowState="Maximized"
+        Title="MainWindow" Height="1080" Width="1920">
+    <Grid>
+        <!--Main Window-->
+        <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="/Images/landing page_bg 1.png" Stretch="UniformToFill"/>
+            </Grid.Background>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="9*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="9*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!--Header Layout-->
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >
+                <Grid.Background>
+                    <ImageBrush ImageSource="/Images/landing page_bar 2.png" Stretch="UniformToFill"/>
+                </Grid.Background>
+
+                <!--Left Info-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" HorizontalAlignment="Left">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0" HorizontalAlignment="Center" Source="/Images/logo.png" Margin="10,0,0,0" />
+                </Grid>
+
+                <!--Right Info-->
+                <Grid Grid.Column="1" HorizontalAlignment="Right">
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <Grid Margin="0,0,5,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="1" Cursor="Hand" Source="/Images/landing page_begin 1.png" Margin="0,0,5,0" />
+                            <Image Grid.Column="2" HorizontalAlignment="Center" Cursor="Hand" Source="/Images/landing page_tool 1.png" Margin="5,0,0,0" />
+                        </Grid>
+                        <Grid Grid.Column="1" VerticalAlignment="Center" Margin="10,0,10,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" x:Name="fullname" Text="" Style="{StaticResource LandingTextUserInfo}" />
+                            <TextBlock Grid.Row="1" x:Name="idBrn" Text="" Style="{StaticResource LandingTextUserInfo}" />
+                        </Grid>
+                        <Grid Grid.Column="2" Margin="15,0,20,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="0.05*" />
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="1" HorizontalAlignment="Center" Cursor="Hand" Source="/Images/landing page_.png"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <!--Menu Layout-->
+            <Grid Grid.Row="1" Grid.Column="0" Margin="24,10,24,24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Image HorizontalAlignment="Center" Cursor="Hand" Source="/Images/landing page_ch 1.png" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Image HorizontalAlignment="Center" Cursor="Hand" Source="/Images/landing page_ch 2.png" />
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Image HorizontalAlignment="Center" Cursor="Hand" Source="/Images/landing page_ch 3.png" />
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Image HorizontalAlignment="Center" Cursor="Hand" Source="/Images/landing page_ch 4.png" />
+                </Grid>
+                <Grid Grid.Row="4">
+                    <Image HorizontalAlignment="Center" Cursor="Hand" Source="/Images/landing page_ch 5.png" />
+                </Grid>
+                <Grid Grid.Row="5">
+                    <Image HorizontalAlignment="Center" Cursor="Hand" Source="/Images/landing page_ch 6.png" MouseDown="Image_MouseDown" />
+                </Grid>
+                <Grid Grid.Row="6">
+                    <Image HorizontalAlignment="Center" Cursor="Hand" Source="/Images/landing page_ch 7.png" />
+                </Grid>
+            </Grid>
+
+            <!--Content Layout-->
+            <Grid Grid.Row="1" Grid.Column="1" Margin="0,20,0,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="9.5*"></RowDefinition>
+                    <RowDefinition Height="0.5*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <!--Content-->
+                <!--Welcome Menu-->
+                <Grid x:Name="WelcomeMenu" Grid.Row="0" Visibility="Visible">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/Images/landing page_bg 2.png" Stretch="UniformToFill"></ImageBrush>
+                        
+                    </Grid.Background>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Center" Source="/Images/landing page_center.png" />
+                </Grid>
+
+                <!--Other Services Menu-->
+                <!--<ScrollViewer>-->
+
+                <ScrollViewer x:Name="OtherServicesMenu"  VerticalScrollBarVisibility="Auto" Grid.Row="0"  Margin="0,0,25,15" CanContentScroll="True" Visibility="Hidden">
+                    <StackPanel Background="#ffffff">
+
+                    <Grid Background="#F4B45A">
+                            <TextBlock Text="ขายกองทุน / Sell Fund" Style="{StaticResource MainOtherSeviceTextBlock}" Foreground="#513281" Margin="10,0"></TextBlock>
+                    </Grid>
+
+                    <!--ข้อมูลลูกค้า-->
+                    <Grid>
+                        <Border Grid.Row="0" BorderBrush="#513281"
+                                Background="#ffffff"
+                                BorderThickness="2"
+                                CornerRadius="12"
+                                Width="130"
+                                Height="40"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Panel.ZIndex="2"
+                                Margin="10,20,0,0">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource SelectFundTextTitleBold}" Foreground="Black" Text="ข้อมูลลูกค้า" Margin="6,0,0,0"></TextBlock>
+                        </Border>
+                        <Border Grid.Row="0" BorderBrush="#513281"
+                                BorderThickness="2"
+                                CornerRadius="12"
+                                Panel.ZIndex="1"
+                                Margin="20,40,20,0">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <!--Line1-->
+                                <!--เลขทะเบียนลูกค้า-->
+                                <Grid Grid.Row="0" Margin="0,30,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                                Margin="20,0,10,0"
+                                            Text="เลขทะเบียนลูกค้า : "
+                                            Style="{StaticResource SelectFundTextTitleBold}" 
+                                            Foreground="Black"
+                                            VerticalAlignment="Center"
+                                        />
+                                    <TextBox x:Name="CustomerIdTextBox"
+                                                Grid.Column="1"
+                                                Style="{StaticResource TextBoxSearCustomerEntryStyle}"
+                                            Width="350"
+                                            Height="40"
+                                            BorderThickness="3"
+                                                VerticalAlignment="Center"
+                                                IsReadOnly="True"
+                                            />
+
+                                    <Image Grid.Column="1"
+                                            Source="/Images/SCB3-02.png" 
+                                            Margin="0,0,0,0" 
+                                            Width="35" 
+                                            Height="36" 
+                                            Cursor="Hand"
+                                            HorizontalAlignment="Right"
+                                            MouseDown="OpenSearchCustomerDialog_MouseDown"
+                                            />
+                                    <!--</StackPanel>-->
+
+                                    <!--บัญชีกองทุนที่-->
+                                    <TextBlock Grid.Column="2"
+                                                Text="บัญชีกองทุนที่ : "
+                                                Margin="20,0,10,0"
+                                                Style="{StaticResource SelectFundTextTitleBold}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                                    <TextBox x:Name="FundAccountIdTextBox"
+                                                Grid.Column="3"
+                                                Style="{StaticResource TextBoxSearCustomerEntryStyle}"
+                                            Width="400"
+                                            Height="40"
+                                                BorderThickness="3"
+                                                IsReadOnly="True"
+                                                />
+                                </Grid>
+                                <!--EndLine1-->
+
+
+                                <!--Line2-->
+                                <Grid Grid.Row="1" Margin="0,5,0,15">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="2.5*"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                                Margin="20,7,0,0"
+                                            Text="ชื่อ - นามสกุล : "
+                                            Style="{StaticResource SelectFundTextTitleBold}" 
+                                            Foreground="Black"
+                                        />
+
+                                    <Label x:Name="CustomerName" Grid.Column="1"
+                                                Margin="0,0,10,0"
+                                            Content=""
+                                            Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                            Foreground="Black"
+
+                                            />
+
+                                    <TextBlock Grid.Column="2"
+                                                Margin="20,0,0,0"
+                                            Text="บัญชีร่วม : "
+                                            Style="{StaticResource SelectFundTextTitleBold}" 
+                                            Foreground="Black"
+                                            VerticalAlignment="Center"
+                                                />
+
+                                    <Label x:Name="JointAccount" Grid.Column="3"
+                                                Content=""
+                                                Margin="0,0,10,0"
+                                                Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                                    <TextBlock Grid.Column="4"
+                                                Text="ลูกค้าเปราะบาง : "
+                                                Margin="0,0,0,0"
+                                                Style="{StaticResource SelectFundTextTitleBold}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                                    <Label x:Name="SensitiveCustomer" Grid.Column="5"
+                                                Content=""
+                                                Margin="0,0,0,0"
+                                                Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                                    <TextBlock Grid.Column="6"
+                                                Text="ระดับความเสี่ยง : "
+                                                Margin="0,0,0,0"
+                                                Style="{StaticResource SelectFundTextTitleBold}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                                    <Label x:Name="RiskLevel" Grid.Column="7"
+                                                Content=""
+                                                Margin="0,0,0,0"
+                                                Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+                                </Grid>
+                                <!--EndLine2-->
+                            </Grid>
+
+
+                        </Border>
+                        <Button Grid.Row="0"
+                                Panel.ZIndex="3"
+                                Content="เงื่อนไขการลงนาม"
+                                Style="{StaticResource DefaultPurpleButtonStyle}"
+                                Width="190"
+                                Height="45"
+                                HorizontalAlignment="Right"
+                                Margin="0,0,40,20"
+                                Cursor="Hand"
+                                />
+
+                    </Grid>
+
+                    <!--ผู้แนะนำการลงทุน-->
+                    <Grid>
+                        <Border Grid.Row="0" BorderBrush="#513281"
+                                Background="#ffffff"
+                                BorderThickness="2"
+                                CornerRadius="12"
+                                Width="170"
+                                Height="40"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Panel.ZIndex="2"
+                                Margin="10,20,0,0">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource SelectFundTextTitleBold}" Foreground="Black" Text="ผู้แนะนำการลงทุน" Margin="6,0,0,0"></TextBlock>
+                        </Border>
+                        <Border Grid.Row="0" BorderBrush="#513281"
+                                BorderThickness="2"
+                                CornerRadius="12"
+                                Panel.ZIndex="1"
+                                Margin="20,35,20,0">
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <!--Line1-->
+                                <!--เลขประจำตัวพนักงาน-->
+                                <Grid Grid.Row="0" Margin="0,20,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Orientation="Horizontal"
+                                                Grid.Column="0">
+
+                                        <TextBlock
+                                                Margin="20,0,10,0"
+                                            Text="เลขประจำตัวพนักงาน : "
+                                            Style="{StaticResource SelectFundTextTitleBold}" 
+                                            Foreground="Black"
+                                            VerticalAlignment="Center"
+                                        />
+
+                                        <TextBox x:Name="StaffId"
+                                                Style="{StaticResource TextBoxSearCustomerEntryStyle}"
+                                            Width="150"
+                                            Height="40"
+                                            BorderThickness="3"
+                                                VerticalAlignment="Center"
+                                                IsReadOnly="True"
+                                            />
+
+                                        <Image
+                                            Source="/Images/SCB3-02.png" 
+                                            Margin="-35,0,0,0" 
+                                            Width="30" 
+                                            Height="30" 
+                                            Cursor="Hand"
+                                            HorizontalAlignment="Right"
+                                            MouseDown="OpenSearchEmployeeDialog_MouseDown"
+                                            />
+
+                                    </StackPanel>
+
+                                    <!--บัญชีกองทุนที่-->
+                                    <StackPanel Grid.Column="1"
+                                                Orientation="Horizontal">
+
+                                        <TextBlock 
+                                                Text="เลขประจำตัว กลต. : "
+                                                Margin="20,0,10,0"
+                                                Style="{StaticResource SelectFundTextTitleBold}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                                        <Label x:Name="SecId"
+                                                Content=""
+                                                Margin="20,0,10,0"
+                                                Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2"
+                                                Orientation="Horizontal">
+                                        <TextBlock 
+                                                Text="IC license : "
+                                                Margin="20,0,10,0"
+                                                Style="{StaticResource SelectFundTextTitleBold}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                                        <Label x:Name="IcLicense"
+                                                Content=""
+                                                Margin="20,0,10,0"
+                                                Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+                                    </StackPanel>
+                                </Grid>
+                                <!--EndLine1-->
+
+
+                                <!--Line2-->
+                                <Grid Grid.Row="1" Margin="0,5,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Orientation="Horizontal"
+                                                Grid.Column="0">
+
+                                        <TextBlock
+                                                Margin="20,0,10,0"
+                                            Text="เลขที่บัตรพนักงาน RM : "
+                                            Style="{StaticResource SelectFundTextTitleBold}" 
+                                            Foreground="Black"
+                                            VerticalAlignment="Center"
+                                        />
+
+                                        <Label x:Name="StaffRm"
+                                                Margin="20,0,10,0"
+                                            Content=""
+                                            Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                            Foreground="Black"
+                                            VerticalAlignment="Center"
+                                        />
+
+                                    </StackPanel>
+
+                                    <!--บัญชีกองทุนที่-->
+                                    <StackPanel Grid.Column="1"
+                                                Orientation="Horizontal">
+
+                                        <TextBlock 
+                                                Text="ชื่อ - นามสกุล : "
+                                                Margin="20,0,10,0"
+                                                Style="{StaticResource SelectFundTextTitleBold}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                                        <Label x:Name="StaffName"
+                                                Content=""
+                                                Margin="20,0,10,0"
+                                                Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2"
+                                                Orientation="Horizontal">
+                                        <TextBlock 
+                                                Text="คำสั่งนี้เกิดจาก : "
+                                                Margin="20,0,10,0"
+                                                Style="{StaticResource SelectFundTextTitleBold}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                                        <ComboBox Grid.Column="1" x:Name="ComboBoxOrderBy"
+                            VerticalAlignment="Center" Margin="0,0,0,0" Height="35" 
+                                                Background="#98d7f8" 
+                                                IsReadOnly="true" ItemsSource="{Binding SearchEmployeeResult}"
+                                                IsEditable="False"
+                                                Text="Select Account"
+                                                Cursor="Hand"
+                                                Width="230"
+                                                    FontSize="20" Template="{StaticResource UsernameBox}"
+                                                >
+                                            <ComboBox.Resources>
+                                                <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#98d7f8" />
+                                            </ComboBox.Resources>
+                                            <ComboBox.ItemContainerStyle>
+                                                <Style TargetType="ComboBoxItem">
+                                                    <Setter Property="Background" Value="#98d7f8"/>
+                                                    <Setter Property="BorderBrush" Value="#98d7f8"/>
+                                                    <Setter Property="BorderThickness" Value="0"/>
+                                                </Style>
+                                            </ComboBox.ItemContainerStyle>
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Text}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+                                <!--EndLine2-->
+                            </Grid>
+
+                        </Border>
+
+                    </Grid>
+
+                    <!--รายการขาย-->
+                    <Grid Margin="0,0,0,0">
+                        <Border Grid.Row="0" BorderBrush="#513281"
+                                Background="#ffffff"
+                                BorderThickness="2"
+                                CornerRadius="12"
+                                Width="130"
+                                Height="40"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Panel.ZIndex="2"
+                                Margin="10,20,0,0">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource SelectFundTextTitleBold}" Foreground="Black" Text="รายการขาย" Margin="6,0,0,0"></TextBlock>
+                        </Border>
+                        <Border Grid.Row="0" BorderBrush="#513281"
+                                BorderThickness="2"
+                                CornerRadius="12"
+                                Panel.ZIndex="1"
+                                Margin="0,40,0,0"
+                                Padding="0,0,0,0">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                    <RowDefinition Height="auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Button Grid.Row="0"
+                                        Panel.ZIndex="3"
+                                        Content="เลือกกองทุน"
+                                        Style="{StaticResource DefaultPurpleButtonStyle}"
+                                        Width="190"
+                                        Height="45"
+                                        HorizontalAlignment="Right"
+                                        Margin="0,15,40,0"
+                                        Cursor="Hand"
+                                        Click="OpenSelectedFundDialog_Click"
+                                />
+
+                                <!--DataTemplate-->
+                                <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                                    <Grid Margin="20,50,20,20">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0" Background="#503181" >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="150" />
+                                                    <ColumnDefinition Width="300"/>
+                                                    <ColumnDefinition Width="150"/>
+                                                    <ColumnDefinition Width="150"/>
+                                                    <ColumnDefinition Width="200" />
+                                                    <ColumnDefinition Width="200"/>
+                                                    <ColumnDefinition Width="140" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="รหัสกองทุน" Style="{DynamicResource TextBlockHeaderStyle2}" />
+                                                <TextBlock Grid.Column="1" Text="ชื่อกองทุน" Style="{DynamicResource TextBlockHeaderStyle2}" />
+                                                <TextBlock Grid.Column="2" Text="จำนวนหน่วย" Style="{DynamicResource TextBlockHeaderStyle2}" />
+                                                <TextBlock Grid.Column="3" Text="จำนวนบาท" Style="{DynamicResource TextBlockHeaderStyle2}" />
+                                                <TextBlock Grid.Column="4" Text="จำนวนหน่วยผิดเงื่อนไข" Style="{DynamicResource TextBlockHeaderStyle2}" />
+                                                <TextBlock Grid.Column="5" Text="สถานะรายการ" Style="{DynamicResource TextBlockHeaderStyle2}" />
+                                                <TextBlock Grid.Column="6" Text="" />
+                                            </Grid>
+                                        </Grid>
+
+                                        <ItemsControl x:Name="SellFundListGrid" Grid.Row="1">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid>
+                                                        <Grid.Resources>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="FontSize" Value="15" />
+                                                                <Setter Property="FontWeight" Value="Regular" />
+                                                                <Setter Property="FontFamily" Value="{DynamicResource SarabunRegular}" />
+                                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                            </Style>
+                                                        </Grid.Resources>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+
+                                                        <Grid Grid.Row="0" Background="Transparent">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="150" />
+                                                                <ColumnDefinition Width="300"/>
+                                                                <ColumnDefinition Width="150"/>
+                                                                <ColumnDefinition Width="150"/>
+                                                                <ColumnDefinition Width="200" />
+                                                                <ColumnDefinition Width="200"/>
+                                                                <ColumnDefinition Width="140" />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <TextBlock 
+                                                                        Grid.Column="0"
+                                                                        Text="{Binding Id}"
+                                                                        Foreground="Black"
+                                                                        Margin="40,0,0,0"
+                                                                        HorizontalAlignment="Left"/>
+                                                            <TextBlock 
+                                                                        Grid.Column="1" 
+                                                                        Text="{Binding Name}"
+                                                                        Foreground="Black"
+                                                                        HorizontalAlignment="Left"/>
+                                                            <TextBlock 
+                                                                        Grid.Column="2"
+                                                                        Text="{Binding Volume, StringFormat='#,##0.0000;(#,##0.0000)'}"
+                                                                        Foreground="Black" />
+                                                            <TextBlock 
+                                                                        Grid.Column="3"
+                                                                        Text="{Binding Price, StringFormat='#,##0.0000;(#,##0.0000)'}"
+                                                                        Foreground="Black" />
+                                                            <TextBlock 
+                                                                        Grid.Column="4"
+                                                                        Text="{Binding ErrorVolume, StringFormat='#,##0.0000;(#,##0.0000)'}"
+                                                                        Foreground="Black" />
+                                                            <TextBlock 
+                                                                        Grid.Column="5"
+                                                                        Text="{Binding Status}"
+                                                                HorizontalAlignment="Center"
+                                                                />
+                                                            <Button Grid.Column="6"
+                                                                    Content="ลบ"
+                                                                    Tag="{Binding Id}"
+                                                                    Margin="29,3,0,0"
+                                                                    Click="SellFundButton_Click"
+                                                                    Style="{StaticResource MainSellFundButtonInTable}"
+                                                                    Cursor="Hand">
+                                                            </Button>
+                                                        </Grid>
+
+                                                        <Grid.Style>
+                                                            <Style TargetType="{x:Type Grid}">
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                                        <Setter Property="Background" Value="White"></Setter>
+                                                                    </Trigger>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter Property="Background" Value="#DCDCF2"></Setter>
+                                                                    </Trigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Grid.Style>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
+                                </ScrollViewer>
+
+
+                            </Grid>
+
+
+                        </Border>
+
+
+                    </Grid>
+
+                    <!--หมายเหตุ-->
+                    <TextBlock Grid.Row="4"
+                                    Style="{StaticResource MainOtherSeviceTextBlock}"
+                                    Foreground="Black" Text="หมายเหตุ : มูลค่ากองทุนที่แสดงไม่ใช่มูลค่าที่แท้จริง เป็นเพียงค่าการประมาณเท่าน้ัน (โดยนำราคาของ BID วันล่าสุดคูณกับจำนวนหน่วยคงเหลือของลูกค้า)"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
+                                    Margin="25,15,25,0">
+
+                    </TextBlock>
+
+                    <!--พิมพ์|บันทึก|ยกเลิก Button-->
+                        <StackPanel Grid.Row="5"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top">
+                            <Button Content="พิมพ์" Style="{StaticResource DefaultPurpleButtonStyle}" Cursor="Hand"></Button>
+                            <Button Content="บันทึกข้อมูล" Style="{StaticResource DefaultPurpleButtonStyle}" Cursor="Hand" Click="SellFundButton_Click"></Button>
+                            <Button Content="ยกเลิก" Style="{StaticResource DefaultWhiteButtonStyle}" Cursor="Hand"></Button>
+                        </StackPanel>
+
+
+                    </StackPanel>
+                </ScrollViewer>
+                <!--</ScrollViewer>-->
+                <!-- Bottom Info -->
+                <Grid Grid.Row="1" Height="33" Margin="0,0,-4,0" Width="560" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="6*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock x:Name="BottomText" Style="{StaticResource MainBottomText}"
+                        Text="{Binding account.id}" TextAlignment="Center"
+                            Margin="0,0,0,0"
+                            />
+                    <Grid x:Name="BottomTextLine" Visibility="Hidden" Background="#ffffff" Grid.Column="1" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+                    <TextBlock x:Name="BottomText2" Grid.Column="2" Style="{StaticResource MainBottomText}"
+                          
+                        Text="{Binding account.branchCode}" TextAlignment="Center"
+                            Margin="0,0,0,0"
+                            />
+                    <Grid x:Name="BottomTextLine2" Visibility="Hidden" Background="#ffffff" Grid.Column="3" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+                    <TextBlock x:Name="BottomText3" Grid.Column="4" Style="{StaticResource MainBottomText}"
+                           
+                        Text="V.6.0.4880" TextAlignment="Center"
+                            Margin="0,0,0,0"
+                            />
+                    <Grid Background="#ffffff" Grid.Column="5" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+                    <TextBlock x:Name="BottomText4" Grid.Column="6" Style="{StaticResource MainBottomText}"
+                            TextAlignment="Center"
+                            Margin="0,0,0,0"
+                            />
+                    <Grid Background="#ffffff" Grid.Column="7" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+                    <Image Width="45" Grid.Column="8" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,-12,0,0" Source="../Images/log in_EN.png" />
+                </Grid>
+
+            </Grid>
+
+
+        </Grid>
+
+        <!-- SelectFundDialog -->
+        <Grid Grid.Row="1" x:Name="SelectFundDialog" Panel.ZIndex="1" Visibility="Hidden">
+            <StackPanel Grid.Row="0" Width="1920" Height="1080" Background="Black" Opacity="0.5" />
+
+            <Border Grid.Row="0" BorderBrush="Black"
+                                    VerticalAlignment="Top"
+                                    Margin="0,50,0,0"
+                                    BorderThickness="1" CornerRadius="20" Height="740" Width="1200" Background="White">
+                <!--Content-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!--PurpleBar-->
+                    <Border Grid.Row="0" Background="#503181" CornerRadius="15,15,0,0">
+                        <Image HorizontalAlignment="Right" Width="20" Height="20" Source="../Images/close.png" Stretch="Uniform" Margin="10,0,15,0" Cursor="Hand" MouseDown="CloseDialog_MouseDown" />
+                    </Border>
+
+                    <Grid Grid.Row="1" Margin="140,50,0,30" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Margin="0" VerticalAlignment="Center" Grid.Column="0" Text="กลุ่มกองทุน : " Style="{DynamicResource TextBoxSearchStyle}" />
+
+                        <ComboBox x:Name="ComboBoxFund" 
+                                  Grid.Column="1" 
+                                  Cursor="Hand" 
+                                  Template="{StaticResource ComboBoxSeachCustomerStyle}"
+                                  Width="380" Height="35" 
+                                  ItemsSource="{Binding ListFundGroups}"
+                                  SelectionChanged="ComboBoxFund_SelectionChanged"
+                                  SelectedItem="ทั้งหมด"
+                                  >
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Style="{DynamicResource TextBlockSearchCustomerStyle}" Text="{Binding}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                    </Grid>
+                    <TextBlock x:Name="fundGroupNameDy" Visibility="Hidden"/>
+
+                    <!--DataTemplate-->
+                    <ScrollViewer Grid.Row="2"  VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Visible">
+                        <Grid Margin="20,50,20,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" Background="#503181" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="350"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="200" />
+                                        <ColumnDefinition Width="55" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="รหัสกองทุน" Style="{DynamicResource TextBlockHeaderStyle2}" />
+                                    <TextBlock Grid.Column="1" Text="ชื่อกองทุน" Style="{DynamicResource TextBlockHeaderStyle2}" />
+                                    <TextBlock Grid.Column="2" Text="NAV" Style="{DynamicResource TextBlockHeaderStyle2}" Margin="20,0,0,0"/>
+                                    <TextBlock Grid.Column="3" Text="จำนวนหน่วยคงเหลือ" Style="{DynamicResource TextBlockHeaderStyle2}" />
+                                    <TextBlock Grid.Column="4" Text="จำนวนเงิน" Style="{DynamicResource TextBlockHeaderStyle2}" />
+                                    <TextBlock Grid.Column="5" Text="กำไร/ขาดทุน" Style="{DynamicResource TextBlockHeaderStyle2}" Margin="15,0,0,0"/>
+                                    <TextBlock Grid.Column="6" Text="ready to redeem" Style="{DynamicResource TextBlockHeaderStyle2}" Margin="-50,0,0,0" />
+                                    <TextBlock Grid.Column="7" Text=""   Margin="-50,0,0,0"/>
+                                </Grid>
+                            </Grid>
+
+                            <ItemsControl x:Name="dgFund" Grid.Row="1">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderThickness="0,0,0,0.8" BorderBrush="Black">
+                                            <Grid>
+                                                <Grid.Resources>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="FontSize" Value="15" />
+                                                        <Setter Property="FontWeight" Value="Regular" />
+                                                        <Setter Property="FontFamily" Value="{DynamicResource SarabunRegular}" />
+                                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                    </Style>
+                                                </Grid.Resources>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+
+                                                <Grid Grid.Row="0" Background="Transparent">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="150" />
+                                                        <ColumnDefinition Width="350"/>
+                                                        <ColumnDefinition Width="100"/>
+                                                        <ColumnDefinition Width="200"/>
+                                                        <ColumnDefinition Width="140" />
+                                                        <ColumnDefinition Width="180"/>
+                                                        <ColumnDefinition Width="200" />
+                                                        <ColumnDefinition Width="30" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <TextBlock x:Name="fundCode" Grid.Column="0" Text="{Binding fundCode}" Foreground="Black" HorizontalAlignment="Left" Margin="50,0,0,0"/>
+                                                    <TextBlock x:Name="fundName" Grid.Column="1"  Text="{Binding fundName}" Foreground="Black"  HorizontalAlignment="Left" />
+                                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                        <TextBlock x:Name="nav" Text="{Binding nav, StringFormat='#,##0.0000;(#,##0.0000)'}" Foreground="Black" Margin="20,0,0,0"/>
+                                                        <Image Source="/Images/SCB3-03.png" Width="10" Height="10" Margin="5,0,0,0" MouseDown="Image_MouseDown_OpenGraph"/>
+                                                    </StackPanel>
+                                                    <TextBlock x:Name="totalUnit" Grid.Column="3" Text="{Binding totalUnit,StringFormat='#,##0.0000;(#,##0.0000)'}" Foreground="Black" />
+                                                    <TextBlock x:Name="totalBaht" Grid.Column="4" Text="{Binding totalBaht, StringFormat='#,##0.0000;(#,##0.0000)'}" Foreground="Black"/>
+                                                    <TextBlock x:Name="totalGain" Grid.Column="5" Text="{Binding totalGain}"  Margin="20,0,0,0">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding profitStatus}" Value="True">
+                                                                        <Setter Property="Foreground" Value="Green" />
+                                                                        <Setter Property="FontSize" Value="15" />
+                                                                        <Setter Property="FontWeight" Value="Regular" />
+                                                                        <Setter Property="FontFamily" Value="{DynamicResource SarabunRegular}" />
+                                                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding profitStatus}" Value="False">
+                                                                        <Setter Property="Foreground" Value="Red" />
+                                                                        <Setter Property="FontSize" Value="15" />
+                                                                        <Setter Property="FontWeight" Value="Regular" />
+                                                                        <Setter Property="FontFamily" Value="{DynamicResource SarabunRegular}" />
+                                                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                    <TextBlock x:Name="allowRedeem" Grid.Column="6" Text="{Binding allowRedeem}" Foreground="Black"  Margin="-50,0,0,0"/>
+                                                    <Button Tag="{Binding fundCode}" Grid.Column="7" Content="ขาย" Foreground="Black" Click="OpenFundDetailDialog_Click" Style="{StaticResource DefaultWhiteButtonOldStyle2}"  Margin="-50,0,0,0" Cursor="Hand"/>
+                                                </Grid>
+
+                                                <Grid.Style>
+                                                    <Style TargetType="{x:Type Grid}">
+
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="False">
+                                                                <Setter Property="Background" Value="White"></Setter>
+                                                            </Trigger>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Background" Value="#DCDCF2"></Setter>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Grid.Style>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- CustomerSellFundDialog -->
+        <Grid Grid.Row="1" x:Name="CustomerSellFundDialog" Panel.ZIndex="1" Visibility="Hidden">
+            <StackPanel Grid.Row="0" Width="1920" Height="1080" Background="Black" Opacity="0.5" />
+
+            <Border Grid.Row="0" BorderBrush="Black"
+                                    VerticalAlignment="Top"
+                                    Margin="0,50,0,0"
+                                    BorderThickness="1" CornerRadius="20" Height="740" Width="1200" Background="White">
+                <!--Content-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <!--PurpleBar-->
+                    <Border Grid.Row="0" Background="#503181" CornerRadius="15,15,0,0">
+                        <Image HorizontalAlignment="Right" Width="20" Height="20" Source="../Images/close.png" Stretch="Uniform" Margin="10,0,15,0" Cursor="Hand" MouseDown="CloseDialog_MouseDown" />
+                    </Border>
+
+                    <Grid Grid.Row="1" Margin="140,50,0,30" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Margin="0" VerticalAlignment="Center" Grid.Column="0" Text="ค้นหาโดย : " Style="{DynamicResource TextBoxSearchStyle}" />
+
+                        <ComboBox x:Name="SearchCustomerComboBox" Grid.Column="1" Cursor="Hand" Template="{StaticResource ComboBoxSeachCustomerStyle}" Width="380" Height="35">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Style="{DynamicResource TextBlockSearchCustomerStyle}" Text="{Binding}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+
+                        </ComboBox>
+
+                        <TextBox x:Name="SearchCustomerTextBox" Text="000015663527" Grid.Column="2" Margin="30,0,0,0" Width="380" Height="35" Style="{DynamicResource TextBoxSearCustomerEntryStyle}" />
+
+                    </Grid>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="ยกเลิก" Margin="0,0,10,0" Cursor="Hand"
+                                                Click="CancelButton_Click"            
+                                                Style="{DynamicResource DialogCancelButton}" />
+                        <Button Content="ค้นหา" Margin="10,0,0,0" Cursor="Hand"
+                                                Click="SearchCustomerButton_Click"    
+                                                Style="{DynamicResource DialogSearchButton}"/>
+                    </StackPanel>
+
+                    <!--DataTemplate-->
+                    <ScrollViewer Grid.Row="3"  VerticalScrollBarVisibility="Hidden">
+                        <Grid Margin="20,50,20,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid Grid.Row="0" Background="#503181" >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="200" />
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="90"/>
+                                        <ColumnDefinition Width="350"/>
+                                        <ColumnDefinition Width="140" />
+                                        <ColumnDefinition Width="140"/>
+                                        <ColumnDefinition Width="140" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="เลขทะเบียนลูกค้า" Style="{DynamicResource TextBlockHeaderStyle}" />
+                                    <TextBlock Grid.Column="1" Text="สาขา" Style="{DynamicResource TextBlockHeaderStyle}" />
+                                    <TextBlock Grid.Column="2" Text="LTF" Style="{DynamicResource TextBlockHeaderStyle}" />
+                                    <TextBlock Grid.Column="3" Text="ชื่อบัญชี" Style="{DynamicResource TextBlockHeaderStyle}" />
+                                    <TextBlock Grid.Column="4" Text="เซกเมนต์" Style="{DynamicResource TextBlockHeaderStyle}" />
+                                    <TextBlock Grid.Column="5" Text="บัญชีร่วม" Style="{DynamicResource TextBlockHeaderStyle}" />
+                                    <TextBlock Grid.Column="6" Text="เปราะปราง" Style="{DynamicResource TextBlockHeaderStyle}" />
+                                </Grid>
+                            </Grid>
+
+                            <ItemsControl x:Name="CustomerDetailListsGrid" Grid.Row="1">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.Resources>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="FontSize" Value="17" />
+                                                    <Setter Property="FontWeight" Value="Regular" />
+                                                    <Setter Property="FontFamily" Value="{DynamicResource SarabunRegular}" />
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                </Style>
+                                            </Grid.Resources>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <Grid Grid.Row="0" Background="Transparent">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="200" />
+                                                    <ColumnDefinition Width="90"/>
+                                                    <ColumnDefinition Width="90"/>
+                                                    <ColumnDefinition Width="350"/>
+                                                    <ColumnDefinition Width="140" />
+                                                    <ColumnDefinition Width="140"/>
+                                                    <ColumnDefinition Width="140" />
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left"  Margin="7">
+                                                    <Button Margin="5,0" Background="Transparent" BorderBrush="Transparent">
+                                                        <Image>
+                                                            <Image.Style>
+                                                                <Style TargetType="{x:Type Image}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                                            <Setter Property="Source" Value="../Images/up_icon.png" />
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding IsSelected}" Value="False">
+                                                                            <Setter Property="Source" Value="../Images/down_icon.png" />
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Image.Style>
+                                                        </Image>
+                                                    </Button>
+                                                    <TextBlock Text="{Binding CustId}" Foreground="Black" />
+                                                </StackPanel>
+                                                <TextBlock Grid.Column="1" Text="{Binding Branch}" Foreground="Black" />
+                                                <TextBlock Grid.Column="2"  Text="{Binding IsLTF}" Foreground="Black" />
+                                                <TextBlock Grid.Column="3" Text="{Binding AccName}" Foreground="Black" />
+                                                <TextBlock Grid.Column="4" Text="{Binding Segment}" Foreground="Black" />
+                                                <TextBlock Grid.Column="5" Text="{Binding IsJointAccount}" Foreground="Black" />
+                                                <TextBlock Grid.Column="6" Text="{Binding IsSensitive}" Foreground="Black" />
+                                            </Grid>
+
+                                            <StackPanel Grid.Row="1" Height="400" x:Name="InnerInformation" Background="#EBEBFC" >
+                                                <StackPanel Orientation="Horizontal" Margin="20">
+                                                    <TextBlock Text="การสั่งจ่าย" Foreground="Black" VerticalAlignment="Top" />
+                                                    <Border BorderBrush="#503081" BorderThickness="1" Margin="50,0,0,0" Background="#e0e0e2">
+                                                        <TextBlock Margin="15,0,0,0" Text="{Binding Payment}" Foreground="Black" Height="80" Width="900" />
+                                                    </Border>
+                                                </StackPanel>
+
+                                                <StackPanel>
+
+                                                    <TextBlock Text="เอกสารการแสดงตน" Margin="20,0" HorizontalAlignment="Left" Foreground="Black" />
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition />
+                                                            <ColumnDefinition />
+                                                        </Grid.ColumnDefinitions>
+                                                        <StackPanel HorizontalAlignment="Left" Grid.Column="0" Margin="150,0">
+                                                            <TextBlock Text="1. บัตรประชาชน" HorizontalAlignment="Left" Foreground="Black" />
+                                                            <Image Source="{Binding CitizenIdCardImagePath}" 
+                                                                                   Stretch="UniformToFill"
+                                                                                   HorizontalAlignment="Center" VerticalAlignment="Top" />
+                                                        </StackPanel>
+
+                                                        <StackPanel HorizontalAlignment="Left" Grid.Column="1">
+                                                            <TextBlock Text="2. ลายมือชื่อ" Foreground="Black" HorizontalAlignment="Left" />
+                                                            <Image Source="{Binding SignedSignatureImagePath}" Stretch="Fill" Height="150" Width="350" />
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </StackPanel>
+
+                                                <StackPanel Orientation="Horizontal" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Button Content="เลือก" Style="{DynamicResource DialogSearchButton}" Click="CustomerSelected_Click" Cursor="Hand" Tag="{Binding CustId}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                            <Grid.Style>
+                                                <Style TargetType="{x:Type Grid}">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="False">
+                                                            <Setter Property="Background" Value="White"></Setter>
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="#DCDCF2"></Setter>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Grid.Style>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- SellFundMenu -->
+        <Grid x:Name="SellFundMenu" Grid.Row="1" Panel.ZIndex="2" Visibility="Hidden">
+            <Image Source="/Images/graph-19.png" Width="500" Height="500" MouseDown="Image_MouseDown_CloseGraph"></Image>
+        </Grid>
+
+        <!-- SearchEmployeeDialog -->
+        <Grid x:Name="SearchEmployeeDialog" Panel.ZIndex="1" Visibility="Hidden">
+            <StackPanel Background="Black" Opacity="0.5" Height="1080" Width="1920" />
+            <Border Background="#ffffff" BorderBrush="Black" BorderThickness="0.1" CornerRadius="28" Height="750" Width="978" >
+                <Grid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#503181"  CornerRadius="28, 28, 0, 0">
+                            <Image HorizontalAlignment="Right" Width="15" Height="20" Source="/Images/close.png" Stretch="Uniform" Margin="10,0,25,0" Cursor="Hand" MouseDown="CloseDialog_MouseDown" />
+                        </Border>
+
+                        <StackPanel Grid.Row="1">
+                            <Label Content="Reason for Authorization" Style="{StaticResource MainSellFundLabelBoldBlack}" HorizontalAlignment="Center" Margin="20"/>
+                            <Label Content="An authorization required to complate the action" Style="{StaticResource MainSellFundLabelRegularBlack}" HorizontalAlignment="Left" Margin="20"/>
+                            <TextBlock Text="   พนักงานแนะนำการลงทุน (IC License) ต้องเป็นผู้ชี้แจง/อธิบายรายละเอียดข้อมูลการลงทุนที่เหมาะสม และตรวจสอบคะแนนความเสี่ยงลูกค้า (Suit+BAA) และมอบหนังสือชี้ชวนสำหรับสรุปข้อมูลสำคัญ (แบบย่อ หรือ Fact Sheet) แจ้งข้อมูลสิทธิ์ขั้นพื้นฐานของผู้บริโภคให้กับลูกค้า ก่อนอนุมัติยืนยัน License ทุกครั้ง"
+                                                       TextWrapping="Wrap"
+                                                       FontFamily="{DynamicResource SarabunRegular}"
+                                                       Foreground="#000000"
+                                                       FontSize="16pt" 
+                                                       HorizontalAlignment="Left"
+                                                       Margin="20" />
+                            <Grid Margin="20" HorizontalAlignment="Center" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="290" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Content="ผู้แนะนำกองทุน : " Style="{StaticResource MainSellFundLabelRegularBlack}" />
+                                <ComboBox x:Name="ComboBoxBranch"
+                                                          Grid.Row="0"
+                                                          Grid.Column="1"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center"
+                                                          Height="39px" 
+                                                          Background="#98d7f8" 
+                                                          IsReadOnly="true"
+                                                          IsEditable="False"
+                                                          Text="กรุณาเลือก"
+                                                          Foreground="#000000"
+                                                          FontFamily="{DynamicResource SarabunRegular}"
+                                                          Width="270"
+                                                          FontSize="16pt"
+                                                          Margin="10"
+                                                          Cursor="Hand"
+                                                          Template="{StaticResource CommandSellFundBox}" 
+                                                          SelectionChanged="ComboBoxBranch_SelectionChanged">
+                                    <ComboBox.Resources>
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#98d7f8" />
+                                    </ComboBox.Resources>
+                                    <ComboBox.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ComboBoxItem}">
+                                            <Setter Property="Background" Value="#98d7f8"/>
+                                            <Setter Property="BorderBrush" Value="#503081"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#F4B45A" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ComboBox.ItemContainerStyle>
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Text}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+
+                                </ComboBox>
+
+                                <Label Grid.Row="1" Grid.Column="0" Content="User ID : " Style="{StaticResource MainSellFundLabelRegularBlack}" />
+                                <ComboBox x:Name="ComboBoxUserId"
+                                                          Grid.Row="1"
+                                                          Grid.Column="1"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Center"
+                                                          Height="39px" 
+                                                          Background="#98d7f8" 
+                                                          IsReadOnly="true"
+                                                          IsEditable="False"
+                                                          Text="กรุณาเลือก"
+                                                          Foreground="#000000"
+                                                          FontFamily="{DynamicResource SarabunRegular}"
+                                                          Width="270"
+                                                          FontSize="16pt"
+                                                          Margin="10"
+                                                          Cursor="Hand"
+                                                          Template="{StaticResource CommandSellFundBox}"  >
+                                    <ComboBox.Resources>
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#98d7f8" />
+                                    </ComboBox.Resources>
+                                    <ComboBox.ItemContainerStyle>
+                                        <Style TargetType="ComboBoxItem">
+                                            <Setter Property="Background" Value="#98d7f8"/>
+                                            <Setter Property="BorderBrush" Value="#503081"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                        </Style>
+                                    </ComboBox.ItemContainerStyle>
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Text, TargetNullValue='กรุณาเลือก'}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+
+                                </ComboBox>
+                                <Border x:Name="UserIdBox" Visibility="Hidden" Grid.Row="1" Grid.Column="1" Style="{StaticResource MainSellFundBorderTextBox}" Margin="10">
+                                    <TextBox Grid.Column="0" Style="{StaticResource MainSellFundTextBoxBoldBlack}" Margin="0,0,0,5" VerticalAlignment="Bottom" />
+                                </Border>
+
+                                <Label Grid.Row="2" Grid.Column="0" Content="Access Code : " Style="{StaticResource MainSellFundLabelRegularBlack}" />
+                                <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource MainSellFundBorderTextBox}" Margin="10" >
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <PasswordBox Grid.Column="0" x:Name="BoxPassword" Background="Transparent" FontFamily="{DynamicResource SarabunRegular}" FontSize="16pt" BorderBrush="{x:Null}" VerticalAlignment="Center" >
+
+                                        </PasswordBox>
+                                        <TextBox Grid.Column="0" x:Name="PasswordTextBox" Text="{Binding PasswordText}" Background="Transparent" FontFamily="{DynamicResource SarabunRegular}" FontSize="16pt" BorderBrush="{x:Null}" VerticalAlignment="Center" Visibility="Collapsed" >
+
+                                        </TextBox>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+
+                            <Label Content="{Binding ErrorText}" Height="40" Style="{StaticResource MainSellFundLabelRegularBlack}" Foreground="Red" HorizontalAlignment="Center" Margin="20" Visibility="{Binding IsVisibility}"/>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="ยกเลิก" Style="{StaticResource MainSellFundOptionButton}" IsEnabled="True"  Margin="10" Cursor="Hand" Click="CancelButton_Click" />
+                                <Button Content="ตกลง" Style="{StaticResource MainSellFundButton}" IsEnabled="True" Cursor="Hand" Click="EmployeeSelectedButton_Click" Margin="10" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- FundDetailDialog -->
+        <Grid x:Name="FundDetailDialog" Panel.ZIndex="1" Visibility="Hidden">
+            <Border Background="Black" Opacity="0.5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            <Border Height="540" Width="850" Background="#f8f8f8" BorderBrush="Black" BorderThickness="0.1" CornerRadius="20" Panel.ZIndex="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="360"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Background="#503181" CornerRadius="18,18,0,0" >
+                        <Image Width="20" Cursor="Hand" Source="../Images/cross-button.png" HorizontalAlignment="Right" Margin="0,2,20,0" MouseDown="CloseDialog_MouseDown"/>
+                    </Border>
+
+                    <Grid Grid.Row="1" HorizontalAlignment="Center" Margin="0,18,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="รหัสกองทุน : " Grid.Column="0" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitleBold}" />
+                        <TextBlock x:Name="FundCode" Grid.Column="1" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitle}" />
+                    </Grid>
+
+                    <Grid Grid.Row="2" HorizontalAlignment="Center" Margin="0,15,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="ชื่อกองทุน : " Grid.Column="0" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitleBold}" />
+                        <TextBlock x:Name="FundName" Grid.Column="1" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitle}" />
+                    </Grid>
+
+                    <Border Grid.Row="3" Background="#ffffff" BorderThickness="1" BorderBrush="LightGray" CornerRadius="18" Margin="15,20,15,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid x:Name="AllowRedeemGird" Grid.Row="0" HorizontalAlignment="Center" Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="LTF หรือ SSF ยอดหน่วยที่ขายได้โดยไม่ผิดเกณฑ์ภาษี" TextAlignment="Left" Grid.Column="0" Margin="-120,0,0,0" Style="{StaticResource FundDetailTextSubTitleBold}" />
+                                <TextBlock x:Name="AllowRedeem" Grid.Column="1" Margin="65,0,0,0" Foreground="Green" Style="{StaticResource FundDetailTextSubTitleBold}" />
+                                <TextBlock Text="หน่วย" Grid.Column="2" Margin="5,0,0,0" Style="{StaticResource FundDetailTextSubTitleBold}" />
+                            </Grid>
+
+                            <Grid Grid.Row="1" HorizontalAlignment="Center" Margin="0,15,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <RadioButton x:Name="RadioBut1" Grid.Column="1" Margin="0,2,0,0" IsChecked="True"  Style="{DynamicResource FundDetailTextRadio}" Click="RadioBut1_Click"/>
+                                <TextBlock Text="จำนวนหน่วย" Grid.Column="2" Margin="10,0,0,0" Style="{StaticResource FundDetailTextTitleBold}" />
+                                <RadioButton x:Name="RadioBut2" Grid.Column="4" Margin="0,2,0,0" Style="{DynamicResource FundDetailTextRadio}" Click="RadioBut2_Click"/>
+                                <TextBlock Text="จำนวนเงิน" Grid.Column="5" Margin="10,0,0,0" Style="{StaticResource FundDetailTextTitleBold}" />
+                            </Grid>
+
+                            <Grid Grid.Row="2" HorizontalAlignment="Left" Margin="0,25,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="95"/>
+                                    <ColumnDefinition Width="187"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="150"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="จำนวนที่มี" HorizontalAlignment="Left" Grid.Column="1" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitleBold}" />
+                                <TextBlock x:Name="TotalUnit" HorizontalAlignment="Right" Grid.Column="2" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitle}" />
+                                <TextBlock x:Name="TotalBaht" HorizontalAlignment="Right" Grid.Column="3" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitle}" />
+                            </Grid>
+
+                            <Grid Grid.Row="3" HorizontalAlignment="Left" Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="95"/>
+                                    <ColumnDefinition Width="187"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="150"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="จำนวนขั้นต่ำที่ขายได้" HorizontalAlignment="Left" Grid.Column="1" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitleBold}" />
+                                <TextBlock x:Name="MinimumSellableUnit" HorizontalAlignment="Right" Grid.Column="2" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitle}" />
+                                <TextBlock x:Name="MinimumSellableBaht" HorizontalAlignment="Right" Grid.Column="3" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitle}" />
+                            </Grid>
+
+                            <Grid Grid.Row="4" HorizontalAlignment="Left" Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="95"/>
+                                    <ColumnDefinition Width="187"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="150"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="จำนวนคงเหลือขั้นต่ำ" HorizontalAlignment="Left" Grid.Column="1" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitleBold}" />
+                                <TextBlock x:Name="MinimumUnit" HorizontalAlignment="Right" Grid.Column="2" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitle}" />
+                                <TextBlock x:Name="MinimumBaht" HorizontalAlignment="Right" Grid.Column="3" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitle}" />
+                            </Grid>
+
+                            <Grid Grid.Row="5" HorizontalAlignment="Left" Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="95"/>
+                                    <ColumnDefinition Width="180"/>
+                                    <ColumnDefinition Width="165"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="จำนวนที่ขายได้" HorizontalAlignment="Left" Grid.Column="1" Margin="0,0,0,0" Foreground="#503181" Style="{StaticResource FundDetailTextTitleBold}" />
+                                <TextBox Grid.Column="2" x:Name="SaleBox" Text="0" TextAlignment="Right" GotFocus="SaleBox_GotFocus" LostFocus="SaleBox_LostFocus" PreviewTextInput="SaleBox_PreviewTextInput" VerticalAlignment="Center" Margin="0,-1,0,0" Background="#98d7f8" Height="27" Width="165" FontSize="17" Template="{StaticResource SaleUnitBox}" />
+                                <TextBlock Text="หน่วย" x:Name="SaleBoxUnit" Grid.Column="3" HorizontalAlignment="Left" Margin="5,0,0,0" Style="{StaticResource FundDetailTextTitleBold}" />
+                            </Grid>
+
+                            <Grid Grid.Row="6" HorizontalAlignment="Left" Margin="0,40,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="95"/>
+                                    <ColumnDefinition Width="380"/>
+                                    <ColumnDefinition Width="300"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock Text="การรับเงินค่าขาย : " HorizontalAlignment="Left" Grid.Column="1" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitleBold}" />
+                                    <ComboBox x:Name="ComboBoxFundChoice1" Padding="5,0,0,0"
+                          HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,0" Height="27" 
+                                              Background="#98d7f8" 
+                                          Cursor="Hand"
+                                               IsReadOnly="true" ItemsSource="{Binding}"
+                                               IsEditable="False"
+                                              Text="Select Account"
+                                              Tag="{Binding optionValue}"
+                                              SelectionChanged="ComboBoxFundChoice1_SelectionChanged"
+                                              Width="215" FontSize="18" Template="{StaticResource FundBox}" 
+                                              >
+                                        <ComboBox.Resources>
+                                            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#98d7f8" />
+                                        </ComboBox.Resources>
+                                        <ComboBox.ItemContainerStyle>
+                                            <Style TargetType="ComboBoxItem">
+                                                <Setter Property="Background" Value="#98d7f8"/>
+                                                <Setter Property="BorderBrush" Value="#98d7f8"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                            </Style>
+                                        </ComboBox.ItemContainerStyle>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding optionName}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                        <!--<i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <prism:InvokeCommandAction Command="{Binding AccountChangedCommand}" CommandParameter="{Binding ElementName=ComboBoxAccount}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>-->
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                    <TextBlock x:Name="ComboBoxFundChoice2Text" Text="บัญชีเลขที่ : " HorizontalAlignment="Left" Grid.Column="3" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitleBold}" />
+                                    <ComboBox Grid.Column="4" x:Name="ComboBoxFundChoice2" Padding="5,0,0,0"
+                          HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0" Height="27" 
+                                              Background="#98d7f8" 
+                                               IsReadOnly="true" ItemsSource="{Binding}"
+                                               IsEditable="False"
+                                              Cursor="Hand"
+                                              Text="Select Account"
+                                              Width="160" FontSize="18"
+                                              Template="{StaticResource FundBox}"
+                                              Tag="{Binding id}"
+                                              SelectionChanged="ComboBoxFundChoice2_SelectionChanged"
+                                              >
+                                        <ComboBox.Resources>
+                                            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#98d7f8" />
+                                        </ComboBox.Resources>
+                                        <ComboBox.ItemContainerStyle>
+                                            <Style TargetType="ComboBoxItem">
+                                                <Setter Property="Background" Value="#98d7f8"/>
+                                                <Setter Property="BorderBrush" Value="#98d7f8"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                            </Style>
+                                        </ComboBox.ItemContainerStyle>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding id}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                        <!--<i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <prism:InvokeCommandAction Command="{Binding AccountChangedCommand}" CommandParameter="{Binding ElementName=ComboBoxAccount}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>-->
+                                    </ComboBox>
+                                    <Grid x:Name="AccImage">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Image x:Name="AccActive" Grid.Column="0" Width="20" Margin="5,0,0,0" Source="../Images/Active.png" Visibility="Hidden"/>
+                                        <Image x:Name="AccNotActive" Grid.Column="0" Width="20" Margin="5,0,0,0" Source="../Images/NotActive.png" Visibility="Hidden"/>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+
+                            <Grid Grid.Row="7" Margin="0,3,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="95"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock Text="ค่าธรรมเนียมการขาย : " HorizontalAlignment="Left" Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitleBold}" />
+                                    <TextBlock Text="0.2%"  Margin="0,0,0,0" Style="{StaticResource FundDetailTextTitle}" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,11,0,0">
+                        <Button Content="ย้อนกลับ" Style="{StaticResource FundDetailButton2}" Cursor="Hand" Click="Back_Button_Click"/>
+                        <Button Content="ตกลง" Style="{StaticResource FundDetailButton}" Cursor="Hand" Click="Confirm_Button_Click"/>
+                        <Button Content="ยกเลิก" Style="{StaticResource FundDetailButton2}" Cursor="Hand" Click="Close_Button_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Grid Panel.ZIndex="2" Margin="0,100,0,0">
+
+                <Border x:Name="LayoutContent1" Height="310" Width="410" Margin="0,-115,0,0" Background="#f8f8f8" BorderBrush="#503181" BorderThickness="1" CornerRadius="20" Visibility="Hidden">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#503181" CornerRadius="18,18,0,0" />
+
+                        <Grid Grid.Row="1" Margin="0,25,0,8" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" LineHeight="30" TextWrapping="Wrap" Margin="35,0,30,0" Style="{StaticResource FundDetailNotiTextTitle}">
+                        ขายกอง LTF ก่อนครบกำหนดหากยืนยันทำรายการ<LineBreak/>
+                        ลูกค้าจะถูกปรับและเก็บภาษีย้อนหลัง
+                            </TextBlock>
+                            <TextBlock Grid.Row="1" LineHeight="30" TextWrapping="Wrap" TextAlignment="Center" Margin="0,20,0,0" Style="{StaticResource FundDetailNotiTextTitle}">
+                         หากต้องการทำรายการต้องการเขียนข้อความ "รับทราบ<LineBreak/>
+                         เงื่อนไขการขายหน่วยลงทุนแล้ว" ในใบคำสั่งขาย<LineBreak/>
+                        ให้ลูกค้าลงนามกำกับ และต้องอนุมัติรายการผ่านระบบ SC
+                            </TextBlock>
+                        </Grid>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,11,0,0">
+                            <Button Content="ยกเลิก" Style="{StaticResource FundDetailButton2}" Cursor="Hand" Click="Layout_Back_Button_Click" />
+                            <Button Content="ยืนยัน" Style="{StaticResource FundDetailButton}" Cursor="Hand" Click="Layout1_Confirm_Button_Click" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="LayoutContent2" Height="375" Width="410" Margin="0,-90,0,0" Background="#f8f8f8" BorderBrush="#503181" BorderThickness="1" CornerRadius="20" Visibility="Hidden">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#503181" CornerRadius="18,18,0,0" />
+
+                        <Grid Grid.Row="1" Margin="0,30,0,8" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" LineHeight="25" Margin="25,0,0,0" Style="{StaticResource FundDetailNotiTextTitle}">
+                        ขาย RMF ผิดเงื่อนไข โปรดตรวจสอบเงื่อนไขการลงทุน<LineBreak/>
+                        ให้ครบถ้วน<LineBreak/>
+                        - อายุครบ 55 ปีบริบูรณ์<LineBreak/>
+                        - ลงทุนไม่ต่ำกว่า 5 ปี (นับวันชนวัน)<LineBreak/>
+                            </TextBlock>
+                            <TextBlock Grid.Row="1" TextWrapping="Wrap" Margin="25,-20,0,0" Style="{StaticResource FundDetailNotiTextTitle2}">
+                        สอบถามเพิ่มเติม โทร. 02-544-3866 ,3900 ,3907 ,3941 ,3998
+                            </TextBlock>
+                            <TextBlock Grid.Row="2" LineHeight="27" TextWrapping="Wrap" TextAlignment="Center" Margin="10,20,10,0" Style="{StaticResource FundDetailNotiTextTitle}">
+                         หากต้องการทำรายการต้องการเขียนข้อความ "รับทราบ<LineBreak/>
+                         เงื่อนไขการขายหน่วยลงทุนแล้ว" ในใบคำสั่งขาย<LineBreak/>
+                        ให้ลูกค้าลงนามกำกับ และต้องอนุมัติรายการผ่านระบบ SC
+                            </TextBlock>
+                        </Grid>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,11,0,0">
+                            <Button Content="ยกเลิก" Style="{StaticResource FundDetailButton2}" Cursor="Hand" Click="Layout_Back_Button_Click" />
+                            <Button Content="ยืนยัน" Style="{StaticResource FundDetailButton}" Cursor="Hand" Click="Layout2_Confirm_Button_Click" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="LayoutContent3" Height="350" Width="410" Margin="0,-90,0,0" Background="#f8f8f8" BorderBrush="#503181" BorderThickness="1" CornerRadius="20" Visibility="Hidden">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#503181" CornerRadius="18,18,0,0" />
+
+                        <Grid Grid.Row="1" Margin="0,30,0,8" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" LineHeight="27" Margin="5,0,0,0" Style="{StaticResource FundDetailNotiTextTitle}">
+                        ขายกองทุน SSF ก่อนครบกำหนด ให้แจ้งลูกค้า<LineBreak/>
+                        จะไม่ได้รับสิทธิลดหย่อนภาษี จะถูกปรับและต้อง<LineBreak/>
+                        เสียภาษีจากกำไรการขาย (ถ้ามี)<LineBreak/>
+                            </TextBlock>
+                            <TextBlock Grid.Row="2" LineHeight="27" TextWrapping="Wrap" TextAlignment="Center" Margin="5,-10,10,0" Style="{StaticResource FundDetailNotiTextTitle}">
+                         หากต้องการทำรายการต้องเขียนข้อความ "รับทราบ<LineBreak/>
+                         เงื่อนไขการขายหน่วยลงทุน SSF ก่อนกำหนด"<LineBreak/>
+                        ในใบคำสั่งขายให้ลูกค้าลงนามกำกับ และต้องอนุมัติ<LineBreak/>
+                        รายการผ่านระบบ SC
+                            </TextBlock>
+                        </Grid>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,11,0,0">
+                            <Button Content="ยกเลิก" Style="{StaticResource FundDetailButton2}" Cursor="Hand" Click="Layout_Back_Button_Click" />
+                            <Button Content="ยืนยัน" Style="{StaticResource FundDetailButton}" Cursor="Hand" Click="Layout3_Confirm_Button_Click" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="LayoutContent4" Height="280" Width="410" Margin="0,-115,0,0" Background="#f8f8f8" BorderBrush="#503181" BorderThickness="1" CornerRadius="20" Visibility="Hidden">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#503181" CornerRadius="18,18,0,0" />
+
+                        <Grid Grid.Row="1" Margin="0,25,0,8" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" LineHeight="30" TextWrapping="Wrap" Margin="35,0,70,0" Style="{StaticResource FundDetailNotiTextTitle}">
+                        บัญชีรับโอนมีสถานะไม่ทราบรับเงินค่าขายได้<LineBreak/>
+                        ต้องชี้แจงให้ลูกค้าทราบ
+                            </TextBlock>
+                            <TextBlock Grid.Row="1" LineHeight="30" TextWrapping="Wrap" TextAlignment="Center" Margin="30,20,30,0" Style="{StaticResource FundDetailNotiTextTitle}">
+                         ยกเลิกเพื่อเปลี่ยนแปลงบัญชี หรือยืนยันทำรายการ<LineBreak/>
+                         โดยใช้บัญชีเดิมและต้องอนุมัติรายการผ่านระบบ SC
+                            </TextBlock>
+                        </Grid>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,11,0,0">
+                            <Button Content="ยกเลิก" Style="{StaticResource FundDetailButton2}" Cursor="Hand" Click="Layout_Back_Button_Click" />
+                            <Button Content="ยืนยัน" Style="{StaticResource FundDetailButton}" Cursor="Hand" Click="Layout4_Confirm_Button_Click" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="LayoutContent5" Height="200" Width="410" Margin="0,-115,0,0" Background="#f8f8f8" BorderBrush="#503181" BorderThickness="1" CornerRadius="20" Visibility="Hidden">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#503181" CornerRadius="18,18,0,0" />
+
+                        <Grid Grid.Row="1" Margin="0,25,0,8" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="1" LineHeight="30" TextWrapping="Wrap" Margin="35,0,35,0" Style="{StaticResource FundDetailNotiTextTitle}">
+                        ไม่สามารถทำรายการขายซ้ำได้
+                            </TextBlock>
+                        </Grid>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,11,0,0">
+                            <Button Content="ปิด" Style="{StaticResource FundDetailButton2}" Cursor="Hand" Click="Layout5_Confirm_Button_Click" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="LayoutContent6" Height="200" Width="410" Margin="0,-115,0,0" Background="#f8f8f8" BorderBrush="#503181" BorderThickness="1" CornerRadius="20" Visibility="Hidden">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#503181" CornerRadius="18,18,0,0" />
+
+                        <Grid Grid.Row="1" Margin="0,25,0,8" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="1" LineHeight="30" TextWrapping="Wrap" Margin="35,0,70,0" Style="{StaticResource FundDetailNotiTextTitle}">
+                        ท่านยังไม่ได้กรอกจำนวนที่ต้องการขาย<LineBreak/>
+                        โปรดลองใหม่อีกครั้ง
+                            </TextBlock>
+                        </Grid>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,11,0,0">
+                            <Button Content="ปิด" Style="{StaticResource FundDetailButton2}" Cursor="Hand" Click="Layout_Back_Button_Click" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Border x:Name="LayoutContent7" Height="200" Width="410" Margin="0,-115,0,0" Background="#f8f8f8" BorderBrush="#503181" BorderThickness="1" CornerRadius="20" Visibility="Hidden">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="#503181" CornerRadius="18,18,0,0" />
+
+                        <Grid Grid.Row="1" Margin="0,25,0,8" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="1" LineHeight="30" TextWrapping="Wrap" Margin="35,0,70,0" Style="{StaticResource FundDetailNotiTextTitle}">
+                        ไม่สามารถกรอกจำนวนเกินยอดที่มีได้<LineBreak/>
+                        โปรดลองใหม่อีกครั้ง
+                            </TextBlock>
+                        </Grid>
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,11,0,0">
+                            <Button Content="ปิด" Style="{StaticResource FundDetailButton2}" Cursor="Hand" Click="Layout_Back_Button_Click" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

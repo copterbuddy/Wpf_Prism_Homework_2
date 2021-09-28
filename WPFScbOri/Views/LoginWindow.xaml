@@ -1,0 +1,202 @@
+﻿<Window x:Class="WPFScbOri.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        WindowState="Maximized"
+        Title="LoginWindow" Height="1080" Width="1920">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="../Images/log in_bg.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <!-- Center Box -->
+        <Grid x:Name="MenuScreen" Visibility="Visible" Height="Auto" Margin="0,0,0,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*" />
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+
+            <!-- Wrap panel to hold the main menu items-->
+            <StackPanel VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Grid.RowSpan="2">
+                <Image Margin="0,0,5,-15" Width="545" Stretch="Uniform" Source="../Images/log in_head.png" />
+
+                <StackPanel x:Name="SVMButtons" Orientation="Vertical" HorizontalAlignment="Center" Visibility="Visible">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Border Margin="1" BorderThickness="1" CornerRadius="4" Opacity="100" Background="{x:Static SystemColors.ControlDarkBrush}">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="40" Opacity="40" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <Grid Background="#ffffff"
+                         Margin="0,0,0,0" Height="410" Width="520">
+                                <Grid x:Name="TopBox" Background="#503181" VerticalAlignment="Top" Height="70" Width="520">
+                                    <TextBlock x:Name="LoginBoxTextTitle"
+                           Style="{StaticResource LoginBoxTextTitle}"
+                           Text="{DynamicResource Login.BoxTextTitle}"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"
+                           Margin="0,10,0,0"
+                           Height="50" 
+                           Width="450"
+                           />
+                                </Grid>
+                                <Grid x:Name="MiddleBox" Background="#e8e8e8" VerticalAlignment="Top" Margin="0,70,0,0" Height="75" Width="520">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock x:Name="LoginBoxTextTitle2" Style="{StaticResource LoginBoxTextTitle2}"
+                           Text="{DynamicResource Login.BoxTextTitle2}" VerticalAlignment="Center" TextAlignment="Right"
+                           Margin="-17,5,0,0" Height="30" Width="180"
+                           />
+                                    <TextBlock Grid.Row="1" x:Name="LoginBoxTextTitle3" Style="{StaticResource LoginBoxTextTitle2}"
+                           Text="{DynamicResource Login.BoxTextTitle3}" VerticalAlignment="Center" TextAlignment="Right"
+                           Margin="-17,5,0,0" Height="30" Width="180"
+                           />
+                                    <TextBlock Grid.Column="1" x:Name="LoginBoxTextTitle4" Style="{StaticResource LoginBoxTextTitle3}"
+                           Text="{Binding account.id}" VerticalAlignment="Center" TextAlignment="Left"
+                           Margin="-70,5,0,0" Height="30" Width="270"
+                           />
+                                    <TextBlock Grid.Column="1" Grid.Row="1" x:Name="LoginBoxTextTitle5" Style="{StaticResource LoginBoxTextTitle3}"
+                           Text="{Binding account.fullname}" VerticalAlignment="Center" TextAlignment="Left"
+                           Margin="-70,6,0,0" Height="30" Width="270"
+                           />
+                                </Grid>
+                                <Grid>
+                                    <TextBlock x:Name="LoginBoxTextTitleBody" Style="{StaticResource LoginBoxTextTitleBody}"
+                           Text="{DynamicResource Login.BoxTextTitleBody}" VerticalAlignment="Center" TextAlignment="Center"
+                           Margin="0,-65,0,0" Height="30" Width="520"
+                           />
+                                </Grid>
+                                <Grid>
+                                    <TextBlock x:Name="LoginBoxTextTitleBody2" Style="{StaticResource LoginBoxTextTitleBody2}"
+                           Text="{DynamicResource Login.BoxTextTitleBody2}" VerticalAlignment="Center" TextAlignment="Center"
+                           Margin="0,-3,0,0" Height="30" Width="520"
+                           />
+                                </Grid>
+
+                                <Grid x:Name="MiddleBox2" VerticalAlignment="Top" Margin="0,225,0,0" Height="120" Width="530">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock x:Name="LoginTextAuthID" Style="{StaticResource LoginBoxTextLabel}"
+                           Text="{DynamicResource Login.BoxTextLabel}" VerticalAlignment="Center" TextAlignment="Right"
+                           Margin="-120,0,0,0" Height="30" Width="180"
+                           />
+                                    <TextBlock Grid.Row="1" x:Name="LoginTextPass" Style="{StaticResource LoginBoxTextLabel}"
+                           Text="{DynamicResource Login.BoxTextLabel2}" VerticalAlignment="Center" TextAlignment="Right"
+                           Margin="-120,10,0,0" Height="30" Width="180"
+                           />
+
+                                    <ComboBox Grid.Column="1" x:Name="ComboBoxAccount"
+                           VerticalAlignment="Center" Margin="-150,-10,0,0" Height="35" 
+                                              Background="#98d7f8" 
+                                               IsReadOnly="true" ItemsSource="{Binding Account}"
+                                               IsEditable="False"
+                                              Text="Select Account"
+                                              Cursor="Hand"
+                                              Width="270" FontSize="20" Template="{StaticResource UsernameBox}"
+                                              SelectionChanged="ComboBoxAccount_SelectionChanged"
+                                              >
+                                        <ComboBox.Resources>
+                                            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#98d7f8" />
+                                        </ComboBox.Resources>
+                                        <ComboBox.ItemContainerStyle>
+                                            <Style TargetType="ComboBoxItem">
+                                                <Setter Property="Background" Value="#98d7f8"/>
+                                                <Setter Property="BorderBrush" Value="#98d7f8"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                            </Style>
+                                        </ComboBox.ItemContainerStyle>
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding name}"/>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                       
+                                    </ComboBox>
+
+                                    <PasswordBox Grid.Column="1" Grid.Row="1" x:Name="BoxPassword" 
+                            VerticalAlignment="Center" Background="#98d7f8"
+                           Margin="-150,0,0,0" Height="35" Width="270" FontSize="20" Template="{StaticResource PasswordBox}" PasswordChanged="BoxPassword_PasswordChanged">
+                                        <PasswordBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </PasswordBox.Resources>
+                                     
+                                    </PasswordBox>
+                                </Grid>
+                                <Grid x:Name="BottomBox" VerticalAlignment="Bottom" Margin="0,0,0,0" Height="50" Width="380">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Width="170" HorizontalAlignment="Center" Cursor="Hand" Source="../Images/log in_cancel 2.png" />
+                                    <Image Width="170" HorizontalAlignment="Center" Grid.Column="1" Cursor="Hand" Source="../Images/log in_ok 2.png" MouseDown="Image_MouseDown" />
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <!-- Bottom Info -->
+        <Grid Height="33" Margin="0,0,-4,0" Width="560" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="6*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="12*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="BottomText" Style="{StaticResource LoginBottomText}"
+                       Text="{Binding account.id}" TextAlignment="Center"
+                           Margin="0,0,0,0"
+                           />
+            <Grid x:Name="BottomTextLine" Visibility="Hidden" Background="#ffffff" Grid.Column="1" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+            <TextBlock x:Name="BottomText2" Grid.Column="2" Style="{StaticResource LoginBottomText}"
+                          
+                       Text="{Binding account.branchCode}" TextAlignment="Center"
+                           Margin="0,0,0,0"
+                           />
+            <Grid x:Name="BottomTextLine2" Visibility="Hidden" Background="#ffffff" Grid.Column="3" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+            <TextBlock x:Name="BottomText3" Grid.Column="4" Style="{StaticResource LoginBottomText}"
+                           
+                       Text="V.6.0.4880" TextAlignment="Center"
+                           Margin="0,0,0,0"
+                           />
+            <Grid Background="#ffffff" Grid.Column="5" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+            <TextBlock x:Name="BottomText4" Grid.Column="6" Style="{StaticResource LoginBottomText}"
+                           TextAlignment="Center"
+                           Margin="0,0,0,0"
+                           />
+            <Grid Background="#ffffff" Grid.Column="7" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+            <Image Width="45" Grid.Column="8" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,-12,0,0" Source="../Images/log in_EN.png" />
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_generic_services = true;
+
+package com.example.sec;
+
+option csharp_namespace = "SecGrpc";
+
+service SecService {
+    rpc checkIcLicense(CheckIcLicenseRequest) returns (SecResponse) {}
+    rpc authenticateIcLicense(AuthenticateIcLicenseRequest) returns (SecResponse) {}
+}
+
+message CheckIcLicenseRequest {
+   string empID = 1;
+}
+
+message AuthenticateIcLicenseRequest {
+    string empID = 1;
+    string password = 2;
+}
+
+message SecResponse {
+    bool branchEmp = 1;
+    string empID = 2;
+    string secID = 3;
+    bool icLicense = 4;
+    string icType = 5;
+    string rmID = 6;
+    string empFirstName = 7;
+    string empLastName = 8;
+    repeated string listObjective = 9;
+}

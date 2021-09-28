@@ -1,0 +1,49 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- SCB Font -->
+    <FontFamily x:Key="SCBFontFamily">pack://application:,,,/Entity;component/Fonts/PSL240pro.ttf#SCB Font Family</FontFamily>
+    <FontFamily x:Key="SCBBoldFontFamily">pack://application:,,,/Entity;component/Fonts/PSL245pro.ttf#SCB Bold Font Family</FontFamily>
+    <FontFamily x:Key="SCBMedediumFontFamily">pack://application:,,,/Entity;component/Fonts/PSL242pro.ttf#SCB Mededium Font Family</FontFamily>
+
+    <!-- Sarabun Font -->
+    <FontFamily x:Key="SarabunBold">pack://application:,,,/Entity;component/Fonts/Sarabun-Bold.ttf#Sarabun Bold</FontFamily>
+    <FontFamily x:Key="SarabunBoldItalic">pack://application:,,,/Entity;component/Fonts/Sarabun-BoldItalic.ttf#Sarabun BoldItalic</FontFamily>
+    <FontFamily x:Key="SarabunExtraBold">pack://application:,,,/Entity;component/Fonts/Sarabun-ExtraBold.ttf#Sarabun ExtraBold</FontFamily>
+    <FontFamily x:Key="SarabunExtraBoldItalic">pack://application:,,,/Entity;component/Fonts/Sarabun-ExtraBoldItalic.ttf#Sarabun ExtraBoldItalic</FontFamily>
+    <FontFamily x:Key="SarabunExtraLight">pack://application:,,,/Entity;component/Fonts/Sarabun-ExtraLight.ttf#Sarabun ExtraLight</FontFamily>
+    <FontFamily x:Key="SarabunExtraLightItalic">pack://application:,,,/Entity;component/Fonts/Sarabun-ExtraLightItalic.ttf#Sarabun ExtraLightItalic</FontFamily>
+    <FontFamily x:Key="SarabunItalic">pack://application:,,,/Entity;component/Fonts/Sarabun-Italic.ttf#Sarabun Italic</FontFamily>
+    <FontFamily x:Key="SarabunLight">pack://application:,,,/Entity;component/Fonts/Sarabun-Light.ttf#Sarabun Light</FontFamily>
+    <FontFamily x:Key="SarabunLightItalic">pack://application:,,,/Entity;component/Fonts/Sarabun-LightItalic.ttf#Sarabun LightItalic</FontFamily>
+    <FontFamily x:Key="SarabunMedium">pack://application:,,,/Entity;component/Fonts/Sarabun-Medium.ttf#Sarabun Medium</FontFamily>
+    <FontFamily x:Key="SarabunMediumItalic">pack://application:,,,/Entity;component/Fonts/Sarabun-MediumItalic.ttf#Sarabun MediumItalic</FontFamily>
+    <FontFamily x:Key="SarabunRegular">pack://application:,,,/Entity;component/Fonts/Sarabun-Regular.ttf#Sarabun Regular</FontFamily>
+    <FontFamily x:Key="SarabunSemiBold">pack://application:,,,/Entity;component/Fonts/Sarabun-SemiBold.ttf#Sarabun SemiBold</FontFamily>
+    <FontFamily x:Key="SarabunSemiBoldItalic">pack://application:,,,/Entity;component/Fonts/Sarabun-SemiBoldItalic.ttf#Sarabun SemiBoldItalic</FontFamily>
+    <FontFamily x:Key="SarabunThin">pack://application:,,,/Entity;component/Fonts/Sarabun-Thin.ttf#Sarabun-Thin</FontFamily>
+    <FontFamily x:Key="SarabunThinItalic">pack://application:,,,/Entity;component/Fonts/Sarabun-ThinItalic.ttf#Sarabun-ThinItalic</FontFamily>
+
+    <!--BasiS-->
+    <FontFamily x:Key="Book_Basis">pack://application:,,,/Entity;component/Fonts/basis.ttf#Book_Basis[2006]</FontFamily>
+    <FontFamily x:Key="MonospaceTypewriter">pack://application:,,,/Entity;component/Fonts/MonospaceTypewriter.ttf#MonospaceTypewriter</FontFamily>
+    <FontFamily x:Key="CordiaUPC">pack://application:,,,/Entity;component/Fonts/cordiaupc bold.ttf#CordiaUPC Bold</FontFamily>
+
+    <FontFamily x:Key="Kittithada_Roman_55">pack://application:,,,/Entity;component/Fonts/PSL242pro.otf#Kittithada_Roman_55</FontFamily>
+
+    <!-- Login -->
+    <system:String x:Key="Login.BoxTextTitle">อนุมัติรายการก่อนเข้าใช้ระบบ</system:String>
+    <system:String x:Key="Login.BoxTextTitle2">เลขบัตรพนักงาน :</system:String>
+    <system:String x:Key="Login.BoxTextTitle3">ชื่อพนักงาน :</system:String>
+    <system:String x:Key="Login.BoxTextTitleBody">เข้าใช้ระบบครั้งแรกของวัน</system:String>
+    <system:String x:Key="Login.BoxTextTitleBody2">อนุมัติรายการด้วย SC ขึ้นไป</system:String>
+    <system:String x:Key="Login.BoxTextLabel">AUTH ID</system:String>
+    <system:String x:Key="Login.BoxTextLabel2">PASSWORD</system:String>
+
+    <!-- LandingPage -->
+    <system:String x:Key="Landing.LandingPassbookTopic">พิมพ์ใบรับรองการเปิดบัญชี / Reprint Non Passbook</system:String>
+    <system:String x:Key="Landing.LandingPassbookAccountNo">เลขที่บัญชี</system:String>
+
+
+</ResourceDictionary>

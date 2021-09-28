@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_generic_services = true;
+
+package com.example.account;
+
+option csharp_namespace = "AccountGrpc";
+
+service AccountService {
+    rpc listRedeemAccounts(ListRedeemAccountRequest) returns (ListRedeemAccountResponse) {}
+}
+
+message ListRedeemAccountRequest {
+   string accountNo = 1;
+}
+
+message ListRedeemAccountResponse {
+ message AccountRpc {
+   string id = 1;
+   string name = 2;
+   string surname = 3;
+   string branchCode = 4;
+   string comname = 5;
+   string status = 6;
+}
+
+   repeated AccountRpc Accounts = 1;
+}

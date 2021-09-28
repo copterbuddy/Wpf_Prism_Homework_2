@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_generic_services = true;
+
+package com.example.customer;
+
+option csharp_namespace = "CustomerGrpc";
+
+service CustomerService {
+    rpc listCustomerInfo(ListCustomerInfoRequest) returns (ListCustomerInfoResponse) {}
+}
+
+message ListCustomerInfoRequest {
+   string searchType = 1;
+   string searchValue = 2;
+}
+
+message ListCustomerInfoResponse {
+    string custID = 1;
+    string branch = 2;
+    bool ltf = 3;
+    string accName = 4;
+    int32 age = 5;
+    string segment = 6;
+    bool jointAccount = 7;
+    bool sensitive = 8;
+    string payment = 9;
+    string passportID = 10;
+    string juristicID = 11;
+    string citizenID = 12;
+    string idCardPath = 13;
+    string signaturePath = 14;
+}
