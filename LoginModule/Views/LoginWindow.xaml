@@ -9,7 +9,9 @@
         xmlns:prism="http://prismlibrary.com/"
         x:Name="loginWindow"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="1080" Width="1920">
+        Title="LoginWindow" Height="1080" Width="1920"
+        WindowState="Maximized"
+        >
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Entity;Component/Images/log in_bg.png" Stretch="UniformToFill"/>
