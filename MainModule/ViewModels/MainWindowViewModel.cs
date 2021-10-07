@@ -105,25 +105,62 @@ namespace MainModule.ViewModels
         private ObservableCollection<SellFundTableModel> sellFundListGrid;
         public ObservableCollection<SellFundTableModel> SellFundListGrid { get => sellFundListGrid; set => SetProperty(ref sellFundListGrid, value); }
 
+        private bool selectFundButtonEnable;
+        public bool SelectFundButtonEnable
+        {
+            get => selectFundButtonEnable;
+            set => SetProperty(ref selectFundButtonEnable, value);
+        }
+        bool checkEnable1 = false;
+        bool checkEnable2 = false;
+
         public ICommand SellFundButtonClickCommand { get; set; }
+        private StringModel comboBoxOrderBySelectedItem;
+        public StringModel ComboBoxOrderBySelectedItem
+        {
+            get => comboBoxOrderBySelectedItem;
+            set => SetProperty(ref comboBoxOrderBySelectedItem, value);
+        }
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
+            #region injection
             _regionManager = regionManager;
             this.dialogService = dialogService;
+            #endregion
 
+            #region InitRegion
             account = AccountManager.GetInstance().Account;
-            //OpenOtherServiceCommaned = new DelegateCommand(OpenOtherService);
+            TimerCount();
+
+            SelectFundButtonEnable = false;
+            CheckSelectFundButtonEnable();
+
+            StaffIdText = AccountManager.GetInstance().Account.id.ToString();
+            CheckIcLicense(StaffIdText);
+            #endregion
+
+            #region Delegate Command
             OpenSearchCustomerDialogCommand = new DelegateCommand(OpenSearchCustomerDialog);
             OpenSearchEmployeeDialogCommand = new DelegateCommand(OpenSearchEmployeeDialog);
             OpenSelectedFundDialogCommand = new DelegateCommand(OpenSelectedFundDialog);
             SellFundButtonClickCommand = new DelegateCommand<string>(SellFundButtonClick);
-
             NavigateCommand = new DelegateCommand<string>(Navigate);
-            //bindDataGrid();
-            TimerCount();
+            #endregion
+
         }
 
+        void CheckSelectFundButtonEnable()
+        {
+            if (!string.IsNullOrEmpty(CustomerIdTextBox))
+                checkEnable1 = true;
+
+            if (ComboBoxOrderByItemsSource != null && ComboBoxOrderByItemsSource.Count > 0)
+                checkEnable2 = true;
+
+            if (checkEnable1 && checkEnable2)
+                SelectFundButtonEnable = true;
+        }
         void SellFundButtonClick(string Id)
         {
             try
@@ -154,7 +191,7 @@ namespace MainModule.ViewModels
 
         void OpenSearchCustomerDialog()
         {
-            dialogService.ShowDialog(
+            dialogService.Show(
                 "SearchCustomerDialog",
                 new DialogParameters(),
                     (result) => {
@@ -166,7 +203,52 @@ namespace MainModule.ViewModels
                             JointAccount = result.Parameters.GetValue<string>("JointAccount");
                             SensitiveCustomer = result.Parameters.GetValue<string>("SensitiveCustomer");
                             RiskLevel = result.Parameters.GetValue<string>("RiskLevel");
-                            System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
+                            //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
+                            //dialogService.ShowDialog("SearchCustomerDialog");
+
+                            CheckSelectFundButtonEnable();
+                        }
+                        else if(result.Result == ButtonResult.Ignore)
+                        {
+                            string message = result.Parameters.GetValue<string>("message");
+                            string defaultSearch = result.Parameters.GetValue<string>("defaultSearch");
+                            OpenSearchCustomerDialog(defaultSearch);
+                            dialogService.Show(
+                                "AlertDialog",
+                                new DialogParameters($"message={message}"),
+                                    (result) => { });
+                        }
+                    });
+        }
+
+        void OpenSearchCustomerDialog(string defaultSearch = "")
+        {
+            dialogService.Show(
+                "SearchCustomerDialog",
+                new DialogParameters($"defaultSearch={defaultSearch}"),
+                    (result) => {
+                        if (result.Result == ButtonResult.OK)
+                        {
+                            CustomerIdTextBox = result.Parameters.GetValue<string>("CustId");
+                            FundAccountIdTextBox = result.Parameters.GetValue<string>("Branch");
+                            CustomerName = result.Parameters.GetValue<string>("AccName");
+                            JointAccount = result.Parameters.GetValue<string>("JointAccount");
+                            SensitiveCustomer = result.Parameters.GetValue<string>("SensitiveCustomer");
+                            RiskLevel = result.Parameters.GetValue<string>("RiskLevel");
+                            //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
+                            //dialogService.ShowDialog("SearchCustomerDialog");
+
+                            CheckSelectFundButtonEnable();
+                        }
+                        else if (result.Result == ButtonResult.Ignore)
+                        {
+                            string message = result.Parameters.GetValue<string>("message");
+                            defaultSearch = result.Parameters.GetValue<string>("defaultSearch");
+                            OpenSearchCustomerDialog(defaultSearch);
+                            dialogService.Show(
+                                "AlertDialog",
+                                new DialogParameters($"message={message}"),
+                                    (result) => { });
                         }
                     });
         }
@@ -182,23 +264,33 @@ namespace MainModule.ViewModels
                             var _empId = result.Parameters.GetValue<string>("_empId");
                             CheckIcLicense(_empId);
                             //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
+
                         }
                     });
         }
 
         void OpenSelectedFundDialog()
         {
-            dialogService.ShowDialog(
+            if (SelectFundButtonEnable)
+            {
+                dialogService.ShowDialog(
                 "SelectFundDialog",
                 new DialogParameters(),
                     (result) => {
                         if (result.Result == ButtonResult.OK)
                         {
                             OpenFundDetailDialog();
-                            //CheckIcLicense();
-                            //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
                         }
                     });
+            }
+            else
+            {
+                dialogService.ShowDialog(
+                "AlertDialog",
+                new DialogParameters("message=กรุณากรอกข้อมูลลูกค้าให้ถูกต้อง"),
+                    (result) => {});
+            }
+            
         }
 
         void OpenFundDetailDialog()
@@ -284,7 +376,11 @@ namespace MainModule.ViewModels
                             {
                                 Text = x
                             }).ToList();
-                            ComboBoxOrderByItemsSource = new(tempComboBoxOrderByItemsSource);
+                            if (tempComboBoxOrderByItemsSource != null && tempComboBoxOrderByItemsSource.Count > 0)
+                            {
+                                ComboBoxOrderByItemsSource = new(tempComboBoxOrderByItemsSource);
+                                ComboBoxOrderBySelectedItem = tempComboBoxOrderByItemsSource[0];
+                            }
                         }
                     }
                     else
@@ -296,7 +392,10 @@ namespace MainModule.ViewModels
                         StaffNameContent = "";
                         List<StringModel> tempComboBoxOrderByItemsSource = new();
                         tempComboBoxOrderByItemsSource.Add(new StringModel() { Text = "" });
-                        ComboBoxOrderByItemsSource = new(tempComboBoxOrderByItemsSource);
+                        if (tempComboBoxOrderByItemsSource != null && tempComboBoxOrderByItemsSource.Count > 0)
+                        {
+                            ComboBoxOrderByItemsSource = new(tempComboBoxOrderByItemsSource);
+                        }
                     }
                 }
                 else
@@ -308,8 +407,13 @@ namespace MainModule.ViewModels
                     StaffNameContent = "";
                     List<StringModel> tempComboBoxOrderByItemsSource = new();
                     tempComboBoxOrderByItemsSource.Add(new StringModel() { Text = "" });
-                    ComboBoxOrderByItemsSource = new(tempComboBoxOrderByItemsSource);
+                    if (tempComboBoxOrderByItemsSource != null && tempComboBoxOrderByItemsSource.Count > 0)
+                    {
+                        ComboBoxOrderByItemsSource = new(tempComboBoxOrderByItemsSource);
+                    }
                 }
+
+                CheckSelectFundButtonEnable();
             }
             catch (Exception)
             {

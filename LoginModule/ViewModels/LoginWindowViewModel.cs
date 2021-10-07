@@ -124,7 +124,23 @@ namespace LoginModule.ViewModels
             if (AccountSelected == null || /*string.IsNullOrEmpty(AccountSelected.name) ||*/ string.IsNullOrEmpty(password))//Cop
             {
                 //Login Failed
-                MessageBox.Show("Login Failed, username or password is not empty", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                dialogService.ShowDialog(
+                "LoginDialog",
+                new DialogParameters(),
+                    (result) => {
+                        if (result.Result == ButtonResult.OK)
+                        {
+                            //CustomerIdTextBox = result.Parameters.GetValue<string>("CustId");
+                            //FundAccountIdTextBox = result.Parameters.GetValue<string>("Branch");
+                            //CustomerName = result.Parameters.GetValue<string>("AccName");
+                            //JointAccount = result.Parameters.GetValue<string>("JointAccount");
+                            //SensitiveCustomer = result.Parameters.GetValue<string>("SensitiveCustomer");
+                            //RiskLevel = result.Parameters.GetValue<string>("RiskLevel");
+                            //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
+                        }
+                    });
+
+                //MessageBox.Show("Login Failed, username or password is not empty", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
             else

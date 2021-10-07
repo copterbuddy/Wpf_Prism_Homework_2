@@ -235,6 +235,44 @@
         </Style.Resources>
     </Style>
 
+    <Style x:Key="TextBoxSearCustomerEntryStyle2" TargetType="{x:Type TextBox}">
+        <Setter Property="FontFamily" Value="{DynamicResource SarabunRegular}" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="FontWeight" Value="Thin" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Background" Value="#98D7F8" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="9,0,0,0" />
+        <Setter Property="BorderBrush" Value="#6a588b" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="8"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="TextBoxSearCustomerEntryStyle3" TargetType="{x:Type TextBox}">
+        <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="FontWeight" Value="Thin" />
+        <Setter Property="Foreground" Value="#476474" />
+        <Setter Property="Background" Value="#98D7F8" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="9,0,0,0" />
+        <Setter Property="BorderBrush" Value="#6a588b" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="8"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
     <ControlTemplate x:Key="ComboBoxSeachCustomerStyle" TargetType="{x:Type ComboBox}">
         <Grid>
             <ToggleButton VerticalAlignment="Stretch"  
@@ -632,7 +670,7 @@
     </Style>
 
     <Style x:Key="TextBlockHeaderStyle2" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontFamily" Value="{DynamicResource SarabunMedium}" />
+        <Setter Property="FontFamily" Value="{DynamicResource SarabunLight}" />
         <Setter Property="FontSize" Value="15" />
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="Foreground" Value="White" />

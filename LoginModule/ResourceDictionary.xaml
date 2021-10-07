@@ -113,4 +113,70 @@
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
         </Grid>
     </ControlTemplate>
+
+    <ControlTemplate x:Key="UsernameBox2" TargetType="{x:Type ComboBox}">
+        <Grid>
+            <ToggleButton x:Name="DropDownToggle"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  
+                  Margin="-1" HorizontalContentAlignment="Right"
+                  IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,
+                              RelativeSource={RelativeSource TemplatedParent}}"
+                           BorderBrush="{TemplateBinding BorderBrush}" 
+                          BorderThickness="{TemplateBinding BorderThickness}" 
+                          Background="{TemplateBinding Background}"
+                          >
+                <ToggleButton.Style>
+                    <Style TargetType="{x:Type ToggleButton}">
+                        <Setter Property="OverridesDefaultStyle" Value="True"/>
+                        <Setter Property="IsTabStop" Value="False"/>
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="ClickMode" Value="Press"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Border x:Name="templateRoot"
+                                            BorderBrush="#6a588b" CornerRadius="5"
+                                            BorderThickness="2" SnapsToDevicePixels="True">
+                                        <Border.Background>
+                                            <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                                                <GradientStop Color="#98d7f8" Offset="0"/>
+                                                <GradientStop Color="#98d7f8" Offset="1"/>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                        <Border x:Name="splitBorder" BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Right" Margin="0" SnapsToDevicePixels="True" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
+                                            <Path x:Name="BtnArrow" Height="7" Width="15" 
+                    Stretch="Fill" Margin="-15,0,0,0"  Fill="Black"
+                    Data="F1 M 300,-190L 310,-190L 305,-183L 301,-190 Z " />
+                                        </Border>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ToggleButton.Style>
+
+            </ToggleButton>
+
+            <Popup x:Name="PART_Popup" IsOpen="{TemplateBinding IsDropDownOpen}">
+                <Border x:Name="PopupBorder" 
+                    HorizontalAlignment="Stretch" Height="Auto" 
+                    MinWidth="{TemplateBinding ActualWidth}"
+                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                      BorderThickness="{TemplateBinding BorderThickness}" 
+                    BorderBrush="#98d7f8" Background="White" CornerRadius="0">
+                    <ScrollViewer x:Name="ScrollViewer" BorderBrush="#98d7f8" BorderThickness="0" Padding="1">
+                        <ItemsPresenter/>
+                    </ScrollViewer>
+                </Border>
+            </Popup>
+            <ContentPresenter x:Name="contentPresenter" 
+                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" 
+                              Content="{TemplateBinding SelectionBoxItem}" 
+                              ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" 
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                              IsHitTestVisible="True" Margin="{TemplateBinding Padding}" 
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Grid>
+    </ControlTemplate>
 </ResourceDictionary>

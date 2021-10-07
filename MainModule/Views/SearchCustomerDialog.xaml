@@ -24,8 +24,8 @@
                             <StackPanel Grid.Row="0" Width="1920" Height="1080" Background="Black" Opacity="0.5" />
 
                             <Border Grid.Row="0" BorderBrush="Black"
-                                    VerticalAlignment="Top"
-                                    Margin="0,50,0,0"
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,0,0"
                                     BorderThickness="1" CornerRadius="20" Height="740" Width="1200" Background="White">
                                 <!--Content-->
                                 <Grid>
@@ -69,6 +69,7 @@
                                                   Width="380"
                                                   Height="35"
                                                   ItemsSource="{Binding SearchTypes}"
+                                                  SelectedItem="{Binding SelectedSearchType}"
                                                   >
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
@@ -85,7 +86,7 @@
 
                                         </ComboBox>
 
-                                        <TextBox x:Name="SearchCustomerTextBox" Text="000015663527" Grid.Column="2" Margin="30,0,0,0" Width="380" Height="35" Style="{DynamicResource TextBoxSearCustomerEntryStyle}" >
+                                        <TextBox x:Name="SearchCustomerTextBox" Text="{Binding SearchCustomerTextBoxString}" Grid.Column="2" Margin="30,0,0,0" Width="380" Height="35" Style="{DynamicResource TextBoxSearCustomerEntryStyle}" >
                                         </TextBox>
 
                                     </Grid>

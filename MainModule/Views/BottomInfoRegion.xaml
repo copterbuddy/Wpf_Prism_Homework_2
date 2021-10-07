@@ -30,25 +30,25 @@
                         Text="{Binding Account.id}" TextAlignment="Center"
                             Margin="0,0,0,0"
                             />
-        <Grid x:Name="BottomTextLine" Visibility="Hidden" Background="#ffffff" Grid.Column="1" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+        <Grid x:Name="BottomTextLine" Visibility="Visible" Background="#9c9a9d" Grid.Column="1" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
         <TextBlock x:Name="BottomText2" Grid.Column="2" Style="{StaticResource MainBottomText}"
                           
                         Text="{Binding Account.branchCode}" TextAlignment="Center"
                             Margin="0,0,0,0"
                             />
-        <Grid x:Name="BottomTextLine2" Visibility="Hidden" Background="#ffffff" Grid.Column="3" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+        <Grid x:Name="BottomTextLine2" Visibility="Visible" Background="#9c9a9d" Grid.Column="3" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
         <TextBlock x:Name="BottomText3" Grid.Column="4" Style="{StaticResource MainBottomText}"
                            
                         Text="V.6.0.4880" TextAlignment="Center"
                             Margin="0,0,0,0"
                             />
-        <Grid Background="#ffffff" Grid.Column="5" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+        <Grid Background="#9c9a9d" Grid.Column="5" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
         <TextBlock x:Name="BottomText4"
                        Text="{Binding RealtimeTimer}" Grid.Column="6" Style="{StaticResource MainBottomText}"
                             TextAlignment="Center"
                             Margin="0,0,0,0"
                             />
-        <Grid Background="#ffffff" Grid.Column="7" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
+        <Grid Background="#9c9a9d" Grid.Column="7" VerticalAlignment="Top" Margin="0,-5,0,0" Height="28" Width="1.5" />
         <Image Width="45" Grid.Column="8" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,-12,0,0" Source="pack://application:,,,/Entity;Component/Images/log in_EN.png" />
     </Grid>
 </UserControl>

@@ -27,9 +27,8 @@
                 <RowDefinition Height="9*"></RowDefinition>
             </Grid.RowDefinitions>
 
-            <!--Title Region-->
             <!--Header Layout-->
-            <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" prism:RegionManager.RegionName="TitleRegion" />
+            <ContentControl Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" prism:RegionManager.RegionName="TitleRegion"  Margin="0,0,0,15" />
 
             <!--Menu Region-->
             <ContentControl Grid.Row="1" Grid.Column="0" Margin="24,10,24,24" prism:RegionManager.RegionName="MenuRegion" />
@@ -40,18 +39,9 @@
                     <RowDefinition Height="0.5*"></RowDefinition>
                 </Grid.RowDefinitions>
 
-
                 <!--WelcomeRegion Region-->
                 <ContentControl Grid.Row="0" Margin="0,20,0,0" prism:RegionManager.RegionName="WelcomeRegion" />
 
-
-                <!--OtherService Region-->
-                <!--<ContentControl Grid.Row="0" Margin="0,20,0,0" prism:RegionManager.RegionName="OtherServiceRegion" />-->
-                
-                
-                
-                
-                
                 <!--BottomInfo Region-->
                 <ContentControl Grid.Row="1" Height="33" Margin="0,0,-4,0" Width="560" HorizontalAlignment="Right" VerticalAlignment="Bottom" prism:RegionManager.RegionName="BottomInfoRegion"/>
             </Grid>

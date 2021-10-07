@@ -1,4 +1,6 @@
-﻿using Prism.Ioc;
+﻿using LoginModule.ViewModels;
+using LoginModule.Views;
+using Prism.Ioc;
 using Prism.Modularity;
 using System;
 using System.Collections.Generic;
@@ -17,7 +19,7 @@ namespace LoginModule
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //containerRegistry.RegisterDialog<AlertDialog, AlertDialogViewModel>();
+            containerRegistry.RegisterDialog<LoginDialog, LoginDialogViewModel>();
         }
     }
 }

@@ -25,9 +25,14 @@
                             <StackPanel Grid.Row="0" Width="1920" Height="1080" Background="Black" Opacity="0.5" />
 
                             <Border Grid.Row="0" BorderBrush="Black"
-                                    VerticalAlignment="Top"
-                                    Margin="0,50,0,0"
-                                    BorderThickness="1" CornerRadius="20" Height="740" Width="1200" Background="White">
+                                    VerticalAlignment="Center"
+                                    Margin="0,0,0,0"
+                                    BorderThickness="1"
+                                    CornerRadius="20"
+                                    Height="500"
+                                    Width="1200"
+                                    Background="White"
+                                    >
                                 <!--Content-->
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -44,7 +49,7 @@
                                         </Image>
                                     </Border>
 
-                                    <Grid Grid.Row="1" Margin="140,50,0,30" >
+                                    <Grid Grid.Row="1" Margin="100,20,0,0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="130" />
                                             <ColumnDefinition Width="Auto" />
@@ -75,20 +80,16 @@
                                         </ComboBox>
 
                                     </Grid>
-                                    <!--<TextBlock x:Name="fundGroupNameDy" Visibility="Hidden"/>-->
 
                                     <!--DataTemplate-->
-                                    <ScrollViewer Grid.Row="2"  VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Visible">
-                                        <Grid Margin="20,50,20,0">
+                                    <Border BorderThickness="0.5,0,0.5,0" BorderBrush="Black" Margin="20,20,20,30" Grid.Row="2">
+                                        <ScrollViewer  VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Visible" VerticalAlignment="Stretch" Background="#F0F0F0">
+                                        <Grid Margin="0,0,0,0">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
-                                            <Grid Grid.Row="0" >
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto" />
-                                                </Grid.RowDefinitions>
-                                                <Grid Grid.Row="0" Background="#503181" >
+                                            <Grid Grid.Row="0" Background="#503181" Height="30" >
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="150" />
                                                         <ColumnDefinition Width="350"/>
@@ -108,9 +109,8 @@
                                                     <TextBlock Grid.Column="6" Text="ready to redeem" Style="{DynamicResource TextBlockHeaderStyle2}" Margin="-50,0,0,0" />
                                                     <TextBlock Grid.Column="7" Text=""   Margin="-50,0,0,0"/>
                                                 </Grid>
-                                            </Grid>
 
-                                            <ItemsControl x:Name="dgFund" Grid.Row="1" ItemsSource="{Binding ListFund}">
+                                                <ItemsControl x:Name="dgFund" Grid.Row="1" ItemsSource="{Binding ListFund}">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
                                                         <Border BorderThickness="0,0,0,0.8" BorderBrush="Black">
@@ -129,30 +129,30 @@
                                                                     <RowDefinition Height="Auto" />
                                                                 </Grid.RowDefinitions>
 
-                                                                <Grid Grid.Row="0" Background="Transparent">
+                                                                <Grid Grid.Row="0" Margin="0,3,0,3">
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="150" />
                                                                         <ColumnDefinition Width="350"/>
                                                                         <ColumnDefinition Width="100"/>
-                                                                        <ColumnDefinition Width="200"/>
+                                                                        <ColumnDefinition Width="195"/>
                                                                         <ColumnDefinition Width="140" />
                                                                         <ColumnDefinition Width="180"/>
                                                                         <ColumnDefinition Width="200" />
                                                                         <ColumnDefinition Width="30" />
                                                                     </Grid.ColumnDefinitions>
 
-                                                                    <TextBlock x:Name="fundCode" Grid.Column="0" Text="{Binding fundCode}" Foreground="Black" HorizontalAlignment="Left" Margin="50,0,0,0"/>
+                                                                    <TextBlock x:Name="fundCode" Grid.Column="0" Text="{Binding fundCode}" Foreground="Black" HorizontalAlignment="Left" Margin="40,0,0,0"/>
                                                                     <TextBlock x:Name="fundName" Grid.Column="1"  Text="{Binding fundName}" Foreground="Black"  HorizontalAlignment="Left" />
                                                                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                                                        <TextBlock x:Name="nav" Text="{Binding nav, StringFormat='#,##0.0000;(#,##0.0000)'}" Foreground="Black" Margin="20,0,0,0"/>
-                                                                        <Image Source="pack://application:,,,/Entity;Component/Images/SCB3-03.png" Width="10" Height="10" Margin="5,0,0,0">
+                                                                        <TextBlock x:Name="nav" Text="{Binding nav, StringFormat='#,##0.0000;(#,##0.0000)'}" Foreground="Black" Margin="30,0,0,0"/>
+                                                                        <Image Source="pack://application:,,,/Entity;Component/Images/SCB3-03.png" Cursor="Hand" Width="10" Height="10" Margin="5,0,0,0">
                                                                             <Image.InputBindings>
                                                                                 <MouseBinding Gesture="LeftClick" Command="{Binding ElementName=dgFund,Path=DataContext.OpenGraphCommand}"/>
                                                                             </Image.InputBindings>
                                                                         </Image>
                                                                     </StackPanel>
-                                                                    <TextBlock x:Name="totalUnit" Grid.Column="3" Text="{Binding totalUnit,StringFormat='#,##0.0000;(#,##0.0000)'}" Foreground="Black" />
-                                                                    <TextBlock x:Name="totalBaht" Grid.Column="4" Text="{Binding totalBaht, StringFormat='#,##0.0000;(#,##0.0000)'}" Foreground="Black"/>
+                                                                    <TextBlock x:Name="totalUnit" Margin="40,0,0,0" Grid.Column="3" Text="{Binding totalUnit,StringFormat='#,##0.0000;(#,##0.0000)'}" TextAlignment="Right" Foreground="Black" />
+                                                                    <TextBlock x:Name="totalBaht" Grid.Column="4" Text="{Binding totalBaht, StringFormat='#,##0.00;(#,##0.00)'}" Foreground="Black"/>
                                                                     <TextBlock x:Name="totalGain" Grid.Column="5" Text="{Binding totalGain}"  Margin="20,0,0,0">
                                                                         <TextBlock.Style>
                                                                             <Style TargetType="{x:Type TextBlock}">
@@ -177,7 +177,17 @@
                                                                             </Style>
                                                                         </TextBlock.Style>
                                                                     </TextBlock>
-                                                                    <TextBlock x:Name="allowRedeem" Grid.Column="6" Text="{Binding allowRedeem}" Foreground="Black"  Margin="-50,0,0,0"/>
+                                                                        <TextBlock x:Name="allowRedeem" Grid.Column="6" Text="{Binding allowRedeem, StringFormat='#,##0.0000;(#,##0.0000)'}" Foreground="Black"  Margin="0,0,70,0">
+                                                                            <TextBlock.Style>
+                                                                                <Style TargetType="TextBlock">
+                                                                                    <Setter Property="FontSize" Value="15" />
+                                                                                    <Setter Property="FontWeight" Value="Regular" />
+                                                                                    <Setter Property="FontFamily" Value="{DynamicResource SarabunRegular}" />
+                                                                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                                                </Style>
+                                                                            </TextBlock.Style>
+                                                                        </TextBlock>
                                                                     <Button
                                                                         Tag="{Binding fundCode}"
                                                                         Grid.Column="7"
@@ -211,13 +221,14 @@
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
                                         </Grid>
-                                    </ScrollViewer>
+                                        </ScrollViewer>
+                                    </Border>
                                 </Grid>
                             </Border>
 
                             <!-- SellFundMenu -->
                             <Grid x:Name="SellFundMenu" Grid.Row="0" Panel.ZIndex="2" Visibility="{Binding SellFundMenuVisibility}">
-                                <Image Source="pack://application:,,,/Entity;Component/Images/graph-19.png" Width="500" Height="500">
+                                <Image Source="pack://application:,,,/Entity;Component/Images/graph-19.png" Width="500" Height="500" Cursor="Hand">
                                     <!--closeGraph-->
                                     <Image.InputBindings>
                                         <MouseBinding Gesture="LeftClick" Command="{Binding CloseGraphCommand}"/>

@@ -11,17 +11,17 @@
              d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
              d:DesignHeight="1080" d:DesignWidth="1920">
     <!--Header Layout-->
-    <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" >
+    <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/Entity;Component/Images/landing page_bar 2.png" Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <!--Left Info-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-
+        
+        <!--Left Info-->
         <Grid Grid.Column="0" HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />

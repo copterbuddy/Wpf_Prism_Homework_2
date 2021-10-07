@@ -32,6 +32,7 @@ namespace MainModule
             containerRegistry.RegisterDialog<SearchEmployeeDialog, SearchEmployeeDialogViewModel>();
             containerRegistry.RegisterDialog<SelectFundDialog, SelectFundDialogViewModel>();
             containerRegistry.RegisterDialog<FundDetailDialog, FundDetailDialogViewModel>();
+            containerRegistry.RegisterDialog<AlertDialog, AlertDialogViewModel>();
         }
     }
 }

@@ -82,13 +82,21 @@ namespace MainModule.ViewModels
             {
                 if (string.IsNullOrEmpty(parameter))
                 {
-                    MessageBox.Show("โปรดเลือกประเภทการค้นหา", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //dialogService.ShowDialog("AlertDialog", new DialogParameters("message=Username หรือ Password ไม่ถูกต้อง"),
+                    //(r) => { System.Diagnostics.Debug.WriteLine("LoginWindowModel: dialog result = " + r.Result); });
+                    //MessageBox.Show("โปรดเลือกประเภทการค้นหา", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("message", "โปรดเลือกประเภทการค้นหา");
+                    RaiseRequestClose(dialogResult);
                     return;
                 }
 
                 if (SelectedSearchType is null)
                 {
-                    MessageBox.Show("โปรดกรอกข้อมูลในการค้นหา", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //MessageBox.Show("โปรดกรอกข้อมูลในการค้นหา", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("message", "โปรดเลือกประเภทการค้นหา");
+                    RaiseRequestClose(dialogResult);
                     return;
                 }
 
@@ -98,7 +106,11 @@ namespace MainModule.ViewModels
 
                 if (listCust == null || listCust.Count() == 0)
                 {
-                    MessageBox.Show("ไม่พบข้อมูลในระบบ", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //MessageBox.Show("ไม่พบข้อมูลในระบบ", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("message", "ไม่พบข้อมูลในระบบ");
+                    dialogResult.Parameters.Add("defaultSearch", SelectedSearchType);
+                    RaiseRequestClose(dialogResult);
                     return;
                 }
                 else
@@ -117,7 +129,7 @@ namespace MainModule.ViewModels
             }
             #endregion
 
-            SelectedSearchType = null;
+            //SelectedSearchType = null;
 
         }
 
@@ -190,12 +202,32 @@ namespace MainModule.ViewModels
 
         public virtual void OnDialogClosed()
         {
-
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            //Message = parameters.GetValue<string>("message");
+            var _defaultSearch = parameters.GetValue<string>("defaultSearch");
+            if (!string.IsNullOrEmpty(_defaultSearch))
+            {
+                foreach (var item in SearchTypes)
+                {
+                    if (item == _defaultSearch)
+                    {
+                        SelectedSearchType = item;
+                    }
+                }
+                if (string.IsNullOrEmpty(SelectedSearchType))
+                {
+                    SelectedSearchType = SearchTypes[0];
+                }
+                
+            }
+            else
+            {
+                SelectedSearchType = SearchTypes[0];
+            }
+            
+            SearchCustomerTextBoxString = "000015663527";
         }
     }
 }
