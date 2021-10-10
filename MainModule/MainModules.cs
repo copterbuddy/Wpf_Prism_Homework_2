@@ -31,6 +31,7 @@ namespace MainModule
             containerRegistry.RegisterForNavigation<TransferRegion>();
 
             containerRegistry.RegisterDialog<SearchCustomerDialog, SearchCustomerDialogViewModel>();
+            containerRegistry.RegisterDialog<SearchCustomerTransferDialog, SearchCustomerTransferDialogViewModel>();
             containerRegistry.RegisterDialog<SearchEmployeeDialog, SearchEmployeeDialogViewModel>();
             containerRegistry.RegisterDialog<SelectFundDialog, SelectFundDialogViewModel>();
             containerRegistry.RegisterDialog<FundDetailDialog, FundDetailDialogViewModel>();

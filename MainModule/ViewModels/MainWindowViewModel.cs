@@ -20,6 +20,8 @@ using Teller.SellFund.Models;
 using Teller.Core.Models;
 using System.Collections.ObjectModel;
 using MainModule.GrpcService;
+using static Entity.Models.Enums;
+using Newtonsoft.Json;
 
 namespace MainModule.ViewModels
 {
@@ -31,6 +33,7 @@ namespace MainModule.ViewModels
 
         //public ICommand OpenOtherServiceCommaned;
         public ICommand OpenSearchCustomerDialogCommand { get; set; }
+        public ICommand OpenSearchCustomerTransferDialogCommand { get; set; }
         public ICommand OpenSearchEmployeeDialogCommand { get; set; }
         public ICommand OpenSelectedFundDialogCommand { get; set; }
 
@@ -121,6 +124,7 @@ namespace MainModule.ViewModels
             get => comboBoxOrderBySelectedItem;
             set => SetProperty(ref comboBoxOrderBySelectedItem, value);
         }
+        public CurrentMainRegion CurrentRegion { get; set; }
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -138,10 +142,13 @@ namespace MainModule.ViewModels
 
             StaffIdText = AccountManager.GetInstance().Account.id.ToString();
             CheckIcLicense(StaffIdText);
+
+            CurrentRegion = CurrentMainRegion.WelcomeRegion;
             #endregion
 
             #region Delegate Command
             OpenSearchCustomerDialogCommand = new DelegateCommand(OpenSearchCustomerDialog);
+            OpenSearchCustomerTransferDialogCommand = new(OpenSearchCustomerTransferDialog);
             OpenSearchEmployeeDialogCommand = new DelegateCommand(OpenSearchEmployeeDialog);
             OpenSelectedFundDialogCommand = new DelegateCommand(OpenSelectedFundDialog);
             SellFundButtonClickCommand = new DelegateCommand<string>(SellFundButtonClick);
@@ -186,11 +193,17 @@ namespace MainModule.ViewModels
         private void Navigate(string navigatePath)
         {
             if (navigatePath != null)
+            {
+                CurrentMainRegion currentRegion;
                 _regionManager.RequestNavigate("WelcomeRegion", navigatePath);
+                Enum.TryParse(navigatePath, out currentRegion);
+                CurrentRegion = currentRegion;
+            }
         }
 
         void OpenSearchCustomerDialog()
         {
+
             dialogService.Show(
                 "SearchCustomerDialog",
                 new DialogParameters(),
@@ -208,7 +221,7 @@ namespace MainModule.ViewModels
 
                             CheckSelectFundButtonEnable();
                         }
-                        else if(result.Result == ButtonResult.Ignore)
+                        else if (result.Result == ButtonResult.Ignore)
                         {
                             string message = result.Parameters.GetValue<string>("message");
                             string defaultSearch = result.Parameters.GetValue<string>("defaultSearch");
@@ -225,7 +238,72 @@ namespace MainModule.ViewModels
         {
             dialogService.Show(
                 "SearchCustomerDialog",
-                new DialogParameters($"defaultSearch={defaultSearch}"),
+                new DialogParameters($"message={defaultSearch}"),
+                    (result) => {
+                        if (result.Result == ButtonResult.OK)
+                        {
+                            CustomerIdTextBox = result.Parameters.GetValue<string>("CustId");
+                            FundAccountIdTextBox = result.Parameters.GetValue<string>("Branch");
+                            CustomerName = result.Parameters.GetValue<string>("AccName");
+                            JointAccount = result.Parameters.GetValue<string>("JointAccount");
+                            SensitiveCustomer = result.Parameters.GetValue<string>("SensitiveCustomer");
+                            RiskLevel = result.Parameters.GetValue<string>("RiskLevel");
+                            //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
+                            //dialogService.ShowDialog("SearchCustomerDialog");
+
+                            CheckSelectFundButtonEnable();
+                        }
+                        else if (result.Result == ButtonResult.Ignore)
+                        {
+                            string message = result.Parameters.GetValue<string>("message");
+                            defaultSearch = result.Parameters.GetValue<string>("defaultSearch");
+                            OpenSearchCustomerDialog(defaultSearch);
+                            dialogService.Show(
+                                "AlertDialog",
+                                new DialogParameters($"message={message}"),
+                                    (result) => { });
+                        }
+                    });
+        }
+
+        void OpenSearchCustomerTransferDialog()
+        {
+
+            dialogService.Show(
+                "SearchCustomerTransferDialog",
+                new DialogParameters(),
+                    (result) => {
+                        if (result.Result == ButtonResult.OK)
+                        {
+                            CustomerIdTextBox = result.Parameters.GetValue<string>("CustId");
+                            FundAccountIdTextBox = result.Parameters.GetValue<string>("Branch");
+                            CustomerName = result.Parameters.GetValue<string>("AccName");
+                            JointAccount = result.Parameters.GetValue<string>("JointAccount");
+                            SensitiveCustomer = result.Parameters.GetValue<string>("SensitiveCustomer");
+                            RiskLevel = result.Parameters.GetValue<string>("RiskLevel");
+                            //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
+                            //dialogService.ShowDialog("SearchCustomerDialog");
+
+                            CheckSelectFundButtonEnable();
+                        }
+                        else if (result.Result == ButtonResult.Ignore)
+                        {
+                            string message = result.Parameters.GetValue<string>("message");
+                            string defaultSearch = result.Parameters.GetValue<string>("defaultSearch");
+                            OpenSearchCustomerDialog(defaultSearch);
+                            dialogService.Show(
+                                "AlertDialog",
+                                new DialogParameters($"message={message}"),
+                                    (result) => { });
+                        }
+                    });
+        }
+
+        void OpenSearchCustomerTransferDialog(string defaultSearch = "")
+        {
+            dialogService.Show(
+                "SearchCustomerTransferDialog",
+                new DialogParameters($"message={defaultSearch}"),
                     (result) => {
                         if (result.Result == ButtonResult.OK)
                         {

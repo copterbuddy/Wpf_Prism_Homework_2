@@ -1,25 +1,23 @@
-﻿using MainModule.GrpcService;
-using Newtonsoft.Json;
-using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Services.Dialogs;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MainModule.GrpcService;
+using Prism.Commands;
+using Prism.Mvvm;
+using Prism.Services.Dialogs;
 using Teller.Core.Models;
 using WPFScbOri.Models;
 using static Entity.Models.Enums;
 
 namespace MainModule.ViewModels
 {
-    class SearchCustomerDialogViewModel : BindableBase, IDialogAware
+    public class SearchCustomerTransferDialogViewModel : BindableBase, IDialogAware
     {
         private DelegateCommand<string> _closeDialogCommand;
         public DelegateCommand<string> CloseDialogCommand => _closeDialogCommand ?? (_closeDialogCommand = new DelegateCommand<string>(CloseDialog));
@@ -61,11 +59,9 @@ namespace MainModule.ViewModels
             {
                 return new ObservableCollection<string>
                 {
-                    "เลขทะเบียนลูกค้า",
                     "บัตรประชาชน",
                     "พาสปอร์ต",
                     "ชื่อ - นามสกุล",
-                    "เลขทะเบียนนิติบุคคล",
                 };
             }
         }
@@ -229,13 +225,13 @@ namespace MainModule.ViewModels
                 {
                     SelectedSearchType = SearchTypes[0];
                 }
-                
+
             }
             else
             {
                 SelectedSearchType = SearchTypes[0];
             }
-            
+
             SearchCustomerTextBoxString = "000015663527";
         }
     }
