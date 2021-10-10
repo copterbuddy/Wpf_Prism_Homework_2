@@ -21,12 +21,14 @@ namespace MainModule
             regionManager.RegisterViewWithRegion(nameof(MenuRegion), typeof(MenuRegion));
             regionManager.RegisterViewWithRegion(nameof(WelcomeRegion), typeof(WelcomeRegion));
             regionManager.RegisterViewWithRegion(nameof(OtherServiceRegion), typeof(OtherServiceRegion));
+            regionManager.RegisterViewWithRegion(nameof(TransferRegion), typeof(TransferRegion));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<WelcomeRegion>();
             containerRegistry.RegisterForNavigation<OtherServiceRegion>();
+            containerRegistry.RegisterForNavigation<TransferRegion>();
 
             containerRegistry.RegisterDialog<SearchCustomerDialog, SearchCustomerDialogViewModel>();
             containerRegistry.RegisterDialog<SearchEmployeeDialog, SearchEmployeeDialogViewModel>();

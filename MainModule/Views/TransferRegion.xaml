@@ -1,0 +1,388 @@
+﻿<UserControl x:Class="MainModule.Views.TransferRegion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MainModule.Views"
+             mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:viewmodels="clr-namespace:MainModule.ViewModels"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <Border>
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="10" Opacity="30" ShadowDepth="0"/>
+        </Border.Effect>
+        <Grid x:Name="OtherServicesMenu" Background="#ffffff" Margin="0,0,25,15">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="5*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <StackPanel Grid.Row="0">
+
+                <Grid Background="#F4B45A">
+                    <TextBlock Text="โอนเงิน / Transfer" Style="{StaticResource MainOtherSeviceTextBlock}" Foreground="#513281" Margin="5,2"></TextBlock>
+                </Grid>
+                <Grid Background="#513281">
+                    <TextBlock Text="เริ่มทำรายการโอนเงิน" Style="{StaticResource TextBlockHeaderStyle3}" Foreground="White" Margin="5,8,0,8" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+                
+            </StackPanel>
+
+            <!--ข้อมูลลูกค้า-->
+            <Grid Grid.Row="1">
+                <Border Grid.Row="0" BorderBrush="#513281"
+                                    Background="#ffffff"
+                                    BorderThickness="2"
+                                    CornerRadius="12"
+                                    Width="130"
+                                    Height="40"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Panel.ZIndex="2"
+                                    Margin="10,20,0,0">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource SelectFundTextTitleBold}" Foreground="Black" Text="ข้อมูลลูกค้า" Margin="0,0,0,0"></TextBlock>
+                </Border>
+                <Border Grid.Row="0" BorderBrush="#513281"
+                                    BorderThickness="2"
+                                    CornerRadius="12"
+                                    Panel.ZIndex="1"
+                                    Margin="20,40,20,0">
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--Line1-->
+                        <!--เลขทะเบียนลูกค้า-->
+                        <Grid Grid.Row="0" Margin="0,30,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                                    Margin="20,0,10,0"
+                                                Text="เลขทะเบียนลูกค้า : "
+                                                Style="{StaticResource SelectFundTextTitleBold}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+                            <TextBox x:Name="CustomerIdTextBox"
+                                         Text="{Binding CustomerIdTextBox}"
+                                                    Grid.Column="1"
+                                                    Style="{StaticResource TextBoxSearCustomerEntryStyle3}"
+                                                Width="350"
+                                                Height="40"
+                                                    VerticalAlignment="Center"
+                                                    IsReadOnly="True"
+                                                />
+
+                            <Image Grid.Column="1"
+                                            Source="pack://application:,,,/Entity;Component/Images/SCB3-02.png" 
+                                            Margin="0,0,6,0" 
+                                            Width="25" 
+                                            Height="26" 
+                                            Cursor="Hand"
+                                            HorizontalAlignment="Right"
+                                            
+                                            >
+                                <Image.InputBindings>
+                                    <MouseBinding Gesture="LeftClick" Command="{Binding OpenSearchCustomerDialogCommand}" />
+                                </Image.InputBindings>
+                            </Image>
+                            <!--</StackPanel>-->
+
+                        </Grid>
+                        <!--EndLine1-->
+
+
+                        <!--Line2-->
+                        <Grid Grid.Row="1" Margin="0,5,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                                    Margin="20,7,0,0"
+                                                Text="ชื่อ - นามสกุล : "
+                                                Style="{StaticResource SelectFundTextTitleBold}" 
+                                                Foreground="Black"
+                                            />
+
+                            <Label x:Name="CustomerName" Grid.Column="1"
+                                                    Margin="0,0,10,0"
+                                                Content="{Binding CustomerName}"
+                                                Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                                Foreground="Black"
+
+                                                />
+
+
+                        </Grid>
+                        <!--EndLine2-->
+                    </Grid>
+
+
+                </Border>
+                <Button Grid.Row="0"
+                                    Panel.ZIndex="3"
+                                    Content="เงื่อนไขการลงนาม"
+                                    Style="{StaticResource DefaultPurpleButtonStyle}"
+                                    Width="190"
+                                    Height="45"
+                                    HorizontalAlignment="Right"
+                                    Margin="0,0,40,20"
+                                    Cursor="Hand"
+                                    />
+
+            </Grid>
+
+            <!--โอนเงิน-->
+            <Grid Grid.Row="2">
+                <Border Grid.Row="0" BorderBrush="#513281"
+                                    Background="#ffffff"
+                                    BorderThickness="2"
+                                    CornerRadius="12"
+                                    Width="80"
+                                    Height="40"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Panel.ZIndex="2"
+                                    Margin="10,20,0,0">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource SelectFundTextTitleBold}" Foreground="Black" Text="โอนเงิน" Margin="0,0,0,0"></TextBlock>
+                </Border>
+                <Border Grid.Row="0"
+                            BorderBrush="#513281"
+                            BorderThickness="2"
+                            CornerRadius="12"
+                            Panel.ZIndex="1"
+                            Margin="20,35,20,0"
+                            >
+
+                    <Grid Margin="0,0,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!--Line1-->
+                        <!--เลขประจำตัวพนักงาน-->
+                        <Grid Grid.Row="0" Margin="0,20,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Orientation="Horizontal"
+                                                    Grid.Column="0">
+
+                                <TextBlock
+                                                    Margin="20,0,10,0"
+                                                Text="เลขประจำตัวพนักงาน : "
+                                                Style="{StaticResource SelectFundTextTitleBold}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                                <Grid>
+                                    <TextBox x:Name="StaffId"
+                                                    Style="{StaticResource TextBoxSearCustomerEntryStyle3}"
+                                             Text="{Binding StaffIdText}"
+                                                Width="150"
+                                                Height="40"
+                                                    VerticalAlignment="Center"
+                                                    IsReadOnly="True"
+                                                />
+
+                                    <Image
+                                                Source="pack://application:,,,/Entity;Component/Images/SCB3-02.png" 
+                                            Margin="0,0,6,0" 
+                                            Width="25" 
+                                            Height="26" 
+                                                Cursor="Hand"
+                                                HorizontalAlignment="Right"
+                                            
+                                                >
+                                        <Image.InputBindings>
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding OpenSearchEmployeeDialogCommand}" />
+                                        </Image.InputBindings>
+                                    </Image>
+                                </Grid>
+
+                            </StackPanel>
+
+                            <!--บัญชีกองทุนที่-->
+                            <StackPanel Grid.Column="1"
+                                                    Orientation="Horizontal">
+
+                                <TextBlock 
+                                                    Text="เลขประจำตัว กลต. : "
+                                                    Margin="20,0,10,0"
+                                                    Style="{StaticResource SelectFundTextTitleBold}" 
+                                                    Foreground="Black"
+                                                    VerticalAlignment="Center"
+                                                />
+
+                                <Label x:Name="SecId"
+                                                    Content="{Binding SecIdContent}"
+                                                    Margin="20,0,10,0"
+                                                    Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                                    Foreground="Black"
+                                                    VerticalAlignment="Center"
+                                                />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2"
+                                                    Orientation="Horizontal">
+                                <TextBlock 
+                                                    Text="IC license : "
+                                                    Margin="20,0,10,0"
+                                                    Style="{StaticResource SelectFundTextTitleBold}" 
+                                                    Foreground="Black"
+                                                    VerticalAlignment="Center"
+                                                />
+
+                                <Label x:Name="IcLicense"
+                                                    Content="{Binding IcLicenseContent}"
+                                                    Margin="20,0,10,0"
+                                                    Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                                    Foreground="Black"
+                                                    VerticalAlignment="Center"
+                                                />
+                            </StackPanel>
+                        </Grid>
+                        <!--EndLine1-->
+
+
+                        <!--Line2-->
+                        <Grid Grid.Row="1" Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Orientation="Horizontal"
+                                                    Grid.Column="0">
+
+                                <TextBlock
+                                                    Margin="20,0,10,0"
+                                                Text="เลขที่บัตรพนักงาน RM : "
+                                                Style="{StaticResource SelectFundTextTitleBold}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                                <Label x:Name="StaffRm"
+                                                    Margin="20,0,10,0"
+                                                Content="{Binding StaffRmContent}"
+                                                Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                                Foreground="Black"
+                                                VerticalAlignment="Center"
+                                            />
+
+                            </StackPanel>
+
+                            <!--บัญชีกองทุนที่-->
+                            <StackPanel Grid.Column="1"
+                                                    Orientation="Horizontal">
+
+                                <TextBlock 
+                                                    Text="ชื่อ - นามสกุล : "
+                                                    Margin="20,0,10,0"
+                                                    Style="{StaticResource SelectFundTextTitleBold}" 
+                                                    Foreground="Black"
+                                                    VerticalAlignment="Center"
+                                                />
+
+                                <Label x:Name="StaffName"
+                                                    Content="{Binding StaffNameContent}"
+                                                    Margin="20,0,10,0"
+                                                    Style="{StaticResource MainSellFundLabelRegularBlack}" 
+                                                    Foreground="Black"
+                                                    VerticalAlignment="Center"
+                                                />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2"
+                                                    Orientation="Horizontal">
+                                <TextBlock 
+                                                    Text="คำสั่งนี้เกิดจาก : "
+                                                    Margin="20,0,10,0"
+                                                    Style="{StaticResource SelectFundTextTitleBold}" 
+                                                    Foreground="Black"
+                                                    VerticalAlignment="Center"
+                                                />
+
+                                <ComboBox Grid.Column="1" x:Name="ComboBoxOrderBy"
+                                VerticalAlignment="Center" Margin="0,0,0,0" Height="35" 
+                                                    Background="#98d7f8" 
+                                                    IsEditable="False"
+                                                    Text="Select Account"
+                                                    Cursor="Hand"
+                                                    Width="230"
+                                              ItemsSource="{Binding ComboBoxOrderByItemsSource}"
+                                                        FontSize="20"
+                                              SelectedValue="{Binding ComboBoxOrderBySelectedItem}"
+                                              Template="{StaticResource UsernameBox2}"
+                                                    >
+                                    <!--IsReadOnly="true" ItemsSource="{Binding SearchEmployeeResult}" cop-->
+                                    <ComboBox.Resources>
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#98d7f8" />
+                                    </ComboBox.Resources>
+                                    <ComboBox.ItemContainerStyle>
+                                        <Style TargetType="ComboBoxItem">
+                                            <Setter Property="Background" Value="#98d7f8"/>
+                                            <Setter Property="BorderBrush" Value="#98d7f8"/>
+                                            <Setter Property="BorderThickness" Value="0"/>
+                                        </Style>
+                                    </ComboBox.ItemContainerStyle>
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Text}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+
+                                </ComboBox>
+                            </StackPanel>
+                        </Grid>
+                        <!--EndLine2-->
+                    </Grid>
+
+                </Border>
+
+            </Grid>
+
+            <!--ขั้นตอนต่อไป|ยกเลิก Button-->
+            <StackPanel Grid.Row="3"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0,10,0,10">
+                <Button Content="ขั้นตอนต่อไป" Style="{StaticResource DefaultPurpleButtonStyle}"
+                            Cursor="Hand"
+                            Margin="0,0,5,0"
+                            >
+                    <!--Click="SellFundButton_Click" cop-->
+                </Button>
+                <Button Content="ยกเลิก"
+                            Style="{StaticResource DefaultWhiteButtonStyle}"
+                            Cursor="Hand"
+                            Margin="5,0,0,0"
+                            ></Button>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</UserControl>

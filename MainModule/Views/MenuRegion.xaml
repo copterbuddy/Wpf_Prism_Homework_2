@@ -27,7 +27,13 @@
             <Image HorizontalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Entity;Component/Images/landing page_ch 2.png" />
         </Grid>
         <Grid Grid.Row="2" Margin="5,5,5,5">
-            <Image HorizontalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Entity;Component/Images/landing page_ch 3.png" />
+            <Image HorizontalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Entity;Component/Images/landing page_ch 3.png" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDown">
+                        <prism:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="TransferRegion"></prism:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
         </Grid>
         <Grid Grid.Row="3" Margin="5,5,5,5">
             <Image HorizontalAlignment="Center" Cursor="Hand" Source="pack://application:,,,/Entity;Component/Images/landing page_ch 4.png" />
