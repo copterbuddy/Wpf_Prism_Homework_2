@@ -64,5 +64,77 @@ namespace MainModule.GrpcService
                 return null;
             }
         }
+
+        public async Task<CustomerDetail> SeachCustomerTransfer(string _searchType, string _searchValue)
+        {
+            #region Mock Data
+
+            //CustomerDetail res = JsonConvert.DeserializeObject<CustomerDetail>(jMock);
+            CustomerDetail res = new()
+            {
+                CustId = "000015663527",
+                CitizenID = "3100202827767",
+                Branch = "0014",
+                AccName = "นายทดสอบ โปรแกรม",
+                Age = "40",
+                Payment = "ลงนามผู้เดียวเทส",
+                CitizenIdCardImagePath = null,
+                SignedSignatureImagePath = null,
+            };
+
+            return res;
+            #endregion
+
+            #region Prod
+            //try
+            //{
+            //    var handler = new HttpClientHandler()
+            //    {
+            //        ServerCertificateCustomValidationCallback = (httpRequestMessage, cert, cetChain, policyErrors) => true
+            //    };
+            //    using var httpClient = new HttpClient(handler);
+            //    var credentials = CallCredentials.FromInterceptor((context, metaData) =>
+            //    {
+            //        //metaData.Add("Authorization", "Bearer 1234");
+            //        return Task.CompletedTask;
+            //    });
+            //    using var channel = GrpcChannel.ForAddress(_baseUrl, new GrpcChannelOptions()
+            //    {
+            //        HttpClient = httpClient
+            //    });
+
+            //    var client = new CustomerGrpc.CustomerService.CustomerServiceClient(channel);
+
+            //    var request = new CustomerGrpc.ListCustomerInfoRequest
+            //    {
+            //        SearchType = _searchType,
+            //        SearchValue = _searchValue,
+            //    };
+
+            //    var response = await client.listCustomerInfoAsync(request);
+
+            //    if (response != null)
+            //    {
+            //        CustomerDetail res = JsonConvert.DeserializeObject<CustomerDetail>(response.ToString());
+
+            //        List<CustomerDetail> listCust = new();
+            //        listCust.Add(res);
+            //        return listCust;
+
+            //    }
+            //    else
+            //    {
+            //        return null;
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    return null;
+            //}
+            #endregion
+
+        }
+
+
     }
 }

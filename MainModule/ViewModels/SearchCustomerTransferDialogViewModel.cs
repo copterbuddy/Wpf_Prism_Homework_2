@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Entity.Models;
 using MainModule.GrpcService;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -73,7 +74,7 @@ namespace MainModule.ViewModels
             string _close = "close";
             string _search = "search";
 
-            #region Close Or Cancel
+            #region Close
             if (parameter?.ToLower() == _close)
             {
 
@@ -107,9 +108,11 @@ namespace MainModule.ViewModels
 
                 //SeachCustomer(SelectedSearchType, SearchCustomerTextBoxString);
                 CustomerService searchCustomerService = new();
-                List<CustomerDetail> listCust = await Task.Run(() => searchCustomerService.SeachCustomer(SelectedSearchType, SearchCustomerTextBoxString));
+                CustomerDetail Cust = await Task.Run(() => searchCustomerService.SeachCustomerTransfer(SelectedSearchType, SearchCustomerTextBoxString));
+                List<CustomerDetail> listCust = new();
+                listCust.Add(Cust);
 
-                if (listCust == null || listCust.Count() == 0)
+                if (listCust == null || listCust.Count == 0)
                 {
                     //MessageBox.Show("ไม่พบข้อมูลในระบบ", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                     var dialogResult = new DialogResult(ButtonResult.Ignore);
@@ -120,13 +123,18 @@ namespace MainModule.ViewModels
                 }
                 else
                 {
-                    if (listCust != null)
+                    foreach (var item in listCust)
                     {
-                        foreach (var item in listCust)
-                        {
+                        if (item.CitizenIdCardImagePath == null)
                             item.CitizenIdCardImagePath = GetImageSource("citizenId_image");
+                        else
+                            item.CitizenIdCardImagePath = GetImageSource("no_image");
+
+                        if (item.SignedSignatureImagePath == null)
                             item.SignedSignatureImagePath = GetImageSource("sign_image");
-                        }
+                        else
+                            item.CitizenIdCardImagePath = GetImageSource("no_image");
+
                     }
 
                     CustomerDetailLists = new(listCust);
@@ -186,9 +194,9 @@ namespace MainModule.ViewModels
         {
             try
             {
-                return new BitmapImage(new Uri($"pack://application:,,,/Entity;Component/Images/{filename}.png"));
+                return new BitmapImage(new Uri($"pack://application:,,,/Entity;Component/Images/TransferImages/{filename}.png"));
             }
-            catch
+            catch(Exception e)
             {
                 return null;
             }
@@ -234,5 +242,6 @@ namespace MainModule.ViewModels
 
             SearchCustomerTextBoxString = "000015663527";
         }
+
     }
 }

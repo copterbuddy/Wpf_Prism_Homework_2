@@ -36,6 +36,7 @@ namespace MainModule
             containerRegistry.RegisterDialog<SelectFundDialog, SelectFundDialogViewModel>();
             containerRegistry.RegisterDialog<FundDetailDialog, FundDetailDialogViewModel>();
             containerRegistry.RegisterDialog<AlertDialog, AlertDialogViewModel>();
+            containerRegistry.RegisterDialog<SelectFromWalletDialog, SelectFromWalletDialogViewModel>();
         }
     }
 }

@@ -94,6 +94,11 @@
     <None Remove="Images\Sell fund flow popup-18.png" />
     <None Remove="Images\Sell fund flow popup-19.png" />
     <None Remove="Images\sign_image.png" />
+    <None Remove="Images\TransferImages\bank-icon0.png" />
+    <None Remove="Images\TransferImages\citizenId_image.png" />
+    <None Remove="Images\TransferImages\no_image.png" />
+    <None Remove="Images\TransferImages\sign_image.png" />
+    <None Remove="Images\TransferImages\slip_transfer.png" />
     <None Remove="Images\uncheck.jpg" />
     <None Remove="Images\up_icon.png" />
     <None Remove="Images\waiting-sign.gif" />
@@ -188,6 +193,11 @@
     <Resource Include="Images\Sell fund flow popup-18.png" />
     <Resource Include="Images\Sell fund flow popup-19.png" />
     <Resource Include="Images\sign_image.png" />
+    <Resource Include="Images\TransferImages\bank-icon0.png" />
+    <Resource Include="Images\TransferImages\citizenId_image.png" />
+    <Resource Include="Images\TransferImages\no_image.png" />
+    <Resource Include="Images\TransferImages\sign_image.png" />
+    <Resource Include="Images\TransferImages\slip_transfer.png" />
     <Resource Include="Images\uncheck.jpg" />
     <Resource Include="Images\up_icon.png" />
     <Resource Include="Images\waiting-sign.gif" />

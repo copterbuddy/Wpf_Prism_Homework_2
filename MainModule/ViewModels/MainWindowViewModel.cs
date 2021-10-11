@@ -125,6 +125,9 @@ namespace MainModule.ViewModels
             set => SetProperty(ref comboBoxOrderBySelectedItem, value);
         }
         public CurrentMainRegion CurrentRegion { get; set; }
+        public ICommand OpenSelectFromWalletDialogCommand { get => openSelectToWalletDialogCommand; set => SetProperty(ref openSelectToWalletDialogCommand, value); }
+
+        private ICommand openSelectToWalletDialogCommand;
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -148,12 +151,46 @@ namespace MainModule.ViewModels
 
             #region Delegate Command
             OpenSearchCustomerDialogCommand = new DelegateCommand(OpenSearchCustomerDialog);
-            OpenSearchCustomerTransferDialogCommand = new(OpenSearchCustomerTransferDialog);
+            OpenSearchCustomerTransferDialogCommand = new DelegateCommand(OpenSearchCustomerTransferDialog);
             OpenSearchEmployeeDialogCommand = new DelegateCommand(OpenSearchEmployeeDialog);
             OpenSelectedFundDialogCommand = new DelegateCommand(OpenSelectedFundDialog);
             SellFundButtonClickCommand = new DelegateCommand<string>(SellFundButtonClick);
             NavigateCommand = new DelegateCommand<string>(Navigate);
+            OpenSelectFromWalletDialogCommand = new DelegateCommand(OpenSelectFromWalletDialog);
             #endregion
+
+        }
+
+        private void OpenSelectFromWalletDialog()
+        {
+            dialogService.Show(
+                "SelectFromWalletDialog",
+                new DialogParameters(),
+                    (result) => {
+                        if (result.Result == ButtonResult.OK)
+                        {
+                            //CustomerIdTextBox = result.Parameters.GetValue<string>("CustId");
+                            //FundAccountIdTextBox = result.Parameters.GetValue<string>("Branch");
+                            //CustomerName = result.Parameters.GetValue<string>("AccName");
+                            //JointAccount = result.Parameters.GetValue<string>("JointAccount");
+                            //SensitiveCustomer = result.Parameters.GetValue<string>("SensitiveCustomer");
+                            //RiskLevel = result.Parameters.GetValue<string>("RiskLevel");
+                            ////System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
+                            ////dialogService.ShowDialog("SearchCustomerDialog");
+
+                            //CheckSelectFundButtonEnable();
+                        }
+                        else if (result.Result == ButtonResult.Ignore)
+                        {
+                            //string message = result.Parameters.GetValue<string>("message");
+                            //string defaultSearch = result.Parameters.GetValue<string>("defaultSearch");
+                            //OpenSearchCustomerDialog(defaultSearch);
+                            //dialogService.Show(
+                            //    "AlertDialog",
+                            //    new DialogParameters($"message={message}"),
+                            //        (result) => { });
+                        }
+                    });
 
         }
 
