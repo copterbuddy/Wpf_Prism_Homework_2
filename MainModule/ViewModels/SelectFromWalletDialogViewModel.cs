@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 
 namespace MainModule.ViewModels
 {
-    public class SelectToWalletDialogViewModel : BindableBase,IDialogAware
+    public class SelectFromWalletDialogViewModel : BindableBase,IDialogAware
     {
         #region template property
         public string Title => "SelectFromWalletDialog";
@@ -35,11 +35,14 @@ namespace MainModule.ViewModels
             set { SetProperty(ref _message, value); }
         }
 
-        public WalletListEntity WalletList { get => walletList; set => SetProperty(ref walletList, value); }
+        public WalletListEntity WalletListData { get => walletListData; set => SetProperty(ref walletListData, value); }
         public ObservableCollection<WalletEntity> WalletListDisplay { get => walletListDisplay; set => SetProperty(ref walletListDisplay, value); }
+        public DelegateCommand<string> SelectedWalletCommand => selectedWalletCommand ?? (selectedWalletCommand = new DelegateCommand<string>(SelectedWallet));
 
-        private WalletListEntity walletList;
+
+        private WalletListEntity walletListData;
         private ObservableCollection<WalletEntity> walletListDisplay;
+        private DelegateCommand<string> selectedWalletCommand;
         #endregion
 
 
@@ -63,8 +66,8 @@ namespace MainModule.ViewModels
         {
             Message = parameters.GetValue<string>("message");
 
-            WalletList = GetMock();
-            WalletListDisplay = new ObservableCollection<WalletEntity>(WalletList.WalletList);
+            WalletListData = GetMock();
+            WalletListDisplay = new ObservableCollection<WalletEntity>(WalletListData.WalletList);
         }
         #endregion
 
@@ -84,20 +87,20 @@ namespace MainModule.ViewModels
             WalletListEntity dataList = new();
 
             {
-                WalletEntity data = new();
-                data.WalletId = "1";
-                data.WalletName = "ชื่อ1";
+                WalletEntity data = new WalletEntity();
+                data.WalletId = "110010012121211";
+                data.WalletName = "นาย คุณานนต์ ทดสอบ1";
                 data.WalletlImage = null;
-                data.Balance = 100;
+                data.Balance = 99000;
                 data.BankCode = "002";
                 dataList.WalletList.Add(data);
             }
             {
-                WalletEntity data = new();
-                data.WalletId = "2";
-                data.WalletName = "ชื่อ2";
+                WalletEntity data = new WalletEntity();
+                data.WalletId = "110010012121212";
+                data.WalletName = "นายคุณานนต์ ทดสอบ2";
                 data.WalletlImage = null;
-                data.Balance = 200;
+                data.Balance = 1000000;
                 data.BankCode = "004";
                 dataList.WalletList.Add(data);
             }
@@ -114,6 +117,24 @@ namespace MainModule.ViewModels
             catch (Exception e)
             {
                 return null;
+            }
+        }
+        private void SelectedWallet(string walletId)
+        {
+            if (walletId == null)
+            {
+                RaiseRequestClose(new DialogResult(ButtonResult.Cancel));
+                return;
+            }
+
+            foreach (var item in WalletListData.WalletList)
+            {
+                if (item.WalletId.Equals(walletId))
+                {
+                    WalletEntityManager.GetInstance().WalletEntity = item;
+                    RaiseRequestClose(new DialogResult(ButtonResult.OK));
+                    return;
+                }
             }
         }
         #endregion

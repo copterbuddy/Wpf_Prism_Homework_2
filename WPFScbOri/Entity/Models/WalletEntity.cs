@@ -20,6 +20,18 @@ namespace Entity.Models
         public string WalletName { get => walletName; set => walletName = value; }
         public decimal Balance { get => balance; set => balance = value; }
         public string BankCode { get => bankCode; set => bankCode = value; }
+
+        public WalletEntity() { }
+
+        public WalletEntity(string walletId,string walletName,ImageSource walletlImage,decimal balance,string bankCode)
+        {
+            this.walletId = walletId;
+            this.walletName = walletName;
+            this.walletName = walletName;
+            this.walletlImage = walletlImage;
+            this.balance = balance;
+            this.bankCode = bankCode;
+        }
     }
 
     public class WalletListEntity

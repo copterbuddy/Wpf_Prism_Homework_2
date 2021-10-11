@@ -253,7 +253,7 @@
                                       HorizontalAlignment="Stretch">
                                     <TextBox
                                         Style="{StaticResource TextBoxSearCustomerEntryStyle3}"
-                                        Text=""
+                                        Text="{Binding FromWalletSelectedDisplay}"
                                         VerticalAlignment="Center"
                                         IsReadOnly="True"
                                         Height="40"
