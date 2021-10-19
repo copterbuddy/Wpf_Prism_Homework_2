@@ -22,6 +22,8 @@ namespace MainModule
             regionManager.RegisterViewWithRegion(nameof(WelcomeRegion), typeof(WelcomeRegion));
             regionManager.RegisterViewWithRegion(nameof(OtherServiceRegion), typeof(OtherServiceRegion));
             regionManager.RegisterViewWithRegion(nameof(TransferRegion), typeof(TransferRegion));
+            regionManager.RegisterViewWithRegion(nameof(WalletPreTransferRegion), typeof(WalletPreTransferRegion));
+            regionManager.RegisterViewWithRegion(nameof(WalletTransferRegion), typeof(WalletTransferRegion));
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
@@ -29,6 +31,8 @@ namespace MainModule
             containerRegistry.RegisterForNavigation<WelcomeRegion>();
             containerRegistry.RegisterForNavigation<OtherServiceRegion>();
             containerRegistry.RegisterForNavigation<TransferRegion>();
+            containerRegistry.RegisterForNavigation<WalletPreTransferRegion>();
+            containerRegistry.RegisterForNavigation<WalletTransferRegion>();
 
             containerRegistry.RegisterDialog<SearchCustomerDialog, SearchCustomerDialogViewModel>();
             containerRegistry.RegisterDialog<SearchCustomerTransferDialog, SearchCustomerTransferDialogViewModel>();
@@ -37,6 +41,9 @@ namespace MainModule
             containerRegistry.RegisterDialog<FundDetailDialog, FundDetailDialogViewModel>();
             containerRegistry.RegisterDialog<AlertDialog, AlertDialogViewModel>();
             containerRegistry.RegisterDialog<SelectFromWalletDialog, SelectFromWalletDialogViewModel>();
+            containerRegistry.RegisterDialog<SelectBankListDialog, SelectBankListDialogViewModel>();
+            containerRegistry.RegisterDialog<InputToWalletDialog, InputToWalletDialogViewModel>();
+            containerRegistry.RegisterDialog<CheckLicenseImageDialog, CheckLicenseImageDialogViewModel>();
         }
     }
 }

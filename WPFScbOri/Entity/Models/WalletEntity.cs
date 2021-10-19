@@ -14,12 +14,29 @@ namespace Entity.Models
         private ImageSource walletlImage;
         private decimal balance;
         private string bankCode;
+        private string bankName;
 
         public string WalletId { get => walletId; set => walletId = value; }
         public ImageSource WalletlImage { get => walletlImage; set => walletlImage = value; }
         public string WalletName { get => walletName; set => walletName = value; }
         public decimal Balance { get => balance; set => balance = value; }
         public string BankCode { get => bankCode; set => bankCode = value; }
+        public string BankName { get
+            {
+                var bankList = BankListEntityManager.GetInstance().bankListEntity;
+                if (bankList != null && bankList.BankList != null && bankList.BankList.Count > 0)
+                {
+                    foreach (var item in bankList.BankList)
+                    {
+                        if (item.BankCode == BankCode)
+                        {
+                            bankName = item.BankName;
+                        }
+                    }
+                }
+                return bankName;
+            }
+        }
 
         public WalletEntity() { }
 

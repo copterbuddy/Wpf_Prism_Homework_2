@@ -88,9 +88,6 @@ namespace MainModule.ViewModels
             {
                 if (string.IsNullOrEmpty(parameter))
                 {
-                    //dialogService.ShowDialog("AlertDialog", new DialogParameters("message=Username หรือ Password ไม่ถูกต้อง"),
-                    //(r) => { System.Diagnostics.Debug.WriteLine("LoginWindowModel: dialog result = " + r.Result); });
-                    //MessageBox.Show("โปรดเลือกประเภทการค้นหา", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                     var dialogResult = new DialogResult(ButtonResult.Ignore);
                     dialogResult.Parameters.Add("message", "โปรดเลือกประเภทการค้นหา");
                     RaiseRequestClose(dialogResult);
@@ -99,14 +96,12 @@ namespace MainModule.ViewModels
 
                 if (SelectedSearchType is null)
                 {
-                    //MessageBox.Show("โปรดกรอกข้อมูลในการค้นหา", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                     var dialogResult = new DialogResult(ButtonResult.Ignore);
                     dialogResult.Parameters.Add("message", "โปรดเลือกประเภทการค้นหา");
                     RaiseRequestClose(dialogResult);
                     return;
                 }
 
-                //SeachCustomer(SelectedSearchType, SearchCustomerTextBoxString);
                 CustomerService searchCustomerService = new();
                 CustomerDetail Cust = await Task.Run(() => searchCustomerService.SeachCustomerTransfer(SelectedSearchType, SearchCustomerTextBoxString));
                 List<CustomerDetail> listCust = new();
@@ -114,7 +109,6 @@ namespace MainModule.ViewModels
 
                 if (listCust == null || listCust.Count == 0)
                 {
-                    //MessageBox.Show("ไม่พบข้อมูลในระบบ", "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                     var dialogResult = new DialogResult(ButtonResult.Ignore);
                     dialogResult.Parameters.Add("message", "ไม่พบข้อมูลในระบบ");
                     dialogResult.Parameters.Add("defaultSearch", SelectedSearchType);
@@ -133,7 +127,7 @@ namespace MainModule.ViewModels
                         if (item.SignedSignatureImagePath == null)
                             item.SignedSignatureImagePath = GetImageSource("sign_image");
                         else
-                            item.CitizenIdCardImagePath = GetImageSource("no_image");
+                            item.SignedSignatureImagePath = GetImageSource("no_image");
 
                     }
 
@@ -158,15 +152,10 @@ namespace MainModule.ViewModels
                     {
                         if (custId == i.CustId)
                         {
+                            CustomerDetailTransferManager.GetInstance().customerDetail = i;
 
                             dialogResult.Parameters.Add("AccName", (i.AccName).ToString());
                             dialogResult.Parameters.Add("CustId", (i.CustId).ToString());
-                            dialogResult.Parameters.Add("Branch", (i.Branch).ToString());
-                            dialogResult.Parameters.Add("JointAccount", (i.IsJointAccount).ToString());
-                            dialogResult.Parameters.Add("SensitiveCustomer", (i.IsSensitive).ToString());
-                            dialogResult.Parameters.Add("OrderPayment", (i.Payment).ToString());
-                            dialogResult.Parameters.Add("Age", (i.Age).ToString());
-                            dialogResult.Parameters.Add("RiskLevel", "5");
 
                             FundManager.GetInstance().CustAge = (i.Age).ToString();
                             FundManager.GetInstance().CustAccount = (i.CustId).ToString();

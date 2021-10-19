@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace Entity.Models
 {
-    public class WalletEntityManager
+    public class BankEntityManager
     {
-        public WalletEntity WalletEntity;
+        public BankEntity bankEntity;
 
-        private static WalletEntityManager instance;
+        private static BankEntityManager instance;
 
-        public static WalletEntityManager Instance
+        public static BankEntityManager Instance
             => instance;
 
-        public static WalletEntityManager GetInstance()
+        public static BankEntityManager GetInstance()
         {
             if (instance == null)
             {
-                instance = new WalletEntityManager();
+                instance = new BankEntityManager();
             }
             return instance;
         }

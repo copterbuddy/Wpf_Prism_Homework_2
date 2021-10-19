@@ -107,9 +107,10 @@
                                 <Grid Grid.Column="1">
                                     <TextBox x:Name="CustomerIdTextBox"
                                                         
-                                                Text="{Binding CustomerIdTextBox}"
-                                                        Style="{StaticResource TextBoxSearCustomerEntryStyle3}"
+                                                Text="{Binding CustomerTransferIdTextBox}"
+                                                        Style="{StaticResource TextBoxSearCustomerEntryStyle31}"
                                                         IsReadOnly="True"
+                                             VerticalContentAlignment="Center"
                                             Margin="0,0,0,0"
                                                 Height="40"
                                                 HorizontalAlignment="Stretch"
@@ -165,7 +166,7 @@
                                 <Grid Grid.Column="1" VerticalAlignment="Center">
                                     <Label x:Name="CustomerName"
                                            Margin="0,8,0,0"
-                                            Content="{Binding CustomerName}"
+                                            Content="{Binding CustomerTransferName}"
                                             Style="{StaticResource MainSellFundLabelRegularBlack}" 
                                             Foreground="Black"
                                             VerticalAlignment="Center"
@@ -252,7 +253,7 @@
                                 <Grid Grid.Column="1"
                                       HorizontalAlignment="Stretch">
                                     <TextBox
-                                        Style="{StaticResource TextBoxSearCustomerEntryStyle3}"
+                                        Style="{StaticResource TextBoxSearCustomerEntryStyle31}"
                                         Text="{Binding FromWalletSelectedDisplay}"
                                         VerticalAlignment="Center"
                                         IsReadOnly="True"
@@ -297,8 +298,8 @@
                                 <Grid Grid.Column="1"
                                     HorizontalAlignment="Stretch">
                                     <TextBox
-                                    Style="{StaticResource TextBoxSearCustomerEntryStyle3}"
-                                    Text=""
+                                    Style="{StaticResource TextBoxSearCustomerEntryStyle31}"
+                                    Text="{Binding ToWalletSelectedDisplay}"
                                     VerticalAlignment="Center"
                                     IsReadOnly="True"
                                     Height="40"
@@ -316,7 +317,7 @@
                                             
                                 >
                                         <Image.InputBindings>
-                                            <MouseBinding Gesture="LeftClick" Command="{Binding OpenSearchEmployeeDialogCommand}" />
+                                                <MouseBinding Gesture="LeftClick" Command="{Binding OpenSelectBankListDialogCommand}" />
                                         </Image.InputBindings>
                                     </Image>
                                 </Grid>
@@ -339,24 +340,29 @@
                                     VerticalAlignment="Center"
                                     />
 
-                                    <Grid Grid.Column="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="4*" />
-                                            <ColumnDefinition Width="6*" />
-                                        </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4*" />
+                                        <ColumnDefinition Width="6*" />
+                                    </Grid.ColumnDefinitions>
                                         
-                                        <Grid Grid.Column="0"
-                                            HorizontalAlignment="Stretch">
-                                            <TextBox
-                                            Style="{StaticResource TextBoxSearCustomerEntryStyle3}"
-                                            Text=""
-                                            VerticalAlignment="Center"
-                                            Height="40"
-                                            VerticalContentAlignment="Center"
-                                            HorizontalAlignment="Stretch"
-                                            />
-                                        </Grid>
+                                    <Grid Grid.Column="0"
+                                        HorizontalAlignment="Stretch">
+                                            <TextBox Style="{StaticResource TextBoxSearCustomerEntryStyle4}"
+                                                    Text="{Binding AmountDisplay ,UpdateSourceTrigger=PropertyChanged}"
+                                                    VerticalAlignment="Center"
+                                                    Height="40"
+                                                    VerticalContentAlignment="Center"
+                                                    HorizontalAlignment="Stretch"
+                                                    >
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="LostFocus" >
+                                                        <i:InvokeCommandAction Command="{Binding LostFocusCommand}"/>
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </TextBox>
                                     </Grid>
+                                </Grid>
                                 
 
                             </Grid>
@@ -381,7 +387,7 @@
                                       HorizontalAlignment="Stretch">
                                         <TextBox
                                         Style="{StaticResource TextBoxMemoEntryStyle}"
-                                        Text=""
+                                        Text="{Binding Memo}"
                                         VerticalAlignment="Center"
                                         Height="40"
                                         VerticalContentAlignment="Center"
@@ -413,6 +419,7 @@
                                                 Margin="0,0,0,0"
                                                 Style="{StaticResource CheckLicenseButtonStyle}"
                                                 HorizontalAlignment="Stretch"
+                                                Command="{Binding OpenCheckLicenseImageCommand}"
                                                 >
                                             </Button>
                                         </Grid>
@@ -441,8 +448,8 @@
                 <Button Content="ขั้นตอนต่อไป" Style="{StaticResource DefaultPurpleButtonStyle}"
                             Cursor="Hand"
                             Margin="0,0,5,0"
+                        Command="{Binding PreTransferCommand}"
                             >
-                    <!--Click="SellFundButton_Click" cop-->
                 </Button>
                 <Button Content="ยกเลิก"
                             Style="{StaticResource DefaultWhiteButtonStyle}"

@@ -273,16 +273,54 @@
         </Style.Resources>
     </Style>
 
-    <Style x:Key="TextBoxMemoEntryStyle" TargetType="{x:Type TextBox}">
+    <Style x:Key="TextBoxSearCustomerEntryStyle31" TargetType="{x:Type TextBox}">
         <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />
         <Setter Property="FontSize" Value="21" />
         <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="FontWeight" Value="Thin" />
         <Setter Property="Foreground" Value="#476474" />
+        <Setter Property="Background" Value="#98D7F8" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="0,0,0,0" />
+        <Setter Property="BorderBrush" Value="#6a588b" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="8"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="TextBoxSearCustomerEntryStyle4" TargetType="{x:Type TextBox}">
+        <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="FontWeight" Value="Thin" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Background" Value="#98D7F8" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="0,0,0,0" />
+        <Setter Property="BorderBrush" Value="#6a588b" />
+        <Setter Property="BorderThickness" Value="2" />
+        <Style.Resources>
+            <Style TargetType="Border">
+                <Setter Property="CornerRadius" Value="8"/>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="TextBoxMemoEntryStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="FontWeight" Value="Thin" />
+        <Setter Property="Foreground" Value="Black" />
         <Setter Property="Background" Value="#ffffff" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Padding" Value="9,0,0,0" />
+        <Setter Property="Padding" Value="0,0,0,0" />
         <Setter Property="BorderBrush" Value="#6a588b" />
         <Setter Property="BorderThickness" Value="2" />
         <Style.Resources>
@@ -907,6 +945,12 @@
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="#000000" />
     </Style>
+    <Style x:Key="SelectFundTextTitleRegular" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource SarabunRegular}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="#000000" />
+    </Style>
 
     <Style x:Key="SelectFundTextTitleBold2" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />
@@ -1070,6 +1114,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    
 
     <!-- FundDetailNotiDialog  -->
     <Style x:Key="FundDetailNotiTextTitle" TargetType="{x:Type TextBlock}">
@@ -1083,6 +1129,24 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="Foreground" Value="#ff0000" />
+    </Style>
+    <Style x:Key="InputDialogTextBoxStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style x:Key="CheckLicenseDialogHeader" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="#000000" />
+    </Style>
+    <Style x:Key="CheckLicenseDialogDetail" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="#000000" />
     </Style>
     <Style x:Key="TitleDialogStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />

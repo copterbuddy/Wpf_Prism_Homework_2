@@ -22,51 +22,31 @@ using System.Collections.ObjectModel;
 using MainModule.GrpcService;
 using static Entity.Models.Enums;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
+using MainModule.Business.WalletTransfer;
+using MainModule.Views;
+using Entity.DTO;
+using MainModule.Service;
 
 namespace MainModule.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
         private readonly IRegionManager _regionManager;
-
         IDialogService dialogService;
-
-        //public ICommand OpenOtherServiceCommaned;
         public ICommand OpenSearchCustomerDialogCommand { get; set; }
         public ICommand OpenSearchCustomerTransferDialogCommand { get; set; }
         public ICommand OpenSearchEmployeeDialogCommand { get; set; }
         public ICommand OpenSelectedFundDialogCommand { get; set; }
-
         private string realtimeTimer;
-        public string RealtimeTimer
-        {
-            get => realtimeTimer;
-            set => SetProperty(ref realtimeTimer, value);
-        }
-
+        public string RealtimeTimer { get => realtimeTimer; set => SetProperty(ref realtimeTimer, value); }
         private string idBrn;
-
         private Account account;
-        public Account Account
-        {
-            get => account;
-            set => SetProperty(ref account, value);
-        }
-
-        public string IdBrn
-        {
-            get {
-                idBrn = $"ID:{AccountManager.Instance.Account.id} / BRN:{AccountManager.Instance.Account.branchCode}";
-                return idBrn;
-            }
-        }
-
+        public Account Account{ get => account; set => SetProperty(ref account, value); }
+        public string IdBrn { get { idBrn = $"ID:{AccountManager.Instance.Account.id} / BRN:{AccountManager.Instance.Account.branchCode}"; return idBrn; } }
         private string customerIdTextBox;
         public string CustomerIdTextBox { get => customerIdTextBox; set => SetProperty(ref customerIdTextBox, value); }
-
         public DelegateCommand<String> NavigateCommand { get; private set; }
-
-
         private string selectedSearchType;
         public string SelectedSearchType { get => selectedSearchType; set => SetProperty(ref selectedSearchType, value); }
         public string FundAccountIdTextBox { get => fundAccountIdTextBox; set => SetProperty(ref fundAccountIdTextBox, value); }
@@ -80,58 +60,95 @@ namespace MainModule.ViewModels
         public string StaffRmContent { get => staffRmContent; set => SetProperty(ref staffRmContent, value); }
         public string StaffNameContent { get => staffNameContent; set => SetProperty(ref staffNameContent, value); }
         public ObservableCollection<StringModel> ComboBoxOrderByItemsSource { get => comboBoxOrderByItemsSource; set => SetProperty(ref comboBoxOrderByItemsSource, value); }
-
         private string fundAccountIdTextBox;
-
         private string customerName;
-
         private string jointAccount;
-
         private string sensitiveCustomer;
-
         private string riskLevel;
-
         private string staffIdText;
-
         private string secIdContent;
-
         private string icLicenseContent;
-
         private string staffRmContent;
-
         private string staffNameContent;
-
         private ObservableCollection<StringModel> comboBoxOrderByItemsSource;
-
         private List<SellFundTableModel> sellFundList;
         public List<SellFundTableModel> SellFundList { get => sellFundList; set => SetProperty(ref sellFundList, value); }
         private ObservableCollection<SellFundTableModel> sellFundListGrid;
         public ObservableCollection<SellFundTableModel> SellFundListGrid { get => sellFundListGrid; set => SetProperty(ref sellFundListGrid, value); }
-
         private bool selectFundButtonEnable;
-        public bool SelectFundButtonEnable
-        {
-            get => selectFundButtonEnable;
-            set => SetProperty(ref selectFundButtonEnable, value);
-        }
+        public bool SelectFundButtonEnable { get => selectFundButtonEnable; set => SetProperty(ref selectFundButtonEnable, value); }
         bool checkEnable1 = false;
         bool checkEnable2 = false;
-
         public ICommand SellFundButtonClickCommand { get; set; }
         private StringModel comboBoxOrderBySelectedItem;
-        public StringModel ComboBoxOrderBySelectedItem
-        {
-            get => comboBoxOrderBySelectedItem;
-            set => SetProperty(ref comboBoxOrderBySelectedItem, value);
-        }
+        public StringModel ComboBoxOrderBySelectedItem { get => comboBoxOrderBySelectedItem; set => SetProperty(ref comboBoxOrderBySelectedItem, value); }
         public CurrentMainRegion CurrentRegion { get; set; }
-        public ICommand OpenSelectFromWalletDialogCommand { get => openSelectToWalletDialogCommand; set => SetProperty(ref openSelectToWalletDialogCommand, value); }
+        public ICommand OpenSelectFromWalletDialogCommand { get => openSelectFromWalletDialogCommand; set => SetProperty(ref openSelectFromWalletDialogCommand, value); }
         public WalletEntity FromWalletSelected { get => fromWalletSelected; set => SetProperty(ref fromWalletSelected, value); }
         public string FromWalletSelectedDisplay { get => fromWalletSelectedDisplay; set => SetProperty(ref fromWalletSelectedDisplay, value); }
+        public ICommand OpenSelectBankListDialogCommand { get => openSelectBankListDialogCommand; set => SetProperty(ref openSelectBankListDialogCommand, value); }
+        public BankEntity ToWalletSelected { get => toWalletSelected; set => SetProperty(ref toWalletSelected, value); }
+        public string ToWalletSelectedDisplay { get => toWalletSelectedDisplay; set => SetProperty(ref toWalletSelectedDisplay, value); }
+        public string AmountDisplay { get => amountDisplay; 
+            set {
+                Regex regex = new Regex("[^0-9.]+");
+                if (!regex.IsMatch(value))
+                {
+                    SetProperty(ref amountDisplay, value);
+                }
+            }
+        }
 
-        private ICommand openSelectToWalletDialogCommand;
+        private ICommand openSelectFromWalletDialogCommand;
         private WalletEntity fromWalletSelected;
         private string fromWalletSelectedDisplay;
+        private ICommand openSelectBankListDialogCommand;
+        private BankEntity toWalletSelected;
+        private string toWalletSelectedDisplay;
+        private string amountDisplay;
+        public DelegateCommand LostFocusCommand => lostFocusCommand ?? (lostFocusCommand = new DelegateCommand(LostFocus));
+
+        public DelegateCommand OpenCheckLicenseImageCommand => openCheckLicenseImageCommand ?? (openCheckLicenseImageCommand = new DelegateCommand(OpenCheckLicenseImageDialog));
+
+        public string CustomerTransferName { get => customerTransferName; set => SetProperty(ref customerTransferName, value); }
+        public string CustomerTransferIdTextBox { get => customerTransferIdTextBox; set => SetProperty(ref customerTransferIdTextBox, value); }
+        public DelegateCommand PreTransferCommand => preTransferCommand ?? (preTransferCommand = new DelegateCommand(PreTransfer));
+
+        //public WalletEntity ToWalletEntity 
+        //{ 
+        //    get 
+        //    { 
+        //        toWalletEntity = WalletToEntityManager.GetInstance().WalletEntity;
+        //        return toWalletEntity;
+        //    } 
+        //}
+
+        //public WalletEntity FromWalletEntity
+        //{
+        //    get
+        //    {
+        //        fromWalletEntity = WalletFromEntityManager.GetInstance().WalletEntity;
+        //        return fromWalletEntity;
+        //    }
+        //}
+
+        public TransactionEntity TransactionEntity { get => transactionEntity; set => SetProperty(ref transactionEntity, value); }
+        public string Memo { get => memo; set => SetProperty(ref memo, value); }
+        public DelegateCommand TransferCommand => transferCommand ?? (transferCommand = new DelegateCommand(Transfer));
+
+        public DelegateCommand PrintCommand => printCommand ?? (printCommand = new DelegateCommand(Print));
+
+        private DelegateCommand lostFocusCommand;
+        private DelegateCommand openCheckLicenseImageCommand;
+        private string customerTransferName;
+        private string customerTransferIdTextBox;
+        private DelegateCommand preTransferCommand;
+        //private WalletEntity toWalletEntity;
+        //private WalletEntity fromWalletEntity;
+        private TransactionEntity transactionEntity;
+        private string memo;
+        private DelegateCommand transferCommand;
+        private DelegateCommand printCommand;
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -161,9 +178,11 @@ namespace MainModule.ViewModels
             SellFundButtonClickCommand = new DelegateCommand<string>(SellFundButtonClick);
             NavigateCommand = new DelegateCommand<string>(Navigate);
             OpenSelectFromWalletDialogCommand = new DelegateCommand(OpenSelectFromWalletDialog);
+            OpenSelectBankListDialogCommand = new DelegateCommand(OpenSelectBankListDialog);
             #endregion
 
         }
+
 
         void CheckSelectFundButtonEnable()
         {
@@ -208,6 +227,7 @@ namespace MainModule.ViewModels
                 CurrentRegion = currentRegion;
             }
         }
+
 
         void OpenSearchCustomerDialog()
         {
@@ -283,14 +303,8 @@ namespace MainModule.ViewModels
                     (result) => {
                         if (result.Result == ButtonResult.OK)
                         {
-                            CustomerIdTextBox = result.Parameters.GetValue<string>("CustId");
-                            FundAccountIdTextBox = result.Parameters.GetValue<string>("Branch");
-                            CustomerName = result.Parameters.GetValue<string>("AccName");
-                            JointAccount = result.Parameters.GetValue<string>("JointAccount");
-                            SensitiveCustomer = result.Parameters.GetValue<string>("SensitiveCustomer");
-                            RiskLevel = result.Parameters.GetValue<string>("RiskLevel");
-                            //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
-                            //dialogService.ShowDialog("SearchCustomerDialog");
+                            CustomerTransferIdTextBox = result.Parameters.GetValue<string>("CustId");
+                            CustomerTransferName = result.Parameters.GetValue<string>("AccName");
 
                             CheckSelectFundButtonEnable();
                         }
@@ -315,14 +329,8 @@ namespace MainModule.ViewModels
                     (result) => {
                         if (result.Result == ButtonResult.OK)
                         {
-                            CustomerIdTextBox = result.Parameters.GetValue<string>("CustId");
-                            FundAccountIdTextBox = result.Parameters.GetValue<string>("Branch");
-                            CustomerName = result.Parameters.GetValue<string>("AccName");
-                            JointAccount = result.Parameters.GetValue<string>("JointAccount");
-                            SensitiveCustomer = result.Parameters.GetValue<string>("SensitiveCustomer");
-                            RiskLevel = result.Parameters.GetValue<string>("RiskLevel");
-                            //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
-                            //dialogService.ShowDialog("SearchCustomerDialog");
+                            CustomerTransferIdTextBox = result.Parameters.GetValue<string>("CustId");
+                            CustomerTransferName = result.Parameters.GetValue<string>("AccName");
 
                             CheckSelectFundButtonEnable();
                         }
@@ -414,31 +422,62 @@ namespace MainModule.ViewModels
                     (result) => {
                         if (result.Result == ButtonResult.OK)
                         {
-                            FromWalletSelected = WalletEntityManager.GetInstance().WalletEntity;
+                            FromWalletSelected = WalletFromEntityManager.GetInstance().WalletEntity;
                             FromWalletSelectedDisplay = SetFromWalletDisplay(FromWalletSelected);
-                            //CustomerIdTextBox = result.Parameters.GetValue<string>("CustId");
-                            //FundAccountIdTextBox = result.Parameters.GetValue<string>("Branch");
-                            //CustomerName = result.Parameters.GetValue<string>("AccName");
-                            //JointAccount = result.Parameters.GetValue<string>("JointAccount");
-                            //SensitiveCustomer = result.Parameters.GetValue<string>("SensitiveCustomer");
-                            //RiskLevel = result.Parameters.GetValue<string>("RiskLevel");
-                            ////System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
-                            ////dialogService.ShowDialog("SearchCustomerDialog");
-
-                            //CheckSelectFundButtonEnable();
                         }
                         else if (result.Result == ButtonResult.Ignore)
                         {
-                            //string message = result.Parameters.GetValue<string>("message");
-                            //string defaultSearch = result.Parameters.GetValue<string>("defaultSearch");
-                            //OpenSearchCustomerDialog(defaultSearch);
-                            //dialogService.Show(
-                            //    "AlertDialog",
-                            //    new DialogParameters($"message={message}"),
-                            //        (result) => { });
                         }
                     });
 
+        }
+
+        private void OpenSelectBankListDialog()
+        {
+            dialogService.Show(
+                "SelectBankListDialog",
+                new DialogParameters(),
+                    (result) => {
+                        if (result.Result == ButtonResult.OK && BankEntityManager.GetInstance().bankEntity != null)
+                        {
+                            OpenInputToWalletDialog();
+                        }
+                    });
+
+        }
+
+        private void OpenInputToWalletDialog()
+        {
+            dialogService.Show(
+                "InputToWalletDialog",
+                new DialogParameters(),
+                    (result) => {
+
+                        var backSelected = BankEntityManager.GetInstance().bankEntity;
+                        var toWalletSelected = WalletToEntityManager.GetInstance().WalletEntity;
+
+                        if (result.Result == ButtonResult.OK && BankEntityManager.GetInstance().bankEntity != null && WalletToEntityManager.GetInstance().WalletEntity != null && !string.IsNullOrEmpty(WalletToEntityManager.GetInstance().WalletEntity.WalletName))
+                        {
+                            ToWalletSelectedDisplay = SetToWalletDisplay(WalletToEntityManager.GetInstance().WalletEntity);
+                        }
+                        else if (result.Result == ButtonResult.Ignore)
+                        {
+                            OpenInputToWalletDialog();
+                            dialogService.Show(
+                                "AlertDialog",
+                                new DialogParameters($"message=กรุณาระบุเลขวอลเลตให้ถูกต้อง"),
+                                    (result) => { });
+                        }
+                    });
+        }
+
+
+        void OpenCheckLicenseImageDialog()
+        {
+            dialogService.Show(
+                                "CheckLicenseImageDialog",
+                                new DialogParameters($"message=กรุณาระบุเลขวอลเลตให้ถูกต้อง"),
+                                    (result) => { });
         }
 
         public string SetFromWalletDisplay(WalletEntity walletEntity)
@@ -447,6 +486,104 @@ namespace MainModule.ViewModels
 
             string response = walletEntity.WalletName + " * " + walletEntity.WalletId + " * " + walletEntity.Balance.ToString("#,##0.00;(#,##0.00)");
             return response;
+        }
+        public string SetToWalletDisplay(WalletEntity walletEntity)
+        {
+            if (walletEntity == null || walletEntity.WalletName == null || walletEntity.WalletId == null) return "";
+
+            string response = walletEntity.WalletName + " * " + walletEntity.WalletId + " * " + BankEntityManager.GetInstance().bankEntity.BankName;
+            return response;
+        }
+
+        void PreTransfer()
+        {
+            DialogResult dialogResult = null;
+            bool isProcess = true;
+
+            #region Check Parameter
+            if (isProcess)
+                if (WalletFromEntityManager.GetInstance().WalletEntity == null)
+                {
+                    dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("errMessage", "กรุณาระบุข้อมูลผู้โอน");
+                    isProcess = false;
+                }
+
+            if (isProcess)
+                if (WalletToEntityManager.GetInstance().WalletEntity == null)
+                {
+                    dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("errMessage", "กรุณาระบุข้อมูลผู้รับโอน");
+                    isProcess = false;
+                }
+
+            if (isProcess)
+                if (string.IsNullOrEmpty(AmountDisplay))
+                {
+                    dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("errMessage", "กรุณาระบุจำนวนเงินที่ถูกต้อง");
+                    isProcess = false;
+                }
+            #endregion
+
+            if (isProcess)
+            {
+                var fromWallet = WalletFromEntityManager.GetInstance().WalletEntity.WalletId;
+                var toWallet = WalletToEntityManager.GetInstance().WalletEntity.WalletId;
+                var strAmount = AmountDisplay;
+
+                WalletPreTransfer walletPreTransfer = new WalletPreTransfer();
+                dialogResult = walletPreTransfer.PreTransfer(toWallet, fromWallet, strAmount);
+
+                WalletService walletService = new WalletService();
+                WalletTransactionResponse transactionResponse = walletService.WalletPreTransfer("950102002557004", "950101000010911", 100);
+                if (transactionResponse != null)
+                {
+                    dialogResult = new DialogResult(ButtonResult.OK);
+                    TransactionEntity = transactionResponse.transactionEntity;
+                }
+                else
+                {
+                    dialogResult = new DialogResult(ButtonResult.Ignore);
+                }
+
+            }
+
+            if (isProcess)
+            {
+                if (dialogResult.Result == ButtonResult.OK)
+                {
+                    Navigate(nameof(WalletPreTransferRegion));
+                }
+            }
+            else
+            {
+                if (dialogResult.Result == ButtonResult.Ignore)
+                {
+                    dialogService.ShowDialog(
+                                    "AlertDialog",
+                                    new DialogParameters($"message={dialogResult.Parameters.GetValue<string>("errMessage")}"),
+                                        (result) => { });
+                }
+            }
+
+            
+        }
+
+        void Transfer()
+        {
+            //Call Api Transfer
+
+
+            //Success
+            Navigate(nameof(WalletTransferRegion));
+
+            //Failed
+        }
+
+        void Print()
+        {
+
         }
 
         public void TimerCount()
@@ -921,7 +1058,13 @@ namespace MainModule.ViewModels
             }
         }
 
-
+        void LostFocus()
+        {
+            if (AmountDisplay.IndexOf('.') < 0)
+            {
+                AmountDisplay = AmountDisplay + ".00";
+            }
+        }
 
 
 

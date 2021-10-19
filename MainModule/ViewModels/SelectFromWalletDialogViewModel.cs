@@ -131,7 +131,7 @@ namespace MainModule.ViewModels
             {
                 if (item.WalletId.Equals(walletId))
                 {
-                    WalletEntityManager.GetInstance().WalletEntity = item;
+                    WalletFromEntityManager.GetInstance().WalletEntity = item;
                     RaiseRequestClose(new DialogResult(ButtonResult.OK));
                     return;
                 }
