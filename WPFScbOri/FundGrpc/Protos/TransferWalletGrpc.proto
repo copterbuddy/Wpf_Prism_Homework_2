@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_generic_services = true;
+
+package com.example.TransferWalletGrpc;
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "TransferWalletGrpc";
+
+service TransferWalletService {
+    rpc PreTansferWallet (PreTransferRequest) returns (PreTransferResponse);
+    rpc TransferWallet (TransferRequest) returns (TransferResponse);
+}
+
+message ReturnResult{
+    string result = 1;
+    string resultCode = 2;
+    string resultDescription = 3;
+    string errorRefId = 4;
+    google.protobuf.Timestamp resultTimestamp = 5;
+}
+
+message PreTransferRequest{
+    string fromWalletId = 1;
+    string toWalletId = 2;
+    string bankCode = 3;
+    double amount = 4;
+    string memo = 5;
+    string comName = 6;
+    string userId = 7;
+}
+
+message PreTransferResponse{
+    TransactionEntity transactionEntity = 1;
+    ReturnResult returnResult = 2;
+}
+
+message TransferRequest{
+    string transactionToken = 1;
+    string comName = 2;
+    string userId = 3;
+    string citizenId = 4;
+}
+
+message TransferResponse{
+    TransactionEntity transactionEntity = 1;
+    ReturnResult returnResult = 2;
+}
+
+
+message TransactionEntity{
+    string transCode = 1;
+    string fromWalletId = 2;
+    string fromWalletName = 3;
+    string toWalletId = 4;
+    string toWalletName = 5;
+    double amount = 6;
+    double fee3Amount = 7;
+    string bankCode = 8;
+    google.protobuf.Timestamp timeStamp = 9;
+    string memo = 10;
+    string transactionToken = 11;
+}

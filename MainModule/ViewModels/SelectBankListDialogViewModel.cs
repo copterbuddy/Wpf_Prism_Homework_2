@@ -91,33 +91,6 @@ namespace MainModule.ViewModels
 
         }
 
-
-        public BankListEntity GetMock()
-        {
-            BankListEntity dataList = new();
-
-            {
-                BankEntity data = new();
-                data.BankCode = "002";
-                data.BankName = "ธ.กรุงเทพ จำกัด (มหาชน)";
-                data.BankNameEN = "BANGKOK BANK PUBLIC COMPANY LTD.";
-                data.BankAbbr = "BBL";
-                data.ImagePath = GetImageSource("bank-icon0.png");
-                dataList.BankList.Add(data);
-            }
-            {
-                BankEntity data = new();
-                data.BankCode = "003";
-                data.BankName = "ธ.กสิกรไทย จำกัด (มหาชน)";
-                data.BankNameEN = "KASIKORNBANK PUBLIC COMPANY LIMITED";
-                data.BankAbbr = "KBANK";
-                data.ImagePath = GetImageSource("no_image.png");
-                dataList.BankList.Add(data);
-            }
-
-            return dataList;
-        }
-
         private ImageSource GetImageSource(string filename)
         {
             try

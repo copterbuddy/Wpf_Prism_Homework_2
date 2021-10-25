@@ -1,22 +1,20 @@
-﻿using Entity.Models;
-using Entity.Models.WalletTransfer;
-using Grpc.Core;
+﻿using Grpc.Core;
 using Grpc.Net.Client;
 using MainModule.GrpcService.Base;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using WPFScbOri.Models;
 
 namespace MainModule.GrpcService
 {
-    public class SystemConfigGrpcService
+    public class LogGrpcService
     {
 
-        public async Task<List<BankEntity>> GetBankList()
+        public async void AddActivityLog(int actType,string actDetail, string pageCode, string pageName)
         {
             try
             {
@@ -36,28 +34,22 @@ namespace MainModule.GrpcService
                     HttpClient = httpClient
                 });
 
-                var client = new systemConfigGrpc.GetBankListService.GetBankListServiceClient(channel);
+                var client = new LogGrpc.LogGrpc.LogGrpcClient(channel);
 
-                var request = new systemConfigGrpc.EmptyRequest{};
-
-                var response = await client.GetBankListAsync(request);
-                var stringRes = JsonConvert.SerializeObject(response);
-
-                if (response != null)
+                var request = new LogGrpc.LogRequest
                 {
-                    var res = JsonConvert.DeserializeObject<GetBankListResponse>(response.ToString());
-                    return res.bankList;
+                    ActType = actType,
+                    ActDetail = actDetail,
+                    UserId = AccountManager.GetInstance().Account.id.ToString(),
+                    Comname = AccountManager.GetInstance().Account.comname,
+                    PageCode = pageCode,
+                    PageName = pageName,
+                };
 
-                }
-                else
-                {
-                    return null;
-                }
+                _ = await client.AddActivityLogAsync(request);
             }
-            catch (Exception e)
-            {
-                return null;
-            }
+            catch
+            {}
         }
     }
 }

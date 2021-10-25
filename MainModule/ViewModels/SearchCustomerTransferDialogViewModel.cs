@@ -25,7 +25,6 @@ namespace MainModule.ViewModels
 
         private DelegateCommand<ComboBox> selectionSearchTypeCommand;
         public DelegateCommand<ComboBox> SelectionSearchTypeCommand => selectionSearchTypeCommand ?? (selectionSearchTypeCommand = new DelegateCommand<ComboBox>(SelectionSearchType));
-        //CustomerDetailListsCommond
         private DelegateCommand<string> customerDetailListsCommond;
         public DelegateCommand<string> CustomerDetailListsCommond => customerDetailListsCommond ?? (customerDetailListsCommond = new DelegateCommand<string>(GetCustId));
 
@@ -103,9 +102,9 @@ namespace MainModule.ViewModels
                 }
 
                 CustomerService searchCustomerService = new();
-                CustomerDetail Cust = await Task.Run(() => searchCustomerService.SeachCustomerTransfer(SelectedSearchType, SearchCustomerTextBoxString));
-                List<CustomerDetail> listCust = new();
-                listCust.Add(Cust);
+                List<CustomerDetail> listCust = await Task.Run(() => searchCustomerService.SeachCustomerTransfer(SelectedSearchType, SearchCustomerTextBoxString));
+                //List<CustomerDetail> listCust = new();
+                //listCust.Add(Cust);
 
                 if (listCust == null || listCust.Count == 0)
                 {
@@ -121,13 +120,9 @@ namespace MainModule.ViewModels
                     {
                         if (item.CitizenIdCardImagePath == null)
                             item.CitizenIdCardImagePath = GetImageSource("citizenId_image");
-                        else
-                            item.CitizenIdCardImagePath = GetImageSource("no_image");
 
                         if (item.SignedSignatureImagePath == null)
                             item.SignedSignatureImagePath = GetImageSource("sign_image");
-                        else
-                            item.SignedSignatureImagePath = GetImageSource("no_image");
 
                     }
 
@@ -145,26 +140,31 @@ namespace MainModule.ViewModels
             if (!string.IsNullOrEmpty(parameter?.ToLower()))
             {
                 string custId = parameter;
-                if (int.TryParse(parameter?.ToLower(), out _))
+                var dialogResult = new DialogResult(ButtonResult.OK);
+                foreach (var i in CustomerDetailLists)
                 {
-                    var dialogResult = new DialogResult(ButtonResult.OK);
-                    foreach (var i in CustomerDetailLists)
+                    if (custId == i.CustId)
                     {
-                        if (custId == i.CustId)
-                        {
-                            CustomerDetailTransferManager.GetInstance().customerDetail = i;
+                        CustomerDetailTransferManager.GetInstance().customerDetail = i;
 
+                        if (i.AccName != null)
                             dialogResult.Parameters.Add("AccName", (i.AccName).ToString());
+
+                        if (i.CustId != null)
                             dialogResult.Parameters.Add("CustId", (i.CustId).ToString());
 
+                        if(i.Age != null)
                             FundManager.GetInstance().CustAge = (i.Age).ToString();
+
+                        if (i.CustId != null)
                             FundManager.GetInstance().CustAccount = (i.CustId).ToString();
 
-                            RaiseRequestClose(dialogResult);
-                            return;
-                        }
-                    }
+                        LogGrpcService logGrpcService = new();
+                        logGrpcService.AddActivityLog(ActivityType.SelectCustomer.GetHashCode(), ActivityType.SelectCustomer.ToString(), PageCode.PAGE001.ToString(), PageName.TRANSFER_PAGE.ToString());
 
+                        RaiseRequestClose(dialogResult);
+                        return;
+                    }
                 }
             }
         }
@@ -229,7 +229,7 @@ namespace MainModule.ViewModels
                 SelectedSearchType = SearchTypes[0];
             }
 
-            SearchCustomerTextBoxString = "000015663527";
+            SearchCustomerTextBoxString = "1100800745551";
         }
 
     }

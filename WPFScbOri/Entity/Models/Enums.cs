@@ -16,5 +16,27 @@ namespace Entity.Models
             TransferRegion = 3,
 
         }
+
+        public enum ActivityType
+        {
+            SearchCustomer = 1,
+            SelectCustomer = 2,
+            CheckSign = 3,
+            PreTransfer = 4,
+            CompleteTransfer = 5,
+        }
+
+        public enum PageCode
+        {
+            PAGE001 = 1,
+            PAGE002 = 2,
+            PAGE003 = 3,
+        }
+        public enum PageName
+        {
+            TRANSFER_PAGE = 1,
+            PRETRANSFER_PAGE = 2,
+            COMPLETETRANSFER_PAGE = 3,
+        }
     }
 }

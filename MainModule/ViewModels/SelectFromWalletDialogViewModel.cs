@@ -1,4 +1,5 @@
 ﻿using Entity.Models;
+using MainModule.GrpcService;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -62,11 +63,12 @@ namespace MainModule.ViewModels
 
         }
 
-        public void OnDialogOpened(IDialogParameters parameters)
+        public async void OnDialogOpened(IDialogParameters parameters)
         {
             Message = parameters.GetValue<string>("message");
 
-            WalletListData = GetMock();
+            CustomerWalletService customerWalletService = new();
+            WalletListData = await customerWalletService.GetFromWallet(CustomerDetailTransferManager.GetInstance().customerDetail.CustId);
             WalletListDisplay = new ObservableCollection<WalletEntity>(WalletListData.WalletList);
         }
         #endregion

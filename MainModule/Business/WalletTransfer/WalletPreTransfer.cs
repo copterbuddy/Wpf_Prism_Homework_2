@@ -14,39 +14,39 @@ namespace MainModule.Business.WalletTransfer
     {
         public WalletPreTransfer() { }
 
-        public DialogResult PreTransfer(string toWallet,string fromWallet,string strAmount)
-        {
-            DialogResult dialogResult = null;
-            bool isProcess = true;
-            WalletTransactionResponse transactionResponse = null;
+        //public DialogResult PreTransfer(string toWallet,string fromWallet,string strAmount)
+        //{
+        //    DialogResult dialogResult = null;
+        //    bool isProcess = true;
+        //    WalletTransactionResponse transactionResponse = null;
 
-            if (isProcess)
-            {
-                //Call Api Pre Transfer
-                WalletService walletService = new();
-                transactionResponse = walletService.WalletPreTransfer("950102002557004", "950101000010911", 100);
+        //    if (isProcess)
+        //    {
+        //        //Call Api Pre Transfer
+        //        WalletService walletService = new();
+        //        transactionResponse = walletService.WalletPreTransfer("950102002557004", "950101000010911", 100);
 
-                if (transactionResponse == null)
-                {
-                    isProcess = false;
-                    dialogResult = new DialogResult(ButtonResult.Ignore);
-                }
-            }
+        //        if (transactionResponse == null)
+        //        {
+        //            isProcess = false;
+        //            dialogResult = new DialogResult(ButtonResult.Ignore);
+        //        }
+        //    }
 
-            if (isProcess)
-            {
-                //Call Api ActLog
+        //    if (isProcess)
+        //    {
+        //        //Call Api ActLog
 
 
-                //Return
-                dialogResult = new DialogResult(ButtonResult.OK);
-                TransactionEntityManager.GetInstance().TransactionEntity = transactionResponse.transactionEntity;
-            }
+        //        //Return
+        //        dialogResult = new DialogResult(ButtonResult.OK);
+        //        TransactionEntityManager.GetInstance().TransactionEntity = transactionResponse.transactionEntity;
+        //    }
             
 
 
-            return dialogResult;
-        }
+        //    return dialogResult;
+        //}
 
         public DialogResult Transfer()
         {
@@ -59,7 +59,7 @@ namespace MainModule.Business.WalletTransfer
             {
                 //Call Api Pre Transfer
                 WalletService walletService = new();
-                transactionResponse = walletService.WalletTransfer();
+                //transactionResponse = walletService.WalletTransfer();
 
                 if (transactionResponse == null)
                 {

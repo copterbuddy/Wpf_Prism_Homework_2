@@ -1,4 +1,5 @@
 ﻿using Entity.Models;
+using MainModule.GrpcService;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using static Entity.Models.Enums;
 
 namespace MainModule.ViewModels
 {
@@ -64,6 +66,9 @@ namespace MainModule.ViewModels
 
             CustomerImageCitizenDisplay = CustomerDetailTransferManager.GetInstance().customerDetail.CitizenIdCardImagePath;
             CustomerImageSignDisplay = CustomerDetailTransferManager.GetInstance().customerDetail.SignedSignatureImagePath;
+
+            LogGrpcService logGrpcService = new();
+            logGrpcService.AddActivityLog(ActivityType.CheckSign.GetHashCode(), ActivityType.CheckSign.ToString(), PageCode.PAGE001.ToString(), PageName.TRANSFER_PAGE.ToString());
         }
         #endregion
 

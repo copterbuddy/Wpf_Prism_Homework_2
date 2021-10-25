@@ -8,65 +8,67 @@ namespace Entity.Models
 {
     public class TransactionEntity
     {
-        private string toWallet;//id
-        private string fromWallet;//id
+        private string transCode;
+        private string fromWalletId;
+        private string fromWalletName;
+        private string toWalletId;
+        private string toWalletName;
         private decimal amount;
-        private string amountDisplay;
-        private string fee3Code;
         private decimal fee3Amount;
-        private string fee3AmountDisplay;
         private string walletNameTo;
         private string bankCode;//ToWalletBankCode
-        private string bankName;
         private DateTime timeStamp;
-        private int tranId;
-        private int tranType;
-        private string tranCode;
-        private string tranBankFrom;
-        private string tranBankTo;
+        private string memo;
+        private string transactionToken;
 
 
-        public string ToWallet { get => toWallet; set => toWallet = value; }
-        public string FromWallet { get => fromWallet; set => fromWallet = value; }
-        public decimal Amount { get => amount; set => amount = value; }
-        public string Fee3Code { get => fee3Code; set => fee3Code = value; }
-        public decimal Fee3Amount { get => fee3Amount; set => fee3Amount = value; }
-        public string WalletNameTo { get => walletNameTo; set => walletNameTo = value; }
-        public string BankCode { get => bankCode; set => bankCode = value; }
-        public string BankName
-        {
-            get
-            {
-                var bankList = BankListEntityManager.GetInstance().bankListEntity;
-                if (bankList != null && bankList.BankList != null && bankList.BankList.Count > 0)
-                {
-                    foreach (var item in bankList.BankList)
-                    {
-                        if (item.BankCode == BankCode)
-                        {
-                            bankName = item.BankName;
-                        }
-                    }
-                }
-                return bankName;
-            }
-        }
-        public DateTime TimeStamp { get => timeStamp; set => timeStamp = value; }
-        public int TranId { get => tranId; set => tranId = value; }
-        public int TranType { get => tranType; set => tranType = value; }
-        public string TranCode { get => tranCode; set => tranCode = value; }
-        public string TranBankFrom { get => tranBankFrom; set => tranBankFrom = value; }
-        public string TranBankTo { get => tranBankTo; set => tranBankTo = value; }
+        
         public string AmountDisplay { 
             get {
-                return amount.ToString();
+                if (Amount.ToString().IndexOf('.') < 0)
+                {
+                    return Amount.ToString() + ".00";
+                }
+                else
+                {
+                    return Amount.ToString();
+                }
             }
     }
 
         public string Fee3AmountDisplay { 
             get {
-                return fee3Amount.ToString();
+                if (Fee3Amount.ToString().IndexOf('.') < 0)
+                {
+                    return Fee3Amount.ToString() + ".00";
+                }
+                else
+                {
+                    return Fee3Amount.ToString();
+                }
             }
         }
+        public string BankName
+        {
+            get
+            {
+                var name = BankEntityManager.GetInstance().bankEntity.BankName;
+                return name;
+            }
+        }
+
+        public string TransCode { get => transCode; set => transCode = value; }
+        public string FromWalletId { get => fromWalletId; set => fromWalletId = value; }
+        public string FromWalletName { get => fromWalletName; set => fromWalletName = value; }
+        public string ToWalletId { get => toWalletId; set => toWalletId = value; }
+        public string ToWalletName { get => toWalletName; set => toWalletName = value; }
+        public decimal Amount { get => amount; set => amount = value; }
+        public decimal Fee3Amount { get => fee3Amount; set => fee3Amount = value; }
+        public string WalletNameTo { get => walletNameTo; set => walletNameTo = value; }
+        public string BankCode { get => bankCode; set => bankCode = value; }
+        public DateTime TimeStamp { get => timeStamp; set => timeStamp = value; }
+        public string Memo { get => memo; set => memo = value; }
+        public string TransactionToken { get => transactionToken; set => transactionToken = value; }
+
     }
 }

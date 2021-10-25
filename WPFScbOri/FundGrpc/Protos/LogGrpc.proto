@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_generic_services = true;
+
+package com.example.LogGrpc;
+
+option csharp_namespace = "LogGrpc";
+
+service LogGrpc {
+    rpc AddActivityLog(LogRequest) returns(EmptyResponse);
+}
+
+message LogRequest{
+    int32 actType = 1;
+    string actDetail = 2;
+    string userId = 3;
+    string comname = 4;
+    string pageCode = 5;
+    string pageName = 6;
+
+}
+
+message EmptyResponse{
+}

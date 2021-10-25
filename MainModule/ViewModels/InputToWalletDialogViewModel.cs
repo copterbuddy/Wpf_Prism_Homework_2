@@ -1,4 +1,5 @@
 ﻿using Entity.Models;
+using MainModule.GrpcService;
 using MainModule.Service;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -92,7 +93,7 @@ namespace MainModule.ViewModels
             RaiseRequestClose(new DialogResult(result));
 
         }
-        private void inputToWallet(TextBox walletIdTextBox)
+        private async void inputToWallet(TextBox walletIdTextBox)
         {
             //Input InValid
             //1.Open Alert Dialog
@@ -110,8 +111,8 @@ namespace MainModule.ViewModels
 
             //Input Valid
             //Call Api
-            WalletService walletService = new();
-            string walletName = walletService.GetToWallet(walletIdTextBox.Text, BankEntityManager.GetInstance().bankEntity.BankCode);
+            CustomerWalletService customerWalletService = new();
+            string walletName = await customerWalletService.GetToWallet(walletIdTextBox.Text);
 
 
 

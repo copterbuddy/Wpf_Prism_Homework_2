@@ -303,8 +303,8 @@ namespace MainModule.ViewModels
                     (result) => {
                         if (result.Result == ButtonResult.OK)
                         {
-                            CustomerTransferIdTextBox = result.Parameters.GetValue<string>("CustId");
-                            CustomerTransferName = result.Parameters.GetValue<string>("AccName");
+                            CustomerTransferIdTextBox = CustomerDetailTransferManager.GetInstance().customerDetail.CitizenID;
+                            CustomerTransferName = CustomerDetailTransferManager.GetInstance().customerDetail.AccName;
 
                             CheckSelectFundButtonEnable();
                         }
@@ -329,8 +329,8 @@ namespace MainModule.ViewModels
                     (result) => {
                         if (result.Result == ButtonResult.OK)
                         {
-                            CustomerTransferIdTextBox = result.Parameters.GetValue<string>("CustId");
-                            CustomerTransferName = result.Parameters.GetValue<string>("AccName");
+                            CustomerTransferIdTextBox = CustomerDetailTransferManager.GetInstance().customerDetail.CitizenID;
+                            CustomerTransferName = CustomerDetailTransferManager.GetInstance().customerDetail.AccName;
 
                             CheckSelectFundButtonEnable();
                         }
@@ -338,7 +338,7 @@ namespace MainModule.ViewModels
                         {
                             string message = result.Parameters.GetValue<string>("message");
                             defaultSearch = result.Parameters.GetValue<string>("defaultSearch");
-                            OpenSearchCustomerDialog(defaultSearch);
+                            OpenSearchCustomerTransferDialog(defaultSearch);
                             dialogService.Show(
                                 "AlertDialog",
                                 new DialogParameters($"message={message}"),
@@ -495,7 +495,7 @@ namespace MainModule.ViewModels
             return response;
         }
 
-        void PreTransfer()
+        async void PreTransfer()
         {
             DialogResult dialogResult = null;
             bool isProcess = true;
@@ -530,16 +530,16 @@ namespace MainModule.ViewModels
             {
                 var fromWallet = WalletFromEntityManager.GetInstance().WalletEntity.WalletId;
                 var toWallet = WalletToEntityManager.GetInstance().WalletEntity.WalletId;
-                var strAmount = AmountDisplay;
+                var bankCode = BankEntityManager.GetInstance().bankEntity.BankCode;
+                var doubleAmount = Double.Parse(AmountDisplay);
 
-                WalletPreTransfer walletPreTransfer = new WalletPreTransfer();
-                dialogResult = walletPreTransfer.PreTransfer(toWallet, fromWallet, strAmount);
+                TransferService transfer = new();
+                WalletTransactionResponse transactionResponse = await transfer.PreTransfer(fromWallet, toWallet, bankCode, doubleAmount, Memo);
 
-                WalletService walletService = new WalletService();
-                WalletTransactionResponse transactionResponse = walletService.WalletPreTransfer("950102002557004", "950101000010911", 100);
                 if (transactionResponse != null)
                 {
                     dialogResult = new DialogResult(ButtonResult.OK);
+                    TransactionEntityManager.GetInstance().TransactionEntity = transactionResponse.transactionEntity;
                     TransactionEntity = transactionResponse.transactionEntity;
                 }
                 else
@@ -570,15 +570,32 @@ namespace MainModule.ViewModels
             
         }
 
-        void Transfer()
+        async void Transfer()
         {
+            var transactionToken = TransactionEntityManager.GetInstance().TransactionEntity.TransactionToken;
+            var citizenId = CustomerDetailTransferManager.GetInstance().customerDetail.CitizenID;
             //Call Api Transfer
+            TransferService transfer = new();
+            WalletTransactionResponse transactionResponse = await transfer.Transfer(transactionToken, citizenId);
+
+            
+            if (transactionResponse != null)
+            {
+                //Success
+                TransactionEntityManager.GetInstance().TransactionEntity = transactionResponse.transactionEntity;
+                TransactionEntity = transactionResponse.transactionEntity;
+
+                Navigate(nameof(WalletTransferRegion));
+            }
+            else
+            {
+                //Failed
+
+            }
 
 
-            //Success
-            Navigate(nameof(WalletTransferRegion));
 
-            //Failed
+
         }
 
         void Print()

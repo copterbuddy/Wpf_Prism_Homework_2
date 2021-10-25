@@ -178,7 +178,7 @@
                                                                             </Image.Style>
                                                                         </Image>
                                                                     </Button>
-                                                                    <TextBlock Text="{Binding CustId}" Foreground="Black" />
+                                                                    <TextBlock Text="{Binding CitizenID}" Foreground="Black" />
                                                                 </StackPanel>
                                                                 <TextBlock Grid.Column="1" Text="{Binding Branch}" Foreground="Black" />
                                                                 <TextBlock Grid.Column="2"  Text="{Binding IsLTF}" Foreground="Black" />
