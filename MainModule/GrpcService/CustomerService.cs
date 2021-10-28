@@ -162,6 +162,8 @@ namespace MainModule.GrpcService
                             customer.Sensitive = item.SensitiveAccount;
                             customer.IdCardPath = item.CitizenImage;
                             customer.SignaturePath = item.SignImage;
+                            customer.MobileNo = item.MobileNo;
+                            customer.Address = item.Address;
 
                             if (!string.IsNullOrEmpty(customer.IdCardPath))
                             {

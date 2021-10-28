@@ -30,6 +30,7 @@
     <None Remove="Fonts\Sarabun-Thin.ttf" />
     <None Remove="Fonts\Sarabun-ThinItalic.ttf" />
     <None Remove="Fonts\THSarabunNew.ttf" />
+    <None Remove="Fonts\upcjl.ttf" />
     <None Remove="Images\Active.png" />
     <None Remove="Images\alert_img.png" />
     <None Remove="Images\check.jpg" />
@@ -129,6 +130,7 @@
     <Resource Include="Fonts\Sarabun-Thin.ttf" />
     <Resource Include="Fonts\Sarabun-ThinItalic.ttf" />
     <Resource Include="Fonts\THSarabunNew.ttf" />
+    <Resource Include="Fonts\upcjl.ttf" />
     <Resource Include="Images\Active.png" />
     <Resource Include="Images\alert_img.png" />
     <Resource Include="Images\check.jpg" />
@@ -210,10 +212,6 @@
     <Page Update="Strings_TH.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DTO\" />
   </ItemGroup>
 
 </Project>

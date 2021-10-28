@@ -8,6 +8,7 @@ package com.example.CustomerWalletGrpc;
 import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "CustomerWalletGrpc";
+
 service CustomerWalletService {
     rpc SearchCustomer (SearchCustomerRequest) returns (SearchCustomerResponse);
     rpc GetFromWallet (GetFromWalletRequest) returns (GetFromWalletResponse);
@@ -42,6 +43,8 @@ message SearchCustomerResponse{
         bool sensitiveAccount = 9;
         string citizenImage = 10;
         string signImage = 11;
+        string mobileNo = 12;
+        string address = 13;
     }
     
     repeated CustomerEntity customerEntity = 1;

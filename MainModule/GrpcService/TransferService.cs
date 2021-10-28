@@ -44,7 +44,7 @@ namespace MainModule.GrpcService
                     ToWalletId = toWalletId,
                     BankCode = bankCode,
                     Amount = amount,
-                    Memo = memo,
+                    Memo = memo != null ? memo : "",
                     ComName = AccountManager.GetInstance().Account.comname,
                     UserId = AccountManager.GetInstance().Account.id.ToString(),
                 };
@@ -61,8 +61,10 @@ namespace MainModule.GrpcService
                     res = null;
                 }
             }
-            catch
-            { }
+            catch (Exception e)
+            {
+                
+            }
             return res;
         }
 

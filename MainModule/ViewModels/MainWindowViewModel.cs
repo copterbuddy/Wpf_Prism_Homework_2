@@ -27,6 +27,11 @@ using MainModule.Business.WalletTransfer;
 using MainModule.Views;
 using Entity.DTO;
 using MainModule.Service;
+using System.IO;
+using iTextSharp.text.pdf;
+using System.Diagnostics;
+using iTextSharp.text;
+using static iTextSharp.text.Font;
 
 namespace MainModule.ViewModels
 {
@@ -113,30 +118,13 @@ namespace MainModule.ViewModels
         public string CustomerTransferName { get => customerTransferName; set => SetProperty(ref customerTransferName, value); }
         public string CustomerTransferIdTextBox { get => customerTransferIdTextBox; set => SetProperty(ref customerTransferIdTextBox, value); }
         public DelegateCommand PreTransferCommand => preTransferCommand ?? (preTransferCommand = new DelegateCommand(PreTransfer));
-
-        //public WalletEntity ToWalletEntity 
-        //{ 
-        //    get 
-        //    { 
-        //        toWalletEntity = WalletToEntityManager.GetInstance().WalletEntity;
-        //        return toWalletEntity;
-        //    } 
-        //}
-
-        //public WalletEntity FromWalletEntity
-        //{
-        //    get
-        //    {
-        //        fromWalletEntity = WalletFromEntityManager.GetInstance().WalletEntity;
-        //        return fromWalletEntity;
-        //    }
-        //}
-
         public TransactionEntity TransactionEntity { get => transactionEntity; set => SetProperty(ref transactionEntity, value); }
         public string Memo { get => memo; set => SetProperty(ref memo, value); }
         public DelegateCommand TransferCommand => transferCommand ?? (transferCommand = new DelegateCommand(Transfer));
 
         public DelegateCommand PrintCommand => printCommand ?? (printCommand = new DelegateCommand(Print));
+
+        public bool CustomerHaveData { get => customerIsNull; set => SetProperty(ref customerIsNull, value); }
 
         private DelegateCommand lostFocusCommand;
         private DelegateCommand openCheckLicenseImageCommand;
@@ -149,6 +137,10 @@ namespace MainModule.ViewModels
         private string memo;
         private DelegateCommand transferCommand;
         private DelegateCommand printCommand;
+        private bool customerIsNull;
+        //MainTransferCommand
+        public DelegateCommand mainTransferCommand;
+        public DelegateCommand MainTransferCommand => mainTransferCommand ?? (mainTransferCommand = new DelegateCommand(GoToMainTransfer));
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -168,6 +160,7 @@ namespace MainModule.ViewModels
             CheckIcLicense(StaffIdText);
 
             CurrentRegion = CurrentMainRegion.WelcomeRegion;
+            CustomerHaveData = false;
             #endregion
 
             #region Delegate Command
@@ -186,6 +179,13 @@ namespace MainModule.ViewModels
 
         void CheckSelectFundButtonEnable()
         {
+            var customerDetail = CustomerDetailTransferManager.GetInstance().customerDetail;
+            if (customerDetail != null && !string.IsNullOrEmpty(customerDetail.CustId))
+            {
+                CustomerHaveData = true;
+            }
+
+
             if (!string.IsNullOrEmpty(CustomerIdTextBox))
                 checkEnable1 = true;
 
@@ -502,21 +502,34 @@ namespace MainModule.ViewModels
 
             #region Check Parameter
             if (isProcess)
-                if (WalletFromEntityManager.GetInstance().WalletEntity == null)
+                if (string.IsNullOrEmpty(CustomerTransferIdTextBox))
                 {
                     dialogResult = new DialogResult(ButtonResult.Ignore);
-                    dialogResult.Parameters.Add("errMessage", "กรุณาระบุข้อมูลผู้โอน");
+                    dialogResult.Parameters.Add("errMessage", "กรุณาเลือกลูกค้า");
                     isProcess = false;
                 }
 
             if (isProcess)
-                if (WalletToEntityManager.GetInstance().WalletEntity == null)
+                if (string.IsNullOrEmpty(CustomerTransferName))
+                {
+                    dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("errMessage", "กรุณาเลือกลูกค้า");
+                    isProcess = false;
+                }
+            if (string.IsNullOrEmpty(FromWalletSelectedDisplay) || WalletFromEntityManager.GetInstance().WalletEntity == null)
+            {
+                dialogResult = new DialogResult(ButtonResult.Ignore);
+                dialogResult.Parameters.Add("errMessage", "กรุณาระบุข้อมูลผู้โอน");
+                isProcess = false;
+            }
+
+            if (isProcess)
+                if (string.IsNullOrEmpty(ToWalletSelectedDisplay) || WalletToEntityManager.GetInstance().WalletEntity == null || BankEntityManager.GetInstance().bankEntity == null)
                 {
                     dialogResult = new DialogResult(ButtonResult.Ignore);
                     dialogResult.Parameters.Add("errMessage", "กรุณาระบุข้อมูลผู้รับโอน");
                     isProcess = false;
                 }
-
             if (isProcess)
                 if (string.IsNullOrEmpty(AmountDisplay))
                 {
@@ -579,7 +592,7 @@ namespace MainModule.ViewModels
             WalletTransactionResponse transactionResponse = await transfer.Transfer(transactionToken, citizenId);
 
             
-            if (transactionResponse != null)
+            if (transactionResponse != null && transactionResponse.transactionEntity != null)
             {
                 //Success
                 TransactionEntityManager.GetInstance().TransactionEntity = transactionResponse.transactionEntity;
@@ -600,7 +613,361 @@ namespace MainModule.ViewModels
 
         void Print()
         {
+            PrintPdf();
+        }
 
+        void PrintPdf()
+        {
+            Thread.Sleep(3000);
+            string workingDirectory = Environment.CurrentDirectory;
+
+            string pdfpath = System.IO.Path.GetTempPath() + "WPF";
+
+            string imageName = "slip_transfer.png";
+            string imagepath = Directory.GetParent(workingDirectory).Parent.Parent.Parent.FullName + "\\WPFScbOri\\Entity\\Images\\TransferImages\\" + imageName;
+
+
+            Document doc = new Document(iTextSharp.text.PageSize.A5.Rotate(), 0, 0, 0, 0);
+            var w = doc.PageSize.Width;
+            var h = doc.PageSize.Height;
+            string pdfOpenPath = pdfpath + "\\PDFFile" + DateTime.Now.ToString("yyMMddHHmmss") + ".pdf";
+
+            PdfWriter pdf = PdfWriter.GetInstance(doc, new FileStream(pdfOpenPath, FileMode.Create));
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            var fJasmineUPC = GetFontJasmineUPC();
+
+            var UsedFont = fJasmineUPC;
+
+            try
+
+            {
+                doc.Open();
+                pdf.Open();
+
+                PdfContentByte canvas = pdf.DirectContent;
+
+                #region PDF Content
+                Image png = Image.GetInstance(imagepath);
+                png.SetAbsolutePosition(0, 0);
+                png.Alignment = iTextSharp.text.Image.UNDERLYING;
+                png.ScaleAbsolute(doc.PageSize.Width, doc.PageSize.Height);
+
+                canvas.AddImage(png);
+
+
+                //TranDate
+                {
+                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.DateDisplayWithShortMonth, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, -30f, 350f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Fix
+                {
+                    Phrase text = new Phrase(new Chunk("อ่อนนุช", UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 85f, 350f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //TranCode
+                {
+                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.TransCode, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 365f, 350f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Fix
+                {
+                    Phrase text = new Phrase(new Chunk("/", UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 60f, 325f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //FullName
+                {
+                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.FromWalletName, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 65f, 292f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //MobileNo
+                {
+                    Phrase text = new Phrase(new Chunk(CustomerDetailTransferManager.GetInstance().customerDetail.MobileNo, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 425f, 292f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Fix
+                {
+                    Phrase text = new Phrase(new Chunk("/", UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 160f, 265f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //FromWalletId
+                {
+                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.FromWalletId, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 308f, 265f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Fix
+                {
+                    Phrase text = new Phrase(new Chunk("/", UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 548, 265f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Address
+                {
+                    Phrase text = new Phrase(new Chunk(CustomerDetailTransferManager.GetInstance().customerDetail.Address, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 70, 240f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //CitizenId
+                {
+                    Phrase text = new Phrase(new Chunk(CustomerDetailTransferManager.GetInstance().customerDetail.CitizenID, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 480, 240f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //ToWalletName
+                {
+                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.ToWalletName, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 70, 205f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Fix
+                {
+                    Phrase text = new Phrase(new Chunk("ดุสิต", UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 70, 178f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //ToWalletId
+                {
+                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.ToWalletId, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 345, 178f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Amount Number Format
+                {
+                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.AmountDisplay, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 100, 128f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Amount String Format
+                {
+                    Phrase text = new Phrase(new Chunk(ChangeDecimalToText(TransactionEntityManager.GetInstance().TransactionEntity.Amount,SaleType.Baht), UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 355, 128f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Memo
+                {
+                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.Memo, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 105, 102f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Fee
+                {
+                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.Fee3AmountDisplay, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 174, 26f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Amount + Fee
+                {
+                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.TotalAmountDisplay, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 295, 26f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Employee Name
+                {
+                    Phrase text = new Phrase(new Chunk(AccountManager.GetInstance().Account.name, UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 380, 26f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+
+                //Employee Id
+                {
+                    Phrase text = new Phrase(new Chunk(AccountManager.GetInstance().Account.id.ToString(), UsedFont));
+                    PdfPTable table = new PdfPTable(1);
+                    table.TotalWidth = 200f;
+                    PdfPCell cell = new PdfPCell(text);
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
+                    cell.BorderWidth = 0;
+                    table.AddCell(cell);
+                    table.WriteSelectedRows(0, -1, 380, 17f, pdf.DirectContent);
+                    pdf.Add(table);
+                }
+                #endregion
+
+
+                doc.Close();
+
+                //open pdf file
+                var p = new Process();
+                p.StartInfo = new ProcessStartInfo(pdfOpenPath)
+                {
+                    UseShellExecute = true
+                };
+                p.Start();
+
+            }
+
+            catch (Exception ex)
+            {
+                //Log error;
+
+            }
+        }
+
+        public static iTextSharp.text.Font GetFontJasmineUPC()
+        {
+            string fontName = "jasmineUPC";
+            if (!FontFactory.IsRegistered(fontName))
+            {
+                string workingDirectory = Environment.CurrentDirectory;
+                string fontttf = "upcjl.ttf";
+                var fontPath = Directory.GetParent(workingDirectory).Parent.Parent.Parent.FullName + "\\WPFScbOri\\Entity\\Fonts\\" + fontttf;
+                FontFactory.Register(fontPath, fontName);
+            }
+
+            var FontColour = new BaseColor(0, 0, 0); // optional... ints 0, 0, 0 are red, green, blue
+            int FontStyle = iTextSharp.text.Font.NORMAL;  // optional
+            float FontSize = iTextSharp.text.Font.DEFAULTSIZE;  // optional
+
+            return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, FontSize, FontStyle, FontColour);
+            // last 3 arguments can be removed
         }
 
         public void TimerCount()
@@ -702,6 +1069,25 @@ namespace MainModule.ViewModels
             {
 
             }
+        }
+
+        void GoToMainTransfer()
+        {
+            CustomerDetailTransferManager.GetInstance().customerDetail = null;
+            WalletFromEntityManager.GetInstance().WalletEntity.WalletId = null;
+            WalletToEntityManager.GetInstance().WalletEntity.WalletId = null;
+            BankEntityManager.GetInstance().bankEntity = null;
+
+            CustomerTransferIdTextBox = "";
+            CustomerTransferName = "";
+            FromWalletSelectedDisplay = "";
+            ToWalletSelectedDisplay = "";
+            AmountDisplay = "";
+            Memo = "";
+
+            CustomerHaveData = false;
+
+            Navigate(nameof(TransferRegion));
         }
 
         private void SetSellFundTable()
@@ -1077,7 +1463,7 @@ namespace MainModule.ViewModels
 
         void LostFocus()
         {
-            if (AmountDisplay.IndexOf('.') < 0)
+            if (!string.IsNullOrEmpty(AmountDisplay) && AmountDisplay.IndexOf('.') < 0)
             {
                 AmountDisplay = AmountDisplay + ".00";
             }

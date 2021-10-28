@@ -300,7 +300,7 @@
 
                                     <TextBlock Grid.Column="1"
                                             Margin="20,0,0,0"
-                                    Text="{Binding TransactionEntity.TimeStamp}"
+                                    Text="{Binding TransactionEntity.DateDisplayWithShortMonth}"
                                     Style="{StaticResource SelectFundTextTitleRegular}"
                                     Foreground="Black"
                                     VerticalAlignment="Center"

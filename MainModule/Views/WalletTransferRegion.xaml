@@ -150,7 +150,7 @@
 
                                     <TextBlock Grid.Column="1"
                                             Margin="20,0,10,0"
-                                    Text="{Binding TransactionEntity.ToWalletId}"
+                                    Text="{Binding TransactionEntity.DateDisplay}"
                                     Style="{StaticResource SelectFundTextTitleRegular}"
                                     Foreground="Black"
                                     VerticalAlignment="Center"
@@ -175,7 +175,7 @@
 
                                     <TextBlock Grid.Column="1"
                                             Margin="20,0,10,0"
-                                    Text="{Binding TransactionEntity.ToWalletName}"
+                                    Text="{Binding TransactionEntity.TimeDisplay}"
                                     Style="{StaticResource SelectFundTextTitleRegular}"
                                     Foreground="Black"
                                     VerticalAlignment="Center"
@@ -198,13 +198,29 @@
                                     VerticalAlignment="Center"
                                     />
 
-                                    <TextBlock Grid.Column="1"
+                                    <StackPanel Grid.Column="1"
                                             Margin="20,0,10,0"
-                                    Text="{Binding TransactionEntity.FromWalletId}"
-                                    Style="{StaticResource SelectFundTextTitleRegular}"
-                                    Foreground="Black"
-                                    VerticalAlignment="Center"
+                                                Orientation="Horizontal">
+                                            <TextBlock
+                                        Text="{Binding TransactionEntity.FromWalletName}"
+                                        Style="{StaticResource SelectFundTextTitleRegular}"
+                                        Foreground="Black"
+                                        VerticalAlignment="Center"
+                                        />
+                                        <TextBlock
+                                        Text=" * "
+                                        Style="{StaticResource SelectFundTextTitleRegular}"
+                                        Foreground="Black"
+                                        VerticalAlignment="Center"
+                                            />
+                                        <TextBlock
+                                        Text="{Binding TransactionEntity.FromWalletId}"
+                                        Style="{StaticResource SelectFundTextTitleRegular}"
+                                        Foreground="Black"
+                                        VerticalAlignment="Center"
                                     />
+                                    </StackPanel>
+                                    
                                 </Grid>
                                 <!--End บัญชีผู้โอน-->
 
@@ -223,13 +239,31 @@
                                     VerticalAlignment="Center"
                                     />
 
-                                    <TextBlock Grid.Column="1"
+                                    <StackPanel Grid.Column="1"
                                             Margin="20,0,10,0"
+                                                Orientation="Horizontal">
+
+                                        <TextBlock
+                                        Text="{Binding TransactionEntity.ToWalletName}"
+                                        Style="{StaticResource SelectFundTextTitleRegular}"
+                                        Foreground="Black"
+                                        VerticalAlignment="Center"
+                                        />
+                                        <TextBlock
+                                        Text=" * "
+                                        Style="{StaticResource SelectFundTextTitleRegular}"
+                                        Foreground="Black"
+                                        VerticalAlignment="Center"
+                                            />
+                                        <TextBlock
                                     Text="{Binding TransactionEntity.ToWalletId}"
                                     Style="{StaticResource SelectFundTextTitleRegular}"
                                     Foreground="Black"
                                     VerticalAlignment="Center"
-                                    />
+                                            />
+                                    </StackPanel>
+                                    
+                                    
                                 </Grid>
                                 <!--End บัญชีผู้รับโอน-->
 
@@ -333,6 +367,7 @@
                             Style="{StaticResource DefaultWhiteButtonStyle}"
                             Cursor="Hand"
                             Margin="5,0,0,0"
+                        Command="{Binding MainTransferCommand}"
                             ></Button>
             </StackPanel>
 

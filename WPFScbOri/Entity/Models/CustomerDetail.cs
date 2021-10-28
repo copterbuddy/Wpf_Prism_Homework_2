@@ -27,6 +27,8 @@ namespace WPFScbOri.Models
         public string CitizenID { get; set; }
         public string IdCardPath { get; set; }
         public string SignaturePath { get; set; }
+        private string mobileNo;
+        private string address;
 
         public ImageSource CitizenIdCardImagePath { get; set; }
         public ImageSource SignedSignatureImagePath { get; set; }
@@ -47,5 +49,7 @@ namespace WPFScbOri.Models
 
         public ICommand ToggleInnerInformationCommand { get; set; }
         public ICommand SelectItemCommand { get; set; }
+        public string MobileNo { get => mobileNo; set => mobileNo = value; }
+        public string Address { get => address; set => address = value; }
     }
 }

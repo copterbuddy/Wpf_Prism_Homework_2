@@ -20,6 +20,9 @@ namespace Entity.Models.WalletTransfer
         string citizenImage;
         string signImage;
 
+        private string mobileNo;
+        private string address;
+
         public string CustId { get => custId; set => custId = value; }
         public string CitizenId { get => citizenId; set => citizenId = value; }
         public string Branch { get => branch; set => branch = value; }
@@ -31,5 +34,7 @@ namespace Entity.Models.WalletTransfer
         public bool SensitiveAccount { get => sensitiveAccount; set => sensitiveAccount = value; }
         public string CitizenImage { get => citizenImage; set => citizenImage = value; }
         public string SignImage { get => signImage; set => signImage = value; }
+        public string MobileNo { get => mobileNo; set => mobileNo = value; }
+        public string Address { get => address; set => address = value; }
     }
 }

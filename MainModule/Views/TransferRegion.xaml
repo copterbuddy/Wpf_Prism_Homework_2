@@ -252,29 +252,42 @@
 
                                 <Grid Grid.Column="1"
                                       HorizontalAlignment="Stretch">
-                                    <TextBox
-                                        Style="{StaticResource TextBoxSearCustomerEntryStyle31}"
-                                        Text="{Binding FromWalletSelectedDisplay}"
-                                        VerticalAlignment="Center"
-                                        IsReadOnly="True"
-                                        Height="40"
-                                        VerticalContentAlignment="Center"
-                                             HorizontalAlignment="Stretch"
-                                        />
+                                        <TextBox
+                                            Style="{StaticResource TextBoxSearCustomerEntryStyle31}"
+                                            Text="{Binding FromWalletSelectedDisplay}"
+                                            VerticalAlignment="Center"
+                                            IsReadOnly="True"
+                                            Height="40"
+                                            VerticalContentAlignment="Center"
+                                                 HorizontalAlignment="Stretch"
+                                            IsEnabled="{Binding CustomerHaveData}"
+                                            />
 
-                                    <Image 
-                                        Source="pack://application:,,,/Entity;Component/Images/SCB3-02.png"
-                                        Margin="0,0,6,0"
-                                        Width="25"
-                                        Height="26"
-                                        Cursor="Hand"
-                                        HorizontalAlignment="Right"
-                                            
-                                    >
-                                        <Image.InputBindings>
+                                        <Image 
+                                            Source="pack://application:,,,/Entity;Component/Images/SCB3-02.png"
+                                            Margin="0,0,6,0"
+                                            Width="25"
+                                            Height="26"
+                                            Cursor="Hand"
+                                            HorizontalAlignment="Right"
+                                                IsEnabled="{Binding CustomerHaveData}"
+                                            >
+                                            <Image.InputBindings>
                                                 <MouseBinding Gesture="LeftClick" Command="{Binding OpenSelectFromWalletDialogCommand}" />
-                                        </Image.InputBindings>
-                                    </Image>
+                                            </Image.InputBindings>
+                                            <Image.Style>
+                                                <Style TargetType="{x:Type Image}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="True">
+                                                            <Setter Property="Opacity" Value="1" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="False">
+                                                            <Setter Property="Opacity" Value="0.3" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
                                 </Grid>
 
                             </Grid>
@@ -297,28 +310,41 @@
 
                                 <Grid Grid.Column="1"
                                     HorizontalAlignment="Stretch">
-                                    <TextBox
-                                    Style="{StaticResource TextBoxSearCustomerEntryStyle31}"
-                                    Text="{Binding ToWalletSelectedDisplay}"
-                                    VerticalAlignment="Center"
-                                    IsReadOnly="True"
-                                    Height="40"
-                                    VerticalContentAlignment="Center"
-                                            HorizontalAlignment="Stretch"
-                                    />
+                                        <TextBox
+                                        Style="{StaticResource TextBoxSearCustomerEntryStyle31}"
+                                        Text="{Binding ToWalletSelectedDisplay}"
+                                        VerticalAlignment="Center"
+                                        IsReadOnly="True"
+                                        Height="40"
+                                        VerticalContentAlignment="Center"
+                                                HorizontalAlignment="Stretch"
+                                        IsEnabled="{Binding CustomerHaveData}"
+                                        />
 
-                                    <Image 
-                                    Source="pack://application:,,,/Entity;Component/Images/SCB3-02.png"
-                                    Margin="0,0,6,0"
-                                    Width="25"
-                                    Height="26"
-                                    Cursor="Hand"
-                                    HorizontalAlignment="Right"
-                                            
-                                >
-                                        <Image.InputBindings>
-                                                <MouseBinding Gesture="LeftClick" Command="{Binding OpenSelectBankListDialogCommand}" />
-                                        </Image.InputBindings>
+                                        <Image 
+                                            Source="pack://application:,,,/Entity;Component/Images/SCB3-02.png"
+                                            Margin="0,0,6,0"
+                                            Width="25"
+                                            Height="26"
+                                            Cursor="Hand"
+                                            HorizontalAlignment="Right"
+                                            IsEnabled="{Binding CustomerHaveData}"
+                                            >
+                                            <Image.InputBindings>
+                                                    <MouseBinding Gesture="LeftClick" Command="{Binding OpenSelectBankListDialogCommand}" />
+                                            </Image.InputBindings>
+                                            <Image.Style>
+                                                <Style TargetType="{x:Type Image}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="True">
+                                                            <Setter Property="Opacity" Value="1" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="False">
+                                                            <Setter Property="Opacity" Value="0.3" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
                                     </Image>
                                 </Grid>
 
@@ -354,6 +380,7 @@
                                                     Height="40"
                                                     VerticalContentAlignment="Center"
                                                     HorizontalAlignment="Stretch"
+                                                     IsEnabled="{Binding CustomerHaveData}"
                                                     >
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="LostFocus" >
@@ -392,6 +419,7 @@
                                         Height="40"
                                         VerticalContentAlignment="Center"
                                         HorizontalAlignment="Stretch"
+                                            IsEnabled="{Binding CustomerHaveData}"
                                         />
                                 </Grid>
 
@@ -420,6 +448,7 @@
                                                 Style="{StaticResource CheckLicenseButtonStyle}"
                                                 HorizontalAlignment="Stretch"
                                                 Command="{Binding OpenCheckLicenseImageCommand}"
+                                                IsEnabled="{Binding CustomerHaveData}"
                                                 >
                                             </Button>
                                         </Grid>
@@ -449,6 +478,7 @@
                             Cursor="Hand"
                             Margin="0,0,5,0"
                         Command="{Binding PreTransferCommand}"
+                        IsEnabled="{Binding CustomerHaveData}"
                             >
                 </Button>
                 <Button Content="ยกเลิก"

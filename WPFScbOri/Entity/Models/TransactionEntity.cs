@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +49,20 @@ namespace Entity.Models
                 }
             }
         }
+        public string TotalAmountDisplay
+        {
+            get
+            {
+                if (Fee3Amount.ToString().IndexOf('.') < 0)
+                {
+                    return (Amount + Fee3Amount).ToString() + ".00";
+                }
+                else
+                {
+                    return Fee3Amount.ToString();
+                }
+            }
+        }
         public string BankName
         {
             get
@@ -55,6 +70,156 @@ namespace Entity.Models
                 var name = BankEntityManager.GetInstance().bankEntity.BankName;
                 return name;
             }
+        }
+
+        public string DateDisplay
+        {
+            get
+            {
+                string response = "";
+                int thaiYear = new ThaiBuddhistCalendar().GetYear(TimeStamp);
+                int thaiMonth = new ThaiBuddhistCalendar().GetMonth(TimeStamp);
+                int thaiDay = new ThaiBuddhistCalendar().GetDayOfMonth(TimeStamp);
+                int thaiHour = new ThaiBuddhistCalendar().GetHour(TimeStamp);
+                int thaiMinute = new ThaiBuddhistCalendar().GetMinute(TimeStamp);
+                int thaiSecond = new ThaiBuddhistCalendar().GetSecond(TimeStamp);
+
+                response = thaiDay.ToString() + " " + GetFullMonthName(thaiMonth) + " " + thaiYear.ToString();
+
+                return response;
+            }
+        }
+
+        public string TimeDisplay
+        {
+            get
+            {
+                string response = "";
+
+                int thaiYear = new ThaiBuddhistCalendar().GetYear(TimeStamp);
+                int thaiMonth = new ThaiBuddhistCalendar().GetMonth(TimeStamp);
+                int thaiDay = new ThaiBuddhistCalendar().GetDayOfMonth(TimeStamp);
+                int thaiHour = new ThaiBuddhistCalendar().GetHour(TimeStamp);
+                int thaiMinute = new ThaiBuddhistCalendar().GetMinute(TimeStamp);
+                int thaiSecond = new ThaiBuddhistCalendar().GetSecond(TimeStamp);
+
+                response = thaiHour.ToString() + ":" + thaiMinute.ToString() + " Bangkok, Thailand (GMT +7:00)";
+                return response;
+            }
+        }
+
+        public string DateDisplayWithShortMonth
+        {
+            get
+            {
+                string response = "";
+                int thaiYear = new ThaiBuddhistCalendar().GetYear(TimeStamp);
+                int thaiMonth = new ThaiBuddhistCalendar().GetMonth(TimeStamp);
+                int thaiDay = new ThaiBuddhistCalendar().GetDayOfMonth(TimeStamp);
+                int thaiHour = new ThaiBuddhistCalendar().GetHour(TimeStamp);
+                int thaiMinute = new ThaiBuddhistCalendar().GetMinute(TimeStamp);
+                int thaiSecond = new ThaiBuddhistCalendar().GetSecond(TimeStamp);
+
+                response = thaiDay.ToString() + " " + GetShortMonthName(thaiMonth) + " " + thaiYear.ToString();
+
+                return response;
+            }
+        }
+
+        private string GetFullMonthName(int month)
+        {
+            string res = "";
+            switch (month)
+            {
+                case 1:
+                    res = "มกราคม";
+                    break;
+                case 2:
+                    res = "กุมภาพันธ์";
+                    break;
+                case 3:
+                    res = "มีนาคม";
+                    break;
+                case 4:
+                    res = "เมษายน";
+                    break;
+                case 5:
+                    res = "พฤษภาคม";
+                    break;
+                case 6:
+                    res = "มิถุนายน";
+                    break;
+                case 7:
+                    res = "กรกฎาคม";
+                    break;
+                case 8:
+                    res = "สิงหาคม";
+                    break;
+                case 9:
+                    res = "กันยายน";
+                    break;
+                case 10:
+                    res = "ตุลาคม";
+                    break;
+                case 11:
+                    res = "พฤศจิกายน";
+                    break;
+                case 12:
+                    res = "ธันวาคม";
+                    break;
+                default:
+                    res = "";
+                    break;
+            }
+            return res;
+        }
+
+        private string GetShortMonthName(int month)
+        {
+            string res = "";
+            switch (month)
+            {
+                case 1:
+                    res = "ม.ค.";
+                    break;
+                case 2:
+                    res = "ก.พ.";
+                    break;
+                case 3:
+                    res = "มี.ค.";
+                    break;
+                case 4:
+                    res = "เม.ย.";
+                    break;
+                case 5:
+                    res = "พ.ค.";
+                    break;
+                case 6:
+                    res = "มี.ค.";
+                    break;
+                case 7:
+                    res = "ก.ค.";
+                    break;
+                case 8:
+                    res = "ส.ค.";
+                    break;
+                case 9:
+                    res = "ก.ย.";
+                    break;
+                case 10:
+                    res = "ต.ค.";
+                    break;
+                case 11:
+                    res = "พ.ย.";
+                    break;
+                case 12:
+                    res = "ธ.ค.";
+                    break;
+                default:
+                    res = "";
+                    break;
+            }
+            return res;
         }
 
         public string TransCode { get => transCode; set => transCode = value; }
