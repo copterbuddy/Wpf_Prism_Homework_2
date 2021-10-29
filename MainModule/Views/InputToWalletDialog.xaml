@@ -133,7 +133,7 @@
                                                 <ColumnDefinition Width="5*" />
                                             </Grid.ColumnDefinitions>
 
-                                            <Button Grid.Column="0" Content="ย้อนกลับ" Style="{StaticResource FundDetailButton2}" Cursor="Hand" Command="{Binding CloseDialogCommand}" HorizontalAlignment="Right" Width="160" Height="35" FontSize="18"
+                                            <Button Grid.Column="0" Content="ย้อนกลับ" Style="{StaticResource FundDetailButton2}" Cursor="Hand" Command="{Binding BackCommand}" HorizontalAlignment="Right" Width="160" Height="35" FontSize="18"
                                                 />
 
                                             <Button Grid.Column="1" Content="ตกลง" Style="{StaticResource FundDetailButton}" Cursor="Hand" Command="{Binding InputToWalletCommand}" CommandParameter="{Binding ElementName=WalletIdTextBox}" HorizontalAlignment="Left" Width="160" Height="35" FontSize="18"

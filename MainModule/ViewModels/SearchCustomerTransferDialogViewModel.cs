@@ -101,6 +101,14 @@ namespace MainModule.ViewModels
                     return;
                 }
 
+                if (string.IsNullOrEmpty(SearchCustomerTextBoxString))
+                {
+                    var dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("message", "กรุณากรอกข้อมูลให้ครบถ้วน");
+                    RaiseRequestClose(dialogResult);
+                    return;
+                }
+
                 CustomerService searchCustomerService = new();
                 List<CustomerDetail> listCust = await Task.Run(() => searchCustomerService.SeachCustomerTransfer(SelectedSearchType, SearchCustomerTextBoxString));
                 //List<CustomerDetail> listCust = new();
@@ -228,8 +236,6 @@ namespace MainModule.ViewModels
             {
                 SelectedSearchType = SearchTypes[0];
             }
-
-            SearchCustomerTextBoxString = "1100800745551";
         }
 
     }

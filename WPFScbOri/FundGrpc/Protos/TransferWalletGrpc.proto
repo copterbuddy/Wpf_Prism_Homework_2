@@ -7,7 +7,7 @@ package com.example.TransferWalletGrpc;
 
 import "google/protobuf/timestamp.proto";
 
-option csharp_namespace = "TransferWalletGrpc";
+option csharp_namespace = "TransferWalletGrpc2";
 
 service TransferWalletService {
     rpc PreTansferWallet (PreTransferRequest) returns (PreTransferResponse);

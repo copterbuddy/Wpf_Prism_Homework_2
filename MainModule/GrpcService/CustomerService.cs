@@ -71,41 +71,6 @@ namespace MainModule.GrpcService
 
         public async Task<List<CustomerDetail>> SeachCustomerTransfer(string _searchType, string _searchValue)
         {
-            #region Mock Data
-            //List<CustomerDetail> listCust = new List<CustomerDetail>();
-
-            //{
-            //    CustomerDetail cust = new()
-            //    {
-            //        CustId = "000015663527",
-            //        CitizenID = "3100202827767",
-            //        Branch = "0014",
-            //        AccName = "นายทดสอบ โปรแกรม",
-            //        Age = "40",
-            //        Payment = "ลงนามผู้เดียวเทส",
-            //        CitizenIdCardImagePath = null,
-            //        SignedSignatureImagePath = null,
-            //    };
-            //    listCust.Add(cust);
-            //}
-
-            //{
-            //    CustomerDetail cust = new()
-            //    {
-            //        CustId = "000015663527",
-            //        CitizenID = "3100202827767",
-            //        Branch = "0014",
-            //        AccName = "นายทดสอบ โปรแกรม",
-            //        Age = "40",
-            //        Payment = "ลงนามผู้เดียวเทส",
-            //        CitizenIdCardImagePath = null,
-            //        SignedSignatureImagePath = null,
-            //    };
-            //    listCust.Add(cust);
-            //}
-
-            //return listCust;
-            #endregion
 
             #region Prod
             try

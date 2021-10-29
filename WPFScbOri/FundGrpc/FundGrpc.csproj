@@ -25,9 +25,9 @@
     <Protobuf Include="Protos\sec.proto" GrpcService="Client" />
     <Protobuf Include="Protos\systemConfigGrpc.proto" GrpcService="Client" />
     <Protobuf Include="Protos\CustomerWalletGrpc.proto" GrpcService="Client" />
-    <Protobuf Include="Protos\TransferWalletGrpc.proto" GrpcService="Client" />
     <Protobuf Include="Protos\LogGrpc.proto" GrpcService="Client" />
-    
+    <Protobuf Include="Protos\TransferWalletGrpc.proto" GrpcService="Client" />
+
   </ItemGroup>
 
 </Project>

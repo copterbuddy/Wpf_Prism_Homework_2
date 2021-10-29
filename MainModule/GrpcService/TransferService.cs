@@ -36,9 +36,9 @@ namespace MainModule.GrpcService
                     HttpClient = httpClient
                 });
 
-                var client = new TransferWalletGrpc.TransferWalletService.TransferWalletServiceClient(channel);
+                var client = new TransferWalletGrpc2.TransferWalletService.TransferWalletServiceClient(channel);
 
-                var request = new TransferWalletGrpc.PreTransferRequest
+                var request = new TransferWalletGrpc2.PreTransferRequest
                 {
                     FromWalletId = fromWalletId,
                     ToWalletId = toWalletId,
@@ -89,9 +89,9 @@ namespace MainModule.GrpcService
                     HttpClient = httpClient
                 });
 
-                var client = new TransferWalletGrpc.TransferWalletService.TransferWalletServiceClient(channel);
+                var client = new TransferWalletGrpc2.TransferWalletService.TransferWalletServiceClient(channel);
 
-                var request = new TransferWalletGrpc.TransferRequest
+                var request = new TransferWalletGrpc2.TransferRequest
                 {
                     TransactionToken = transactionToken,
                     CitizenId = citizenId,

@@ -124,7 +124,7 @@ namespace MainModule.ViewModels
 
         public DelegateCommand PrintCommand => printCommand ?? (printCommand = new DelegateCommand(Print));
 
-        public bool CustomerHaveData { get => customerIsNull; set => SetProperty(ref customerIsNull, value); }
+        public bool CustomerHaveData { get => customerHaveData; set => SetProperty(ref customerHaveData, value); }
 
         private DelegateCommand lostFocusCommand;
         private DelegateCommand openCheckLicenseImageCommand;
@@ -137,7 +137,7 @@ namespace MainModule.ViewModels
         private string memo;
         private DelegateCommand transferCommand;
         private DelegateCommand printCommand;
-        private bool customerIsNull;
+        private bool customerHaveData;
         //MainTransferCommand
         public DelegateCommand mainTransferCommand;
         public DelegateCommand MainTransferCommand => mainTransferCommand ?? (mainTransferCommand = new DelegateCommand(GoToMainTransfer));
@@ -225,6 +225,30 @@ namespace MainModule.ViewModels
                 _regionManager.RequestNavigate("WelcomeRegion", navigatePath);
                 Enum.TryParse(navigatePath, out currentRegion);
                 CurrentRegion = currentRegion;
+
+                if (navigatePath.Equals(nameof(TransferRegion)))
+                {
+                    if(CustomerDetailTransferManager.GetInstance().customerDetail != null)
+                        CustomerDetailTransferManager.GetInstance().customerDetail = null;
+
+                    if (WalletFromEntityManager.GetInstance().WalletEntity != null)
+                        WalletFromEntityManager.GetInstance().WalletEntity.WalletId = null;
+
+                    if (WalletToEntityManager.GetInstance().WalletEntity != null)
+                        WalletToEntityManager.GetInstance().WalletEntity.WalletId = null;
+
+                    if (BankEntityManager.GetInstance().bankEntity != null)
+                        BankEntityManager.GetInstance().bankEntity = null;
+
+                    CustomerTransferIdTextBox = "";
+                    CustomerTransferName = "";
+                    FromWalletSelectedDisplay = "";
+                    ToWalletSelectedDisplay = "";
+                    AmountDisplay = "";
+                    Memo = "";
+
+                    CustomerHaveData = false;
+                }
             }
         }
 
@@ -244,8 +268,21 @@ namespace MainModule.ViewModels
                             JointAccount = result.Parameters.GetValue<string>("JointAccount");
                             SensitiveCustomer = result.Parameters.GetValue<string>("SensitiveCustomer");
                             RiskLevel = result.Parameters.GetValue<string>("RiskLevel");
-                            //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
-                            //dialogService.ShowDialog("SearchCustomerDialog");
+
+
+                            if (WalletFromEntityManager.GetInstance().WalletEntity != null)
+                                WalletFromEntityManager.GetInstance().WalletEntity.WalletId = null;
+
+                            if (WalletToEntityManager.GetInstance().WalletEntity != null)
+                                WalletToEntityManager.GetInstance().WalletEntity.WalletId = null;
+
+                            if (BankEntityManager.GetInstance().bankEntity != null)
+                                BankEntityManager.GetInstance().bankEntity = null;
+
+                            FromWalletSelectedDisplay = "";
+                            ToWalletSelectedDisplay = "";
+                            AmountDisplay = "";
+                            Memo = "";
 
                             CheckSelectFundButtonEnable();
                         }
@@ -257,7 +294,8 @@ namespace MainModule.ViewModels
                             dialogService.Show(
                                 "AlertDialog",
                                 new DialogParameters($"message={message}"),
-                                    (result) => { });
+                                    (result) => {
+                                    });
                         }
                     });
         }
@@ -276,8 +314,6 @@ namespace MainModule.ViewModels
                             JointAccount = result.Parameters.GetValue<string>("JointAccount");
                             SensitiveCustomer = result.Parameters.GetValue<string>("SensitiveCustomer");
                             RiskLevel = result.Parameters.GetValue<string>("RiskLevel");
-                            //System.Diagnostics.Debug.WriteLine("SelectedSearchType: dialog result = " + SelectedSearchType);
-                            //dialogService.ShowDialog("SearchCustomerDialog");
 
                             CheckSelectFundButtonEnable();
                         }
@@ -289,7 +325,8 @@ namespace MainModule.ViewModels
                             dialogService.Show(
                                 "AlertDialog",
                                 new DialogParameters($"message={message}"),
-                                    (result) => { });
+                                    (result) => {
+                                    });
                         }
                     });
         }
@@ -305,6 +342,21 @@ namespace MainModule.ViewModels
                         {
                             CustomerTransferIdTextBox = CustomerDetailTransferManager.GetInstance().customerDetail.CitizenID;
                             CustomerTransferName = CustomerDetailTransferManager.GetInstance().customerDetail.AccName;
+
+                            //reset wallet
+                            if (WalletFromEntityManager.GetInstance().WalletEntity != null)
+                                WalletFromEntityManager.GetInstance().WalletEntity.WalletId = null;
+
+                            if (WalletToEntityManager.GetInstance().WalletEntity != null)
+                                WalletToEntityManager.GetInstance().WalletEntity.WalletId = null;
+
+                            if (BankEntityManager.GetInstance().bankEntity != null)
+                                BankEntityManager.GetInstance().bankEntity = null;
+
+                            FromWalletSelectedDisplay = "";
+                            ToWalletSelectedDisplay = "";
+                            AmountDisplay = "";
+                            Memo = "";
 
                             CheckSelectFundButtonEnable();
                         }
@@ -331,6 +383,21 @@ namespace MainModule.ViewModels
                         {
                             CustomerTransferIdTextBox = CustomerDetailTransferManager.GetInstance().customerDetail.CitizenID;
                             CustomerTransferName = CustomerDetailTransferManager.GetInstance().customerDetail.AccName;
+
+                            //reset wallet
+                            if (WalletFromEntityManager.GetInstance().WalletEntity != null)
+                                WalletFromEntityManager.GetInstance().WalletEntity.WalletId = null;
+
+                            if (WalletToEntityManager.GetInstance().WalletEntity != null)
+                                WalletToEntityManager.GetInstance().WalletEntity.WalletId = null;
+
+                            if (BankEntityManager.GetInstance().bankEntity != null)
+                                BankEntityManager.GetInstance().bankEntity = null;
+
+                            FromWalletSelectedDisplay = "";
+                            ToWalletSelectedDisplay = "";
+                            AmountDisplay = "";
+                            Memo = "";
 
                             CheckSelectFundButtonEnable();
                         }
@@ -467,6 +534,9 @@ namespace MainModule.ViewModels
                                 "AlertDialog",
                                 new DialogParameters($"message=กรุณาระบุเลขวอลเลตให้ถูกต้อง"),
                                     (result) => { });
+                        }else if(result.Result == ButtonResult.Abort)
+                        {
+                            OpenSelectBankListDialog();
                         }
                     });
         }
@@ -499,6 +569,7 @@ namespace MainModule.ViewModels
         {
             DialogResult dialogResult = null;
             bool isProcess = true;
+            double doubleAmount = 0;
 
             #region Check Parameter
             if (isProcess)
@@ -516,15 +587,17 @@ namespace MainModule.ViewModels
                     dialogResult.Parameters.Add("errMessage", "กรุณาเลือกลูกค้า");
                     isProcess = false;
                 }
-            if (string.IsNullOrEmpty(FromWalletSelectedDisplay) || WalletFromEntityManager.GetInstance().WalletEntity == null)
-            {
-                dialogResult = new DialogResult(ButtonResult.Ignore);
-                dialogResult.Parameters.Add("errMessage", "กรุณาระบุข้อมูลผู้โอน");
-                isProcess = false;
-            }
 
             if (isProcess)
-                if (string.IsNullOrEmpty(ToWalletSelectedDisplay) || WalletToEntityManager.GetInstance().WalletEntity == null || BankEntityManager.GetInstance().bankEntity == null)
+                if (string.IsNullOrEmpty(FromWalletSelectedDisplay))
+                {
+                    dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("errMessage", "กรุณาระบุข้อมูลผู้โอน");
+                    isProcess = false;
+                }
+
+            if (isProcess)
+                if (string.IsNullOrEmpty(ToWalletSelectedDisplay))
                 {
                     dialogResult = new DialogResult(ButtonResult.Ignore);
                     dialogResult.Parameters.Add("errMessage", "กรุณาระบุข้อมูลผู้รับโอน");
@@ -537,46 +610,77 @@ namespace MainModule.ViewModels
                     dialogResult.Parameters.Add("errMessage", "กรุณาระบุจำนวนเงินที่ถูกต้อง");
                     isProcess = false;
                 }
+                else
+                {
+                    doubleAmount = Double.Parse(AmountDisplay);
+                    if (doubleAmount <= 0)
+                    {
+                        dialogResult = new DialogResult(ButtonResult.Ignore);
+                        dialogResult.Parameters.Add("errMessage", "กรุณาระบุจำนวนเงินที่ถูกต้อง");
+                        isProcess = false;
+                    }
+                    if (WalletFromEntityManager.GetInstance().WalletEntity.Balance <= 0)
+                    {
+                        dialogResult = new DialogResult(ButtonResult.Ignore);
+                        dialogResult.Parameters.Add("errMessage", "ยอดเงินไม่เพียงพอต่อการทำรายการ");
+                        isProcess = false;
+                    }
+                }
             #endregion
 
             if (isProcess)
             {
+
                 var fromWallet = WalletFromEntityManager.GetInstance().WalletEntity.WalletId;
                 var toWallet = WalletToEntityManager.GetInstance().WalletEntity.WalletId;
                 var bankCode = BankEntityManager.GetInstance().bankEntity.BankCode;
-                var doubleAmount = Double.Parse(AmountDisplay);
 
                 TransferService transfer = new();
                 WalletTransactionResponse transactionResponse = await transfer.PreTransfer(fromWallet, toWallet, bankCode, doubleAmount, Memo);
 
                 if (transactionResponse != null)
                 {
-                    dialogResult = new DialogResult(ButtonResult.OK);
-                    TransactionEntityManager.GetInstance().TransactionEntity = transactionResponse.transactionEntity;
-                    TransactionEntity = transactionResponse.transactionEntity;
+                    if (transactionResponse.returnResult != null && transactionResponse.transactionEntity != null && transactionResponse.returnResult.ResultCode == "200")
+                    {
+                        dialogResult = new DialogResult(ButtonResult.OK);
+                        TransactionEntityManager.GetInstance().TransactionEntity = transactionResponse.transactionEntity;
+                        TransactionEntity = transactionResponse.transactionEntity;
+
+                        Navigate(nameof(WalletPreTransferRegion));
+                    }
+                    else
+                    {
+                        isProcess = false;
+                        dialogResult = new DialogResult(ButtonResult.Ignore);
+                        if (transactionResponse.returnResult != null)
+                        {
+                            dialogResult.Parameters.Add("errMessage", transactionResponse.returnResult.ResultDescription);
+                        }
+                        else
+                        {
+                            dialogResult.Parameters.Add("errMessage", "เซิฟเวอร์ไม่เปิดให้บริการ");
+                        }
+                    }
                 }
                 else
                 {
+                    isProcess = false;
                     dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("errMessage", "เซิฟเวอร์ไม่เปิดให้บริการ");
                 }
 
             }
 
-            if (isProcess)
-            {
-                if (dialogResult.Result == ButtonResult.OK)
-                {
-                    Navigate(nameof(WalletPreTransferRegion));
-                }
-            }
-            else
-            {
+            if (!isProcess) {
                 if (dialogResult.Result == ButtonResult.Ignore)
                 {
                     dialogService.ShowDialog(
                                     "AlertDialog",
                                     new DialogParameters($"message={dialogResult.Parameters.GetValue<string>("errMessage")}"),
-                                        (result) => { });
+                                        (result) => {
+                                            Navigate(nameof(TransferRegion));
+                                        });
+                    
                 }
             }
 
@@ -587,24 +691,81 @@ namespace MainModule.ViewModels
         {
             var transactionToken = TransactionEntityManager.GetInstance().TransactionEntity.TransactionToken;
             var citizenId = CustomerDetailTransferManager.GetInstance().customerDetail.CitizenID;
+
+            DialogResult dialogResult = null;
+            bool isProcess = true;
+
+            #region Check Parameter
+            if (isProcess)
+                if (string.IsNullOrEmpty(transactionToken))
+                {
+                    dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("errMessage", "การทำรายการผิดพลาด");
+                    isProcess = false;
+                }
+
+            if (isProcess)
+                if (string.IsNullOrEmpty(citizenId))
+                {
+                    dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("errMessage", "การทำรายการผิดพลาด");
+                    isProcess = false;
+                }
+            #endregion
             //Call Api Transfer
-            TransferService transfer = new();
-            WalletTransactionResponse transactionResponse = await transfer.Transfer(transactionToken, citizenId);
-
-            
-            if (transactionResponse != null && transactionResponse.transactionEntity != null)
+            if (isProcess)
             {
-                //Success
-                TransactionEntityManager.GetInstance().TransactionEntity = transactionResponse.transactionEntity;
-                TransactionEntity = transactionResponse.transactionEntity;
+                TransferService transfer = new();
+                WalletTransactionResponse transactionResponse = await transfer.Transfer(transactionToken, citizenId);
 
-                Navigate(nameof(WalletTransferRegion));
+
+                if (transactionResponse != null) {
+                    if (transactionResponse.transactionEntity != null && transactionResponse.returnResult != null && transactionResponse.returnResult.ResultCode == "200")  
+                    {
+                        //Success
+                        TransactionEntityManager.GetInstance().TransactionEntity = transactionResponse.transactionEntity;
+                        TransactionEntity = transactionResponse.transactionEntity;
+
+                        Navigate(nameof(WalletTransferRegion));
+                    }
+                    else
+                    {
+                        isProcess = false;
+                        dialogResult = new DialogResult(ButtonResult.Ignore);
+                        if (transactionResponse.returnResult != null)
+                        {
+                            dialogResult.Parameters.Add("errMessage", transactionResponse.returnResult.ResultDescription);
+                        }
+                        else
+                        {
+                            dialogResult.Parameters.Add("errMessage", "เซิฟเวอร์ไม่เปิดให้บริการ");
+                        }
+                    }
+                }
+                else
+                {
+
+                    //Failed
+                    isProcess = false;
+                    dialogResult = new DialogResult(ButtonResult.Ignore);
+                    dialogResult.Parameters.Add("errMessage", "เซิฟเวอร์ไม่เปิดให้บริการ");
+                }
             }
-            else
+
+            if(!isProcess)
             {
-                //Failed
-
+                if (dialogResult.Result == ButtonResult.Ignore)
+                {
+                    dialogService.ShowDialog(
+                                    "AlertDialog",
+                                    new DialogParameters($"message={dialogResult.Parameters.GetValue<string>("errMessage")}"),
+                                        (result) => {
+                                            Navigate(nameof(TransferRegion));
+                                        });
+                    
+                }
             }
+
 
 
 
@@ -689,10 +850,10 @@ namespace MainModule.ViewModels
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
-                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.HorizontalAlignment = Element.ALIGN_LEFT;
                     cell.BorderWidth = 0;
                     table.AddCell(cell);
-                    table.WriteSelectedRows(0, -1, 365f, 350f, pdf.DirectContent);
+                    table.WriteSelectedRows(0, -1, 460f, 350f, pdf.DirectContent);
                     pdf.Add(table);
                 }
 

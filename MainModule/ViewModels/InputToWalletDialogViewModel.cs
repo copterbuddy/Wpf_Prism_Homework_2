@@ -25,6 +25,10 @@ namespace MainModule.ViewModels
 
         public DelegateCommand CloseDialogCommand => _closeDialogCommand ?? (_closeDialogCommand = new DelegateCommand(CloseDialog));
 
+
+        private DelegateCommand backCommand;
+
+        public DelegateCommand BackCommand => backCommand ?? (backCommand = new DelegateCommand(Back));
         #endregion
 
         #region bindable property
@@ -49,6 +53,12 @@ namespace MainModule.ViewModels
                     SetProperty(ref walletIdTextBox, value);
                 }
             }
+        }
+
+        void Back()
+        {
+            ButtonResult result = ButtonResult.Abort;
+            RaiseRequestClose(new DialogResult(result));
         }
 
         public string BankSelectedDisplay { 
