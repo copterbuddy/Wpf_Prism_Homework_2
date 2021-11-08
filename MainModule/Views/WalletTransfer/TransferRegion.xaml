@@ -253,15 +253,46 @@
                                 <Grid Grid.Column="1"
                                       HorizontalAlignment="Stretch">
                                         <TextBox
-                                            Style="{StaticResource TextBoxSearCustomerEntryStyle31}"
                                             Text="{Binding FromWalletSelectedDisplay}"
                                             VerticalAlignment="Center"
                                             IsReadOnly="True"
                                             Height="40"
                                             VerticalContentAlignment="Center"
                                                  HorizontalAlignment="Stretch"
-                                            IsEnabled="{Binding CustomerHaveData}"
-                                            />
+                                            >
+                                            <TextBox.Style>
+                                                <Style TargetType="{x:Type TextBox}">
+
+                                                    <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />
+                                                    <Setter Property="FontSize" Value="21" />
+                                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                                    <Setter Property="FontWeight" Value="Thin" />
+                                                    <Setter Property="Foreground" Value="#476474" />
+                                                    <Setter Property="Background" Value="#98D7F8" />
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                    <Setter Property="Padding" Value="0,0,0,0" />
+                                                    <Setter Property="BorderBrush" Value="#6a588b" />
+                                                    <Setter Property="BorderThickness" Value="2" />
+                                                    
+                                                    <Style.Resources>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="CornerRadius" Value="8"/>
+
+                                                        </Style>
+                                                    </Style.Resources>
+                                                    
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="True">
+                                                            <Setter Property="Background" Value="#98D7F8" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="False">
+                                                            <Setter Property="Background" Value="#7fb8d6" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBox.Style>
+                                        </TextBox>
 
                                         <Image 
                                             Source="pack://application:,,,/Entity;Component/Images/SCB3-02.png"
@@ -270,23 +301,11 @@
                                             Height="26"
                                             Cursor="Hand"
                                             HorizontalAlignment="Right"
-                                                IsEnabled="{Binding CustomerHaveData}"
+                                            IsEnabled="{Binding CustomerHaveData}"
                                             >
                                             <Image.InputBindings>
                                                 <MouseBinding Gesture="LeftClick" Command="{Binding OpenSelectFromWalletDialogCommand}" />
                                             </Image.InputBindings>
-                                            <Image.Style>
-                                                <Style TargetType="{x:Type Image}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="True">
-                                                            <Setter Property="Opacity" Value="1" />
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="False">
-                                                            <Setter Property="Opacity" Value="0.3" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
                                         </Image>
                                 </Grid>
 
@@ -311,15 +330,46 @@
                                 <Grid Grid.Column="1"
                                     HorizontalAlignment="Stretch">
                                         <TextBox
-                                        Style="{StaticResource TextBoxSearCustomerEntryStyle31}"
                                         Text="{Binding ToWalletSelectedDisplay}"
                                         VerticalAlignment="Center"
                                         IsReadOnly="True"
                                         Height="40"
                                         VerticalContentAlignment="Center"
                                                 HorizontalAlignment="Stretch"
-                                        IsEnabled="{Binding CustomerHaveData}"
-                                        />
+                                        >
+                                            <TextBox.Style>
+                                                <Style TargetType="{x:Type TextBox}">
+
+                                                    <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />
+                                                    <Setter Property="FontSize" Value="21" />
+                                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                                    <Setter Property="FontWeight" Value="Thin" />
+                                                    <Setter Property="Foreground" Value="#476474" />
+                                                    <Setter Property="Background" Value="#98D7F8" />
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                                    <Setter Property="Padding" Value="0,0,0,0" />
+                                                    <Setter Property="BorderBrush" Value="#6a588b" />
+                                                    <Setter Property="BorderThickness" Value="2" />
+
+                                                    <Style.Resources>
+                                                        <Style TargetType="Border">
+                                                            <Setter Property="CornerRadius" Value="8"/>
+
+                                                        </Style>
+                                                    </Style.Resources>
+
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="True">
+                                                            <Setter Property="Background" Value="#98D7F8" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="False">
+                                                            <Setter Property="Background" Value="#7fb8d6" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBox.Style>
+                                        </TextBox>
 
                                         <Image 
                                             Source="pack://application:,,,/Entity;Component/Images/SCB3-02.png"
@@ -331,21 +381,9 @@
                                             IsEnabled="{Binding CustomerHaveData}"
                                             >
                                             <Image.InputBindings>
-                                                    <MouseBinding Gesture="LeftClick" Command="{Binding OpenSelectBankListDialogCommand}" />
+                                                <MouseBinding Gesture="LeftClick" Command="{Binding OpenSelectBankListDialogCommand}" />
                                             </Image.InputBindings>
-                                            <Image.Style>
-                                                <Style TargetType="{x:Type Image}">
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="True">
-                                                            <Setter Property="Opacity" Value="1" />
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding CustomerHaveData}" Value="False">
-                                                            <Setter Property="Opacity" Value="0.3" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Image.Style>
-                                    </Image>
+                                        </Image>
                                 </Grid>
 
                             </Grid>
@@ -374,19 +412,54 @@
                                         
                                     <Grid Grid.Column="0"
                                         HorizontalAlignment="Stretch">
-                                            <TextBox Style="{StaticResource TextBoxSearCustomerEntryStyle4}"
-                                                    Text="{Binding AmountDisplay ,UpdateSourceTrigger=PropertyChanged}"
+                                            <TextBox Text="{Binding AmountDisplay ,UpdateSourceTrigger=PropertyChanged}"
                                                     VerticalAlignment="Center"
                                                     Height="40"
                                                     VerticalContentAlignment="Center"
                                                     HorizontalAlignment="Stretch"
-                                                     IsEnabled="{Binding CustomerHaveData}"
+                                                     IsReadOnly="{Binding NotCustomerHaveData}"
                                                     >
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="LostFocus" >
                                                         <i:InvokeCommandAction Command="{Binding LostFocusCommand}"/>
                                                     </i:EventTrigger>
+                                                    <i:EventTrigger EventName="GotFocus" >
+                                                        <i:InvokeCommandAction Command="{Binding GotFocusCommand}"/>
+                                                    </i:EventTrigger>
                                                 </i:Interaction.Triggers>
+
+                                                <TextBox.Style>
+                                                    <Style TargetType="{x:Type TextBox}">
+
+                                                        <Setter Property="FontFamily" Value="{DynamicResource SarabunBold}" />
+                                                        <Setter Property="FontSize" Value="21" />
+                                                        <Setter Property="TextWrapping" Value="Wrap" />
+                                                        <Setter Property="FontWeight" Value="Thin" />
+                                                        <Setter Property="Foreground" Value="#476474" />
+                                                        <Setter Property="Background" Value="#98D7F8" />
+                                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                                        <Setter Property="Padding" Value="0,0,0,0" />
+                                                        <Setter Property="BorderBrush" Value="#6a588b" />
+                                                        <Setter Property="BorderThickness" Value="2" />
+
+                                                        <Style.Resources>
+                                                            <Style TargetType="Border">
+                                                                <Setter Property="CornerRadius" Value="8"/>
+
+                                                            </Style>
+                                                        </Style.Resources>
+
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding CustomerHaveData}" Value="True">
+                                                                <Setter Property="Background" Value="#98D7F8" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding CustomerHaveData}" Value="False">
+                                                                <Setter Property="Background" Value="#7fb8d6" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBox.Style>
                                             </TextBox>
                                     </Grid>
                                 </Grid>

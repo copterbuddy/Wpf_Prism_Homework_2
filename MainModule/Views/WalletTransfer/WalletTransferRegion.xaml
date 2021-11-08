@@ -73,8 +73,8 @@
                     <Border  Margin="0,0,0,10">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="6*" />
-                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="8*" />
+                                <ColumnDefinition Width="2*" />
                             </Grid.ColumnDefinitions>
 
                             <Grid Grid.Row="0" Margin="0,40,0,0">

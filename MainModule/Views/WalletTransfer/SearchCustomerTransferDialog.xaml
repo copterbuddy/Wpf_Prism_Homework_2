@@ -114,19 +114,17 @@
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="200" />
                                                         <ColumnDefinition Width="90"/>
-                                                        <ColumnDefinition Width="90"/>
-                                                        <ColumnDefinition Width="350"/>
+                                                        <ColumnDefinition Width="435"/>
                                                         <ColumnDefinition Width="140" />
                                                         <ColumnDefinition Width="140"/>
                                                         <ColumnDefinition Width="140" />
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock Grid.Column="0" Text="เลขทะเบียนลูกค้า" Style="{DynamicResource TextBlockHeaderStyle}" />
                                                     <TextBlock Grid.Column="1" Text="สาขา" Style="{DynamicResource TextBlockHeaderStyle}" />
-                                                    <TextBlock Grid.Column="2" Text="LTF" Style="{DynamicResource TextBlockHeaderStyle}" />
-                                                    <TextBlock Grid.Column="3" Text="ชื่อบัญชี" Style="{DynamicResource TextBlockHeaderStyle}" />
-                                                    <TextBlock Grid.Column="4" Text="เซกเมนต์" Style="{DynamicResource TextBlockHeaderStyle}" />
-                                                    <TextBlock Grid.Column="5" Text="บัญชีร่วม" Style="{DynamicResource TextBlockHeaderStyle}" />
-                                                    <TextBlock Grid.Column="6" Text="เปราะปราง" Style="{DynamicResource TextBlockHeaderStyle}" />
+                                                    <TextBlock Grid.Column="2" Text="ชื่อบัญชี" Style="{DynamicResource TextBlockHeaderStyle}" />
+                                                    <TextBlock Grid.Column="3" Text="เซกเมนต์" Style="{DynamicResource TextBlockHeaderStyle}" />
+                                                    <TextBlock Grid.Column="4" Text="บัญชีร่วม" Style="{DynamicResource TextBlockHeaderStyle}" />
+                                                    <TextBlock Grid.Column="5" Text="เปราะปราง" Style="{DynamicResource TextBlockHeaderStyle}" />
                                                 </Grid>
                                             </Grid>
 
@@ -153,16 +151,15 @@
 
                                                             <Grid Grid.Row="0" Background="Transparent">
                                                                 <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="200" />
-                                                                    <ColumnDefinition Width="90"/>
-                                                                    <ColumnDefinition Width="90"/>
-                                                                    <ColumnDefinition Width="350"/>
-                                                                    <ColumnDefinition Width="140" />
-                                                                    <ColumnDefinition Width="140"/>
-                                                                    <ColumnDefinition Width="140" />
+                                                                    <ColumnDefinition Width="220" />
+                                                                    <ColumnDefinition Width="70"/>
+                                                                    <ColumnDefinition Width="435"/>
+                                                                    <ColumnDefinition Width="130" />
+                                                                    <ColumnDefinition Width="130"/>
+                                                                    <ColumnDefinition Width="130" />
                                                                 </Grid.ColumnDefinitions>
                                                                 <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left"  Margin="7">
-                                                                    <Button Margin="5,0" Background="Transparent" BorderBrush="Transparent">
+                                                                    <Button Margin="5,0" Background="Transparent" BorderBrush="Transparent" Command="{Binding ElementName=CustomerDetailListsGrid, Path=DataContext.ExpandDetailCommand}" CommandParameter="{Binding CustId}" >
                                                                         <Image>
                                                                             <Image.Style>
                                                                                 <Style TargetType="{x:Type Image}">
@@ -180,15 +177,14 @@
                                                                     </Button>
                                                                     <TextBlock Text="{Binding CitizenID}" Foreground="Black" />
                                                                 </StackPanel>
-                                                                <TextBlock Grid.Column="1" Text="{Binding Branch}" Foreground="Black" />
-                                                                <TextBlock Grid.Column="2"  Text="{Binding IsLTF}" Foreground="Black" />
-                                                                <TextBlock Grid.Column="3" Text="{Binding AccName}" Foreground="Black" />
-                                                                <TextBlock Grid.Column="4" Text="{Binding Segment}" Foreground="Black" />
-                                                                <TextBlock Grid.Column="5" Text="{Binding IsJointAccount}" Foreground="Black" />
-                                                                <TextBlock Grid.Column="6" Text="{Binding IsSensitive}" Foreground="Black" />
+                                                                <TextBlock Grid.Column="1" Text="{Binding Branch}" Foreground="Black"/>
+                                                                <TextBlock Grid.Column="2" Text="{Binding AccName}" Foreground="Black"/>
+                                                                <TextBlock Grid.Column="3" Text="{Binding Segment}" Foreground="Black" Margin="45,0,0,0" />
+                                                                <TextBlock Grid.Column="4" Text="{Binding IsJointAccount}" Foreground="Black" Margin="35,0,0,0" />
+                                                                <TextBlock Grid.Column="5" Text="{Binding IsSensitive}" Foreground="Black" Margin="50,0,0,0" />
                                                             </Grid>
 
-                                                            <StackPanel Grid.Row="1" Height="400" x:Name="InnerInformation" Background="#EBEBFC" >
+                                                            <StackPanel Grid.Row="1" x:Name="InnerInformation" Background="#EBEBFC" >
                                                                 <StackPanel Orientation="Horizontal" Margin="20">
                                                                     <TextBlock Text="การสั่งจ่าย" Foreground="Black" VerticalAlignment="Top" />
                                                                     <Border BorderBrush="#503081" BorderThickness="1" Margin="50,0,0,0" Background="#e0e0e2">
@@ -223,6 +219,22 @@
                                                             Style="{DynamicResource DialogSearchButton}"
                                                             Cursor="Hand" Command="{Binding ElementName=CustomerDetailListsGrid, Path=DataContext.CustomerDetailListsCommond}" CommandParameter="{Binding CustId}" />
                                                                 </StackPanel>
+
+
+                                                                <StackPanel.Style>
+                                                                    <Style TargetType="{x:Type StackPanel}">
+                                                                        <Style.Triggers>
+                                                                            <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                                                <Setter Property="Height" Value="400" />
+                                                                                <Setter Property="Visibility" Value="Visible" />
+                                                                            </DataTrigger>
+                                                                            <DataTrigger Binding="{Binding IsSelected}" Value="False">
+                                                                                <Setter Property="Height" Value="0" />
+                                                                                <Setter Property="Visibility" Value="Hidden" />
+                                                                            </DataTrigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </StackPanel.Style>
                                                             </StackPanel>
 
                                                             <Grid.Style>

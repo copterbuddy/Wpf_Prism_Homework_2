@@ -112,6 +112,7 @@
                                                                                        Text="{Binding BankName}"
                                                                                        Foreground="Black"
                                                                                        HorizontalAlignment="Left"
+                                                                                       FontSize="20"
                                                                                        Margin="40,0,0,0"
                                                                                        VerticalAlignment="Center"
                                                                                        Style="{StaticResource SelectFundTextTitleBold3}"

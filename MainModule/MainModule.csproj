@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <None Remove="ViewModels\MainWindowViewModel.cs~RF26215d2.TMP" />
+    <None Remove="Views\SearchCustomerTransferDialog.xaml~RF14b85e26.TMP" />
   </ItemGroup>
 
   <ItemGroup>

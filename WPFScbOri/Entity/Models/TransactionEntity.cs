@@ -49,6 +49,13 @@ namespace Entity.Models
                 }
             }
         }
+        public decimal TotalAmount
+        {
+            get
+            {
+                return Amount + Fee3Amount;
+            }
+        }
         public string TotalAmountDisplay
         {
             get

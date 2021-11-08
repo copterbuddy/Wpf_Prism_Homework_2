@@ -23,7 +23,6 @@ using MainModule.GrpcService;
 using static Entity.Models.Enums;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
-using MainModule.Business.WalletTransfer;
 using MainModule.Views;
 using Entity.DTO;
 using MainModule.Service;
@@ -94,13 +93,23 @@ namespace MainModule.ViewModels
         public ICommand OpenSelectBankListDialogCommand { get => openSelectBankListDialogCommand; set => SetProperty(ref openSelectBankListDialogCommand, value); }
         public BankEntity ToWalletSelected { get => toWalletSelected; set => SetProperty(ref toWalletSelected, value); }
         public string ToWalletSelectedDisplay { get => toWalletSelectedDisplay; set => SetProperty(ref toWalletSelectedDisplay, value); }
-        public string AmountDisplay { get => amountDisplay; 
+        public string AmountDisplay { 
+            get => amountDisplay; 
             set {
-                Regex regex = new Regex("[^0-9.]+");
-                if (!regex.IsMatch(value))
+                if (systemSetAmount)
                 {
                     SetProperty(ref amountDisplay, value);
+                    systemSetAmount = false;
                 }
+                else
+                {
+                    Regex regex = new Regex("[^0-9.]+");
+                    if (!regex.IsMatch(value))
+                    {
+                        SetProperty(ref amountDisplay, value);
+                    }
+                }
+                
             }
         }
 
@@ -124,9 +133,20 @@ namespace MainModule.ViewModels
 
         public DelegateCommand PrintCommand => printCommand ?? (printCommand = new DelegateCommand(Print));
 
-        public bool CustomerHaveData { get => customerHaveData; set => SetProperty(ref customerHaveData, value); }
+        public bool CustomerHaveData { get => customerHaveData; set
+            {
+                SetProperty(ref customerHaveData, value);
+                NotCustomerHaveData = !value;
+            }
+        }
+        public bool NotCustomerHaveData
+        {
+            get => !customerHaveData;
+            set => SetProperty(ref notCustomerHaveData, !value);
+        }
 
         private DelegateCommand lostFocusCommand;
+        private DelegateCommand gotFocusCommand;
         private DelegateCommand openCheckLicenseImageCommand;
         private string customerTransferName;
         private string customerTransferIdTextBox;
@@ -138,9 +158,15 @@ namespace MainModule.ViewModels
         private DelegateCommand transferCommand;
         private DelegateCommand printCommand;
         private bool customerHaveData;
+        private bool notCustomerHaveData;
+        
         //MainTransferCommand
         public DelegateCommand mainTransferCommand;
         public DelegateCommand MainTransferCommand => mainTransferCommand ?? (mainTransferCommand = new DelegateCommand(GoToMainTransfer));
+
+        public DelegateCommand GotFocusCommand => gotFocusCommand ?? (gotFocusCommand = new DelegateCommand(GotFocus));
+
+        private bool systemSetAmount = false;
 
         public MainWindowViewModel(IRegionManager regionManager, IDialogService dialogService)
         {
@@ -377,7 +403,7 @@ namespace MainModule.ViewModels
         {
             dialogService.Show(
                 "SearchCustomerTransferDialog",
-                new DialogParameters($"message={defaultSearch}"),
+                new DialogParameters($"defaultSearch={defaultSearch}"),
                     (result) => {
                         if (result.Result == ButtonResult.OK)
                         {
@@ -604,7 +630,7 @@ namespace MainModule.ViewModels
                     isProcess = false;
                 }
             if (isProcess)
-                if (string.IsNullOrEmpty(AmountDisplay))
+                if (string.IsNullOrEmpty(AmountDisplay) || checkCountPoint())
                 {
                     dialogResult = new DialogResult(ButtonResult.Ignore);
                     dialogResult.Parameters.Add("errMessage", "กรุณาระบุจำนวนเงินที่ถูกต้อง");
@@ -612,7 +638,7 @@ namespace MainModule.ViewModels
                 }
                 else
                 {
-                    doubleAmount = Double.Parse(AmountDisplay);
+                    doubleAmount = Double.Parse(TrimComma(AmountDisplay));
                     if (doubleAmount <= 0)
                     {
                         dialogResult = new DialogResult(ButtonResult.Ignore);
@@ -678,7 +704,7 @@ namespace MainModule.ViewModels
                                     "AlertDialog",
                                     new DialogParameters($"message={dialogResult.Parameters.GetValue<string>("errMessage")}"),
                                         (result) => {
-                                            Navigate(nameof(TransferRegion));
+                                            //Navigate(nameof(TransferRegion));
                                         });
                     
                 }
@@ -774,6 +800,13 @@ namespace MainModule.ViewModels
 
         void Print()
         {
+            string message = DateTime.Now.ToString(); ;
+            dialogService.Show(
+                "AlertWaitingDialog",
+                new DialogParameters($"message={message}"),
+                    (result) => {
+                    });
+
             PrintPdf();
         }
 
@@ -798,8 +831,12 @@ namespace MainModule.ViewModels
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             var fJasmineUPC = GetFontJasmineUPC();
+            var fJasmineUPCSmall = GetFontJasmineUPCSmall();
+            var fJasmineUPCSlash = GetFontJasmineUPCSlash();
 
             var UsedFont = fJasmineUPC;
+            var UsedFontSmall = fJasmineUPCSmall;
+            var UsedFontSlash = fJasmineUPCSlash;
 
             try
 
@@ -859,20 +896,20 @@ namespace MainModule.ViewModels
 
                 //Fix
                 {
-                    Phrase text = new Phrase(new Chunk("/", UsedFont));
+                    Phrase text = new Phrase(new Chunk("/", UsedFontSlash));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.BorderWidth = 0;
                     table.AddCell(cell);
-                    table.WriteSelectedRows(0, -1, 60f, 325f, pdf.DirectContent);
+                    table.WriteSelectedRows(0, -1, 59f, 332f, pdf.DirectContent);
                     pdf.Add(table);
                 }
 
                 //FullName
                 {
-                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.FromWalletName, UsedFont));
+                    Phrase text = new Phrase(new Chunk(CustomerDetailTransferManager.GetInstance().customerDetail.AccName, UsedFont));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
@@ -885,7 +922,9 @@ namespace MainModule.ViewModels
 
                 //MobileNo
                 {
-                    Phrase text = new Phrase(new Chunk(CustomerDetailTransferManager.GetInstance().customerDetail.MobileNo, UsedFont));
+                    string from = CustomerDetailTransferManager.GetInstance().customerDetail.MobileNo;
+                    string _mobileNo = $"{from[0]}{from[1]}{from[2]}-{from[3]}{from[4]}{from[5]}-{from[6]}{from[7]}{from[8]}{from[9]}";
+                    Phrase text = new Phrase(new Chunk(_mobileNo, UsedFont));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
@@ -898,20 +937,22 @@ namespace MainModule.ViewModels
 
                 //Fix
                 {
-                    Phrase text = new Phrase(new Chunk("/", UsedFont));
+                    Phrase text = new Phrase(new Chunk("/", UsedFontSlash));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
                     cell.HorizontalAlignment = Element.ALIGN_CENTER;
                     cell.BorderWidth = 0;
                     table.AddCell(cell);
-                    table.WriteSelectedRows(0, -1, 160f, 265f, pdf.DirectContent);
+                    table.WriteSelectedRows(0, -1, 158f, 270f, pdf.DirectContent);
                     pdf.Add(table);
                 }
 
                 //FromWalletId
                 {
-                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.FromWalletId, UsedFont));
+                    string from = TransactionEntityManager.GetInstance().TransactionEntity.FromWalletId;
+                    string _fromWalletId = $"{from[0]}{from[1]}{from[2]}{from[3]}{from[4]}-{from[5]}{from[6]}{from[7]}-{from[8]}{from[9]}{from[10]}-{from[11]}{from[12]}{from[13]}{from[14]}";
+                    Phrase text = new Phrase(new Chunk(_fromWalletId, UsedFont));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
@@ -924,14 +965,14 @@ namespace MainModule.ViewModels
 
                 //Fix
                 {
-                    Phrase text = new Phrase(new Chunk("/", UsedFont));
+                    Phrase text = new Phrase(new Chunk("/", UsedFontSlash));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
                     cell.HorizontalAlignment = Element.ALIGN_LEFT;
                     cell.BorderWidth = 0;
                     table.AddCell(cell);
-                    table.WriteSelectedRows(0, -1, 548, 265f, pdf.DirectContent);
+                    table.WriteSelectedRows(0, -1, 544, 270f, pdf.DirectContent);
                     pdf.Add(table);
                 }
 
@@ -950,7 +991,9 @@ namespace MainModule.ViewModels
 
                 //CitizenId
                 {
-                    Phrase text = new Phrase(new Chunk(CustomerDetailTransferManager.GetInstance().customerDetail.CitizenID, UsedFont));
+                    string from = CustomerDetailTransferManager.GetInstance().customerDetail.CitizenID;
+                    string _citizenId = $"{from[0]} {from[1]}{from[2]}{from[3]}{from[4]} {from[5]}{from[6]}{from[7]}{from[8]}{from[9]} {from[10]}{from[11]} {from[12]}";
+                    Phrase text = new Phrase(new Chunk(_citizenId, UsedFont));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
@@ -989,7 +1032,9 @@ namespace MainModule.ViewModels
 
                 //ToWalletId
                 {
-                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.ToWalletId, UsedFont));
+                    string from = TransactionEntityManager.GetInstance().TransactionEntity.ToWalletId;
+                    string _toWalletId = $"{from[0]}{from[1]}{from[2]}{from[3]}{from[4]}-{from[5]}{from[6]}{from[7]}-{from[8]}{from[9]}{from[10]}-{from[11]}{from[12]}{from[13]}{from[14]}";
+                    Phrase text = new Phrase(new Chunk(_toWalletId, UsedFont));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
@@ -1015,7 +1060,8 @@ namespace MainModule.ViewModels
 
                 //Amount String Format
                 {
-                    Phrase text = new Phrase(new Chunk(ChangeDecimalToText(TransactionEntityManager.GetInstance().TransactionEntity.Amount,SaleType.Baht), UsedFont));
+                    string _amountString = "(" + ChangeDecimalToText(TransactionEntityManager.GetInstance().TransactionEntity.Amount, SaleType.Baht) + ")";
+                    Phrase text = new Phrase(new Chunk(_amountString, UsedFont));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
@@ -1054,7 +1100,11 @@ namespace MainModule.ViewModels
 
                 //Amount + Fee
                 {
-                    Phrase text = new Phrase(new Chunk(TransactionEntityManager.GetInstance().TransactionEntity.TotalAmountDisplay, UsedFont));
+                    decimal de2 = Convert.ToDecimal(TransactionEntityManager.GetInstance().TransactionEntity.TotalAmount);
+                    string tempAmount2 = de2.ToString("N");
+                    string amountFee = tempAmount2;
+
+                    Phrase text = new Phrase(new Chunk(amountFee, UsedFont));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
@@ -1067,27 +1117,27 @@ namespace MainModule.ViewModels
 
                 //Employee Name
                 {
-                    Phrase text = new Phrase(new Chunk(AccountManager.GetInstance().Account.name, UsedFont));
+                    Phrase text = new Phrase(new Chunk(AccountManager.GetInstance().Account.name, UsedFontSmall));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
                     cell.HorizontalAlignment = Element.ALIGN_LEFT;
                     cell.BorderWidth = 0;
                     table.AddCell(cell);
-                    table.WriteSelectedRows(0, -1, 380, 26f, pdf.DirectContent);
+                    table.WriteSelectedRows(0, -1, 385, 18.5f, pdf.DirectContent);
                     pdf.Add(table);
                 }
 
                 //Employee Id
                 {
-                    Phrase text = new Phrase(new Chunk(AccountManager.GetInstance().Account.id.ToString(), UsedFont));
+                    Phrase text = new Phrase(new Chunk(AccountManager.GetInstance().Account.id.ToString(), UsedFontSmall));
                     PdfPTable table = new PdfPTable(1);
                     table.TotalWidth = 200f;
                     PdfPCell cell = new PdfPCell(text);
                     cell.HorizontalAlignment = Element.ALIGN_LEFT;
                     cell.BorderWidth = 0;
                     table.AddCell(cell);
-                    table.WriteSelectedRows(0, -1, 380, 17f, pdf.DirectContent);
+                    table.WriteSelectedRows(0, -1, 385, 12f, pdf.DirectContent);
                     pdf.Add(table);
                 }
                 #endregion
@@ -1126,6 +1176,44 @@ namespace MainModule.ViewModels
             var FontColour = new BaseColor(0, 0, 0); // optional... ints 0, 0, 0 are red, green, blue
             int FontStyle = iTextSharp.text.Font.NORMAL;  // optional
             float FontSize = iTextSharp.text.Font.DEFAULTSIZE;  // optional
+
+            return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, FontSize, FontStyle, FontColour);
+            // last 3 arguments can be removed
+        }
+
+        public static iTextSharp.text.Font GetFontJasmineUPCSmall()
+        {
+            string fontName = "jasmineUPC";
+            if (!FontFactory.IsRegistered(fontName))
+            {
+                string workingDirectory = Environment.CurrentDirectory;
+                string fontttf = "upcjl.ttf";
+                var fontPath = Directory.GetParent(workingDirectory).Parent.Parent.Parent.FullName + "\\WPFScbOri\\Entity\\Fonts\\" + fontttf;
+                FontFactory.Register(fontPath, fontName);
+            }
+
+            var FontColour = new BaseColor(0, 0, 0); // optional... ints 0, 0, 0 are red, green, blue
+            int FontStyle = iTextSharp.text.Font.NORMAL;  // optional
+            float FontSize = 8;  // optional
+
+            return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, FontSize, FontStyle, FontColour);
+            // last 3 arguments can be removed
+        }
+
+        public static iTextSharp.text.Font GetFontJasmineUPCSlash()
+        {
+            string fontName = "jasmineUPC";
+            if (!FontFactory.IsRegistered(fontName))
+            {
+                string workingDirectory = Environment.CurrentDirectory;
+                string fontttf = "upcjl.ttf";
+                var fontPath = Directory.GetParent(workingDirectory).Parent.Parent.Parent.FullName + "\\WPFScbOri\\Entity\\Fonts\\" + fontttf;
+                FontFactory.Register(fontPath, fontName);
+            }
+
+            var FontColour = new BaseColor(0, 0, 0); // optional... ints 0, 0, 0 are red, green, blue
+            int FontStyle = iTextSharp.text.Font.NORMAL;  // optional
+            float FontSize = 20;  // optional
 
             return FontFactory.GetFont(fontName, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, FontSize, FontStyle, FontColour);
             // last 3 arguments can be removed
@@ -1624,9 +1712,59 @@ namespace MainModule.ViewModels
 
         void LostFocus()
         {
-            if (!string.IsNullOrEmpty(AmountDisplay) && AmountDisplay.IndexOf('.') < 0)
+            if (!string.IsNullOrEmpty(AmountDisplay))
             {
-                AmountDisplay = AmountDisplay + ".00";
+                if (AmountDisplay.IndexOf('.') < 0)
+                {
+                    AmountDisplay = AmountDisplay + ".00";
+                }
+
+                checkAmountInput();
+            }
+        }
+
+        void GotFocus()
+        {
+            if (!string.IsNullOrEmpty(AmountDisplay))
+            {
+                AmountDisplay = TrimComma(AmountDisplay);
+            }
+        }
+
+        string TrimComma(string rawstring)
+        {
+            string trimComma = rawstring.Replace(",", string.Empty);
+            return trimComma;
+        }
+
+        bool checkCountPoint()
+        {
+            int countPoint = 0;
+            foreach (Char item in AmountDisplay)
+            {
+                if (item == 46)
+                {
+                    countPoint++;
+                }
+            }
+
+            if (countPoint > 1)
+                return true;
+            else
+                return false;
+
+        }
+
+        void checkAmountInput()
+        {
+            if(!checkCountPoint())
+            {
+                systemSetAmount = true;
+                decimal de1 = Convert.ToDecimal(AmountDisplay);
+                string tempAmount1 = de1.ToString("0.##");
+                decimal de2 = Convert.ToDecimal(tempAmount1);
+                string tempAmount2 = de2.ToString("N");
+                AmountDisplay = tempAmount2;
             }
         }
 

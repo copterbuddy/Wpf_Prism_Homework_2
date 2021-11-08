@@ -40,6 +40,7 @@ namespace MainModule
             containerRegistry.RegisterDialog<SelectFundDialog, SelectFundDialogViewModel>();
             containerRegistry.RegisterDialog<FundDetailDialog, FundDetailDialogViewModel>();
             containerRegistry.RegisterDialog<AlertDialog, AlertDialogViewModel>();
+            containerRegistry.RegisterDialog<AlertWaitingDialog, AlertWaitingDialogViewModel>();
             containerRegistry.RegisterDialog<SelectFromWalletDialog, SelectFromWalletDialogViewModel>();
             containerRegistry.RegisterDialog<SelectBankListDialog, SelectBankListDialogViewModel>();
             containerRegistry.RegisterDialog<InputToWalletDialog, InputToWalletDialogViewModel>();

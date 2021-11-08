@@ -68,7 +68,7 @@
                                                 </TextBlock>
                                             </Grid>
 
-                                            <Grid Grid.Row="1">
+                                            <Grid Grid.Row="1" Margin="0,30,0,0">
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="3*" />
                                                     <ColumnDefinition Width="7*" />
@@ -80,8 +80,11 @@
                                                         <ColumnDefinition Width="2*" />
                                                         <ColumnDefinition Width="1.5*" />
                                                     </Grid.ColumnDefinitions>
-                                                    <Image Grid.Column="2"
+                                                    <!--<Image Grid.Column="2"
                                                        Source="pack://application:,,,/Entity;Component/Images/TransferImages/bank-icon0.png"
+                                                       />-->
+                                                    <Image Grid.Column="2"
+                                                       Source="{Binding BankLogoDisplay}"
                                                        />
                                                 </Grid>
 

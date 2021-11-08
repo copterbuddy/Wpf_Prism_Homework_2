@@ -11,6 +11,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace MainModule.ViewModels
 {
@@ -47,8 +49,8 @@ namespace MainModule.ViewModels
 
         public string WalletIdTextBox { get => walletIdTextBox; set 
             {
-                Regex regex = new Regex("[^0-9.]+");
-                if (!regex.IsMatch(value))
+                Regex regex = new Regex("^\\d{0,15}$");
+                if (regex.IsMatch(value))
                 {
                     SetProperty(ref walletIdTextBox, value);
                 }
@@ -67,8 +69,9 @@ namespace MainModule.ViewModels
             }
         }
 
+        public ImageSource BankLogoDisplay { get => BankEntityManager.GetInstance().bankEntity.ImagePath != null ? BankEntityManager.GetInstance().bankEntity.ImagePath : GetImageSource("bank-icon0.png"); }
+
         private string walletIdTextBox;
-        private string bankSelectedDisplay;
         #endregion
 
 
@@ -143,8 +146,25 @@ namespace MainModule.ViewModels
                 RaiseRequestClose(new DialogResult(ButtonResult.OK));
                 return;
             }
+            else
+            {
+                RaiseRequestClose(new DialogResult(ButtonResult.Ignore));
+                return;
+            }
 
 
+        }
+
+        private ImageSource GetImageSource(string filename)
+        {
+            try
+            {
+                return new BitmapImage(new Uri($"pack://application:,,,/Entity;Component/Images/TransferImages/{filename}.png"));
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
         #endregion
     }

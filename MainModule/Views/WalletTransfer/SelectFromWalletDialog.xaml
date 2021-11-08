@@ -117,9 +117,10 @@
                                                                         <TextBlock Grid.Column="0"
                                                                                    Grid.Row="0"
                                                                                    Text="{Binding WalletName}"
+                                                                                   FontSize="19"
                                                                                    Foreground="Black"
                                                                                    HorizontalAlignment="Left"
-                                                                                   Margin="40,0,0,0"
+                                                                                   Margin="40,8,0,0"
                                                                                    VerticalAlignment="Center"
                                                                                    Style="{StaticResource SelectFundTextTitleBold3}"
                                                                                    />
@@ -139,16 +140,17 @@
                                                                                        HorizontalAlignment="Right"
                                                                                        VerticalAlignment="Center"
                                                                                     >
-                                                                            
-                                                                            <TextBlock Text="{Binding Balance, StringFormat='#,##0.00;(#,##0.00)'}"
+
+                                                                            <TextBlock Text="{Binding Balance, StringFormat='#,##0.00;-#,##0.00'}"
+                                                                                   FontSize="19"
                                                                                        Foreground="Black"
-                                                                                       Margin="40,0,0,0"
+                                                                                       Margin="40,8,0,0"
                                                                                    Style="{StaticResource SelectFundTextTitleBold3}"
                                                                                    />
 
                                                                             <TextBlock Text="บาท"
                                                                                        Foreground="Black"
-                                                                                       Margin="10,0,20,0"
+                                                                                       Margin="10,8,20,0"
                                                                                    Style="{StaticResource SelectFundTextTitleBold3}"
                                                                                        />
                                                                         </StackPanel>

@@ -288,6 +288,7 @@
         <Style.Resources>
             <Style TargetType="Border">
                 <Setter Property="CornerRadius" Value="8"/>
+
             </Style>
         </Style.Resources>
     </Style>

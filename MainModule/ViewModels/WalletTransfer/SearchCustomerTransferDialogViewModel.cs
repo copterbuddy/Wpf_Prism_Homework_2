@@ -27,6 +27,7 @@ namespace MainModule.ViewModels
         public DelegateCommand<ComboBox> SelectionSearchTypeCommand => selectionSearchTypeCommand ?? (selectionSearchTypeCommand = new DelegateCommand<ComboBox>(SelectionSearchType));
         private DelegateCommand<string> customerDetailListsCommond;
         public DelegateCommand<string> CustomerDetailListsCommond => customerDetailListsCommond ?? (customerDetailListsCommond = new DelegateCommand<string>(GetCustId));
+        private DelegateCommand<string> expandDetailCommand;
 
         private DelegateCommand<TextBox> searchCustomerTextBox;
         public DelegateCommand<TextBox> SearchCustomerTextBox => searchCustomerTextBox ?? (searchCustomerTextBox = new DelegateCommand<TextBox>(SearchCustomerTextBoxRef));
@@ -66,6 +67,7 @@ namespace MainModule.ViewModels
             }
         }
 
+        public DelegateCommand<string> ExpandDetailCommand => expandDetailCommand ?? (expandDetailCommand = new DelegateCommand<string>(ExpandDetail));
 
         public async virtual void CloseDialog(string parameter)
         {
@@ -111,8 +113,6 @@ namespace MainModule.ViewModels
 
                 CustomerService searchCustomerService = new();
                 List<CustomerDetail> listCust = await Task.Run(() => searchCustomerService.SeachCustomerTransfer(SelectedSearchType, SearchCustomerTextBoxString));
-                //List<CustomerDetail> listCust = new();
-                //listCust.Add(Cust);
 
                 if (listCust == null || listCust.Count == 0)
                 {
@@ -132,6 +132,11 @@ namespace MainModule.ViewModels
                         if (item.SignedSignatureImagePath == null)
                             item.SignedSignatureImagePath = GetImageSource("sign_image");
 
+                    }
+
+                    if (listCust.Count == 1)
+                    {
+                        listCust[0].IsSelected = !listCust[0].IsSelected;
                     }
 
                     CustomerDetailLists = new(listCust);
@@ -177,6 +182,33 @@ namespace MainModule.ViewModels
             }
         }
 
+        void ExpandDetail(string custId)
+        {
+
+            List<CustomerDetail> listCust = new(CustomerDetailLists);
+            if (listCust == null || listCust.Count == 0)
+            {
+                var dialogResult = new DialogResult(ButtonResult.Ignore);
+                dialogResult.Parameters.Add("message", "ไม่พบข้อมูลในระบบ");
+                dialogResult.Parameters.Add("defaultSearch", SelectedSearchType);
+                RaiseRequestClose(dialogResult);
+                return;
+            }
+            else
+            {
+                foreach (var item in listCust)
+                {
+                    if (item.CustId == custId)
+                    {
+                        item.IsSelected = !item.IsSelected;
+                    }
+                }
+
+                CustomerDetailLists = new(listCust);
+
+            }
+        }
+
         public virtual void SelectionSearchType(ComboBox parameter)
         {
             if (parameter != null && parameter.SelectedValue != null)
@@ -216,7 +248,7 @@ namespace MainModule.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            var _defaultSearch = parameters.GetValue<string>("defaultSearch");
+            var _defaultSearch = parameters?.GetValue<string>("defaultSearch");
             if (!string.IsNullOrEmpty(_defaultSearch))
             {
                 foreach (var item in SearchTypes)
@@ -224,6 +256,7 @@ namespace MainModule.ViewModels
                     if (item == _defaultSearch)
                     {
                         SelectedSearchType = item;
+                        break;
                     }
                 }
                 if (string.IsNullOrEmpty(SelectedSearchType))
